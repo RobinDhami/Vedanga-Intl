@@ -10,7 +10,7 @@ export const legacyTeamMembers: Array<{
   show_on_homepage: boolean;
 }> = [
   {
-    name: "Bhawesh Chhatkuli, M.Sc.Humanities (TU)",
+    name: "Bhawesh Sapkota, M.Sc.Humanities (TU)",
     position: "Principal",
     image: "/images/ppp.png",
     qualifications: "Masters in Humanities (TU)",

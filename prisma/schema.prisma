@@ -1,0 +1,156 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url      = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model HeroSlide {
+  id          Int      @id @default(autoincrement())
+  title       String
+  subtitle    String   @default("")
+  imageUrl    String   @default("")
+  ctaText     String   @default("")
+  ctaLink     String   @default("")
+  sortOrder   Int      @default(0)
+  isPublished Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Notice {
+  id            Int      @id @default(autoincrement())
+  title         String
+  excerpt       String   @db.Text
+  imageUrl      String   @default("")
+  link          String   @default("")
+  showInOverlay Boolean  @default(false)
+  sortOrder     Int      @default(0)
+  isPublished   Boolean  @default(false)
+  publishedAt   String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model NewsArticle {
+  id          Int      @id @default(autoincrement())
+  title       String
+  slug        String   @unique
+  excerpt     String   @db.Text
+  content     String   @db.Text
+  category    String
+  author      String
+  imageUrl    String   @default("")
+  tags        Json
+  sortOrder   Int      @default(0)
+  isPublished Boolean  @default(false)
+  publishedAt String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Event {
+  id          Int      @id @default(autoincrement())
+  title       String
+  slug        String   @unique
+  description String   @db.Text
+  category    String
+  venue       String
+  date        String
+  time        String   @default("")
+  schedule    Json
+  imageUrl    String   @default("")
+  sortOrder   Int      @default(0)
+  isPublished Boolean  @default(false)
+  publishedAt String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model GalleryImage {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String   @db.Text
+  category    String   @default("")
+  takenOn     String?
+  imageUrl    String   @default("")
+  sortOrder   Int      @default(0)
+  isPublished Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Video {
+  id          Int      @id @default(autoincrement())
+  title       String
+  subtitle    String   @default("")
+  url         String
+  sortOrder   Int      @default(0)
+  isPublished Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model TeamMember {
+  id             Int      @id @default(autoincrement())
+  name           String
+  position       String
+  imageUrl       String   @default("")
+  qualifications String   @db.Text
+  subject        String   @default("")
+  email          String   @default("")
+  phone          String   @default("")
+  teamGroup      String   @default("academic")
+  showOnHomepage Boolean  @default(false)
+  sortOrder      Int      @default(0)
+  isPublished    Boolean  @default(false)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+model Club {
+  id          Int      @id @default(autoincrement())
+  name        String
+  slug        String   @unique
+  description String   @db.Text
+  iconName    String   @default("code")
+  members     Int      @default(0)
+  meetingDay  String   @default("")
+  activities  Json
+  advisor     String   @default("")
+  imageUrl    String   @default("")
+  sortOrder   Int      @default(0)
+  isPublished Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model JobOpening {
+  id             Int      @id @default(autoincrement())
+  title          String
+  department     String
+  employmentType String
+  experience     String
+  education      String
+  description    String   @db.Text
+  sortOrder      Int      @default(0)
+  isPublished    Boolean  @default(false)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+
+model ContactSubmission {
+  id        Int      @id @default(autoincrement())
+  firstName String
+  lastName  String
+  email     String
+  phone     String
+  message   String   @db.Text
+  status    String   @default("new")
+  notes     String   @db.Text
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}

@@ -19,8 +19,35 @@ import type {
 } from "@/types/cms";
 import { phaseFourSeed, phaseOneSeed, phaseThreeSeed, phaseTwoSeed } from "@/lib/cms-seed";
 
-const API_BASE_URL =
-  process.env.NEXT_PUBLIC_CMS_API_BASE_URL?.replace(/\/$/, "") || "http://localhost:8000/api";
+function getApiBaseUrl() {
+  const configured = process.env.NEXT_PUBLIC_CMS_API_BASE_URL?.replace(/\/$/, "");
+  if (configured) {
+    return configured;
+  }
+
+  if (typeof window !== "undefined") {
+    return "/api";
+  }
+
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "");
+  if (siteUrl) {
+    return `${siteUrl}/api`;
+  }
+
+  return "http://localhost:3000/api";
+}
+
+const REQUEST_TIMEOUT_MS = 8000;
+
+function createTimeoutSignal(timeoutMs = REQUEST_TIMEOUT_MS) {
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
+
+  return {
+    signal: controller.signal,
+    clear: () => clearTimeout(timeoutId),
+  };
+}
 
 function getCookie(name: string) {
   if (typeof document === "undefined") return "";
@@ -30,12 +57,11 @@ function getCookie(name: string) {
 }
 
 async function fetchJson<T>(path: string): Promise<T> {
-  const response = await fetch(`${API_BASE_URL}${path}`, {
-    headers: {
-      "Content-Type": "application/json",
-    },
+  const { signal, clear } = createTimeoutSignal();
+  const response = await fetch(`${getApiBaseUrl()}${path}`, {
     cache: "no-store",
-  });
+    signal,
+  }).finally(clear);
 
   if (!response.ok) {
     throw new Error(`Failed to fetch ${path}: ${response.status}`);
@@ -45,13 +71,12 @@ async function fetchJson<T>(path: string): Promise<T> {
 }
 
 async function fetchAdminJson<T>(path: string): Promise<T> {
-  const response = await fetch(`${API_BASE_URL}${path}`, {
-    headers: {
-      "Content-Type": "application/json",
-    },
+  const { signal, clear } = createTimeoutSignal();
+  const response = await fetch(`${getApiBaseUrl()}${path}`, {
     credentials: "include",
     cache: "no-store",
-  });
+    signal,
+  }).finally(clear);
 
   if (!response.ok) {
     throw new Error(`Failed to fetch admin ${path}: ${response.status}`);
@@ -211,12 +236,16 @@ export async function getAdminPhaseTwoCollections(): Promise<PhaseTwoCollections
 }
 
 export async function getSessionUser(): Promise<CmsSessionUser> {
-  const response = await fetch(`${API_BASE_URL}/auth/me/`, {
+  const { signal, clear } = createTimeoutSignal();
+  const response = await fetch(`${getApiBaseUrl()}/auth/me/`, {
     credentials: "include",
     cache: "no-store",
-  });
+    signal,
+  })
+    .catch(() => null)
+    .finally(clear);
 
-  if (!response.ok) {
+  if (!response || !response.ok) {
     return { authenticated: false, is_staff: false };
   }
 
@@ -224,7 +253,7 @@ export async function getSessionUser(): Promise<CmsSessionUser> {
 }
 
 export async function ensureCsrfCookie() {
-  await fetch(`${API_BASE_URL}/auth/csrf/`, {
+  await fetch(`${getApiBaseUrl()}/auth/csrf/`, {
     credentials: "include",
     cache: "no-store",
   });
@@ -233,7 +262,7 @@ export async function ensureCsrfCookie() {
 export async function loginToCms(username: string, password: string) {
   await ensureCsrfCookie();
 
-  const response = await fetch(`${API_BASE_URL}/auth/login/`, {
+  const response = await fetch(`${getApiBaseUrl()}/auth/login/`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -254,7 +283,7 @@ export async function loginToCms(username: string, password: string) {
 export async function logoutFromCms() {
   await ensureCsrfCookie();
 
-  const response = await fetch(`${API_BASE_URL}/auth/logout/`, {
+  const response = await fetch(`${getApiBaseUrl()}/auth/logout/`, {
     method: "POST",
     headers: {
       "X-CSRFToken": getCookie("csrftoken"),
@@ -302,7 +331,8 @@ async function sendAdminMutation(
 ) {
   await ensureCsrfCookie();
 
-  const response = await fetch(`${API_BASE_URL}${buildAdminItemPath(collection, identifier)}`, {
+  const apiBaseUrl = getApiBaseUrl();
+  const response = await fetch(`${apiBaseUrl}${buildAdminItemPath(collection, identifier)}`, {
     method,
     headers: {
       "Content-Type": "application/json",
@@ -407,7 +437,7 @@ export async function submitContactSubmission(payload: {
   phone: string;
   message?: string;
 }) {
-  const response = await fetch(`${API_BASE_URL}/contact-submissions/`, {
+  const response = await fetch(`${getApiBaseUrl()}/contact-submissions/`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

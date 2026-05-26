@@ -8,6 +8,8 @@ import { Toaster } from 'sonner';
 import Footer from '@/components/Footer';
 import BackToTopButton from '@/components/BackToTopButton';
 
+export const dynamic = 'force-dynamic';
+
 export const metadata: Metadata = {
   title: 'Vedanga International School',
   description: 'Excellence in Education since 2022',
