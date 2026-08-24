@@ -118,12 +118,12 @@ export default function Contact() {
                     </div>
                     <div>
                       <h3 className="font-medium text-gray-800">Email</h3>
-                      <p className="text-gray-600 mt-1">vedanga79@gmail.com
+                      <p className="text-gray-600 mt-1">info@vedanga.edu.np
                       </p>
                     </div>
                   </div>
                   <Link
-                    href="mailto:vedanga79@gmail.com"
+                    href="mailto:info@vedanga.edu.np"
                     className="flex items-center justify-center gap-2 px-4 py-2 bg-[#D41D33] hover:bg-[#b31828] text-white rounded-lg transition-colors"
                   >
                     <Mail className="h-4 w-4" />

@@ -1,0 +1,669 @@
+{
+  "heroSlides": [
+    {
+      "id": 1,
+      "title": "Excellence in Education",
+      "subtitle": "Nurturing Minds, Shaping Futures",
+      "cta_text": "Contact Us",
+      "cta_link": "/contact",
+      "sort_order": 0,
+      "is_published": true,
+      "image_url": "/images/foto14.jpg"
+    },
+    {
+      "id": 2,
+      "title": "World-Class Facilities",
+      "subtitle": "Creating the Perfect Learning Environment",
+      "cta_text": "Contact Us",
+      "cta_link": "/contact",
+      "sort_order": 1,
+      "is_published": true,
+      "image_url": "/images/foto2.jpg"
+    },
+    {
+      "id": 3,
+      "title": "Holistic Development",
+      "subtitle": "Beyond Academics",
+      "cta_text": "Contact Us",
+      "cta_link": "/contact",
+      "sort_order": 2,
+      "is_published": true,
+      "image_url": "/images/foto16.jpg"
+    },
+    {
+      "id": 4,
+      "title": "World-Class Facilities",
+      "subtitle": "Creating the Perfect Learning Environment",
+      "cta_text": "Contact Us",
+      "cta_link": "/contact",
+      "sort_order": 3,
+      "is_published": true,
+      "image_url": "/images/foto8.jpg"
+    },
+    {
+      "id": 5,
+      "title": "Holistic Development",
+      "subtitle": "Beyond Academics",
+      "cta_text": "Contact Us",
+      "cta_link": "/contact",
+      "sort_order": 4,
+      "is_published": true,
+      "image_url": "/images/foto3.jpg"
+    }
+  ],
+  "notices": [
+    {
+      "id": 1,
+      "title": "Admission Open for Academic Year 2024-25",
+      "excerpt": "Applications are now being accepted for all grades. Limited seats available.",
+      "published_at": "2024-02-15",
+      "is_published": true,
+      "image_url": "/images/foto2.jpg",
+      "link": "",
+      "show_in_overlay": true
+    },
+    {
+      "id": 2,
+      "title": "Parent-Teacher Meeting Schedule",
+      "excerpt": "The first term parent-teacher meeting will be held on March 1st, 2024.",
+      "published_at": "2024-02-10",
+      "is_published": true,
+      "image_url": "/images/foto2.jpg",
+      "link": "",
+      "show_in_overlay": false
+    },
+    {
+      "id": 3,
+      "title": "Holiday Notice: Holi Festival",
+      "excerpt": "School will remain closed on March 25th, 2024 for Holi celebrations.",
+      "published_at": "2024-02-05",
+      "is_published": true,
+      "image_url": "/images/foto2.jpg",
+      "link": "",
+      "show_in_overlay": false
+    }
+  ],
+  "news": [
+    {
+      "id": 1,
+      "title": "Outstanding Academic Results in National Examinations",
+      "slug": "outstanding-academic-results",
+      "excerpt": "Our students have achieved exceptional results in this year's national examinations, with 95% scoring distinction grades across all subjects.",
+      "content": "\n      <p class=\"mb-4\">We are proud to announce that our students have achieved exceptional results in this year's national examinations. The dedication of our students, combined with the support of our faculty and parents, has led to outstanding academic performance across all subjects.</p>\n      \n      <h2 class=\"text-2xl font-bold text-gray-800 mt-8 mb-4\">Key Highlights</h2>\n      <ul class=\"list-disc pl-6 mb-6 space-y-2\">\n        <li>95% of students scored distinction</li>\n        <li>100% pass rate across all subjects</li>\n        <li>Top scores in Mathematics and Sciences</li>\n        <li>Multiple students ranked in national top 10</li>\n      </ul>\n\n      <p class=\"mb-4\">This achievement reflects our commitment to academic excellence and our holistic approach to education. We continue to strive for even better results while ensuring our students develop into well-rounded individuals.</p>\n    ",
+      "category": "Academic",
+      "author": "Admin",
+      "tags": [
+        "Academic",
+        "Achievement",
+        "Examinations"
+      ],
+      "published_at": "2024-03-15",
+      "is_published": true,
+      "image_url": "/images/foto3.jpg"
+    },
+    {
+      "id": 2,
+      "title": "New STEM Laboratory Inauguration",
+      "slug": "stem-lab-inauguration",
+      "excerpt": "State-of-the-art STEM laboratory inaugurated with cutting-edge technology to enhance scientific learning and innovation.",
+      "content": "\n      <p class=\"mb-4\">We are excited to announce the inauguration of our new STEM laboratory, equipped with the latest technology to foster innovation and scientific learning.</p>\n      \n      <h2 class=\"text-2xl font-bold text-gray-800 mt-8 mb-4\">Features Include</h2>\n      <ul class=\"list-disc pl-6 mb-6 space-y-2\">\n        <li>3D printing and robotics stations</li>\n        <li>Virtual reality science simulations</li>\n        <li>Advanced microscopy equipment</li>\n        <li>Collaborative research spaces</li>\n      </ul>\n\n      <p class=\"mb-4\">This facility represents our commitment to preparing students for careers in science and technology, with hands-on learning experiences that inspire creativity and problem-solving.</p>\n    ",
+      "category": "Facilities",
+      "author": "Principal",
+      "tags": [
+        "STEM",
+        "Facilities",
+        "Innovation"
+      ],
+      "published_at": "2024-03-10",
+      "is_published": true,
+      "image_url": "/images/foto4.jpg"
+    },
+    {
+      "id": 3,
+      "title": "International Student Exchange Program Launch",
+      "slug": "student-exchange-program",
+      "excerpt": "New global partnership program offering students international exposure and cross-cultural learning opportunities.",
+      "content": "\n      <p class=\"mb-4\">We are thrilled to launch our new International Student Exchange Program in partnership with leading schools across three continents.</p>\n      \n      <h2 class=\"text-2xl font-bold text-gray-800 mt-8 mb-4\">Program Highlights</h2>\n      <ul class=\"list-disc pl-6 mb-6 space-y-2\">\n        <li>Semester-long exchanges with partner schools</li>\n        <li>Cultural immersion experiences</li>\n        <li>Language learning opportunities</li>\n        <li>Global classroom collaborations</li>\n      </ul>\n\n      <p class=\"mb-4\">This program will broaden our students' horizons and prepare them to be global citizens in an increasingly interconnected world.</p>\n    ",
+      "category": "International",
+      "author": "Admin",
+      "tags": [
+        "International",
+        "Exchange",
+        "Global"
+      ],
+      "published_at": "2024-03-05",
+      "is_published": true,
+      "image_url": "/images/foto5.jpg"
+    }
+  ],
+  "events": [
+    {
+      "id": 1,
+      "title": "Election of Head and Deputy Head",
+      "slug": "election-of-head-and-deputy-head",
+      "description": "The Election of Head and Deputy Head is an annual event that encourages student participation in the democratic process. Students from various grades campaign for leadership positions, showcasing their vision and plans for the school. This event fosters leadership skills, public speaking, and teamwork among the participants. The election process includes candidate speeches, voting, and the announcement of results. It is a significant event that empowers students to take on leadership roles and contribute to the school community.",
+      "category": "Community",
+      "venue": "Sports Complex",
+      "date": "2025-05-02",
+      "time": "12:00 AM - 5:00 PM",
+      "schedule": [
+        {
+          "day": "Election Day",
+          "date": "May 02, 2025",
+          "events": [
+            "8:00 AM - Opening Ceremony",
+            "9:30 AM - Candidate Speeches",
+            "11:00 AM - Voting Begins",
+            "4:00 PM - Results Announcement"
+          ]
+        }
+      ],
+      "published_at": "2025-05-02",
+      "is_published": true,
+      "image_url": "/images/foto14.jpg"
+    },
+    {
+      "id": 2,
+      "title": "House Division (Internal)",
+      "slug": "house-division-internal",
+      "description": "The House Division is an internal event where students are divided into different houses for the academic year. This division fosters a sense of belonging and team spirit among the students. Each house will participate in various inter-house competitions throughout the year, promoting healthy competition and collaboration. The event includes team-building activities and the assignment of house captains and vice-captains. It is an essential part of the school's extracurricular activities, encouraging students to work together and support each other.",
+      "category": "Community",
+      "venue": "Auditorium",
+      "date": "2025-05-13",
+      "time": "11:00 AM - 3:00 PM",
+      "schedule": [
+        {
+          "day": "Division Day",
+          "date": "May 13, 2025",
+          "events": [
+            "10:00 AM - Welcome and Introduction",
+            "11:30 AM - House Assignments",
+            "1:00 PM - Team Building Activities",
+            "2:30 PM - Closing Remarks"
+          ]
+        }
+      ],
+      "published_at": "2025-05-13",
+      "is_published": true,
+      "image_url": "/images/foto6.jpg"
+    },
+    {
+      "id": 3,
+      "title": "Debate (Sr. and M.S.) House-wise",
+      "slug": "housewise-debate-sr-and-ms",
+      "description": "The House-wise Debate competition is an annual event that encourages critical thinking, public speaking, and teamwork among Senior and Middle School students. Each house prepares and presents arguments on various topics, fostering a culture of healthy debate and intellectual discourse. The competition is judged by a panel of experts, and the winning house is awarded points that contribute to their overall house score. This event is a highlight of the academic year, promoting academic excellence and fostering a competitive spirit among the students.",
+      "category": "Academic",
+      "venue": "School Ground",
+      "date": "2025-05-22",
+      "time": "6:00 PM - 9:00 PM",
+      "schedule": [
+        {
+          "day": "Debate Day",
+          "date": "May 22, 2025",
+          "events": [
+            "6:00 PM - Opening Ceremony",
+            "6:30 PM - Debate Rounds Begin",
+            "7:30 PM - Final Round",
+            "8:30 PM - Award Ceremony"
+          ]
+        }
+      ],
+      "published_at": "2025-05-22",
+      "is_published": true,
+      "image_url": "/images/foto21.jpg"
+    },
+    {
+      "id": 4,
+      "title": "Oath taking and badge distribution",
+      "slug": "oath-taking-and-badge-distribution",
+      "description": "The Oath taking and badge distribution ceremony is an event where newly elected student leaders take an oath and receive their badges. This ceremony marks the beginning of their leadership roles and responsibilities. It is an important event that encourages students to take on leadership positions and contribute to the school community.",
+      "category": "Community",
+      "venue": "Auditorium",
+      "date": "2025-05-22",
+      "time": "10:00 AM - 12:00 PM",
+      "schedule": [
+        {
+          "day": "Oath Taking Day",
+          "date": "May 22, 2025",
+          "events": [
+            "10:00 AM - Welcome and Introduction",
+            "10:30 AM - Oath Taking Ceremony",
+            "11:00 AM - Badge Distribution",
+            "11:30 AM - Closing Remarks"
+          ]
+        }
+      ],
+      "published_at": "2025-05-22",
+      "is_published": true,
+      "image_url": "/images/foto4.jpg"
+    }
+  ],
+  "galleryImages": [
+    {
+      "id": 1,
+      "title": "Student Life",
+      "description": "Students enjoying school activities",
+      "category": "School Life",
+      "taken_on": "March 15, 2024",
+      "sort_order": 1,
+      "is_published": true,
+      "image_url": "/images/foto1.jpg"
+    },
+    {
+      "id": 2,
+      "title": "Library",
+      "description": "Our state-of-the-art library facility",
+      "category": "Academics",
+      "taken_on": "March 10, 2024",
+      "sort_order": 2,
+      "is_published": true,
+      "image_url": "/images/foto2.jpg"
+    },
+    {
+      "id": 3,
+      "title": "Annual Sports Meet",
+      "description": "Highlights from our annual sports day",
+      "category": "Sports",
+      "taken_on": "March 5, 2024",
+      "sort_order": 3,
+      "is_published": true,
+      "image_url": "/images/foto3.jpg"
+    },
+    {
+      "id": 4,
+      "title": "Cultural Festival",
+      "description": "Celebrating diversity through cultural performances",
+      "category": "Events",
+      "taken_on": "March 1, 2024",
+      "sort_order": 4,
+      "is_published": true,
+      "image_url": "/images/foto4.jpg"
+    },
+    {
+      "id": 5,
+      "title": "Science Fair",
+      "description": "Students showcasing their scientific projects",
+      "category": "Activities",
+      "taken_on": "February 25, 2024",
+      "sort_order": 5,
+      "is_published": true,
+      "image_url": "/images/foto5.jpg"
+    },
+    {
+      "id": 6,
+      "title": "Student Council",
+      "description": "Student leaders in action",
+      "category": "School Life",
+      "taken_on": "February 20, 2024",
+      "sort_order": 6,
+      "is_published": true,
+      "image_url": "/images/foto6.jpg"
+    },
+    {
+      "id": 7,
+      "title": "Student Council",
+      "description": "Student leaders in action",
+      "category": "School Life",
+      "taken_on": "February 20, 2024",
+      "sort_order": 7,
+      "is_published": true,
+      "image_url": "/images/foto7.jpg"
+    },
+    {
+      "id": 8,
+      "title": "Student Council",
+      "description": "Student leaders in action",
+      "category": "School Life",
+      "taken_on": "February 20, 2024",
+      "sort_order": 8,
+      "is_published": true,
+      "image_url": "/images/foto8.jpg"
+    },
+    {
+      "id": 9,
+      "title": "Student Council",
+      "description": "Student leaders in action",
+      "category": "School Life",
+      "taken_on": "February 20, 2024",
+      "sort_order": 9,
+      "is_published": true,
+      "image_url": "/images/foto9.jpg"
+    },
+    {
+      "id": 10,
+      "title": "Student Council",
+      "description": "Student leaders in action",
+      "category": "School Life",
+      "taken_on": "February 20, 2024",
+      "sort_order": 10,
+      "is_published": true,
+      "image_url": "/images/foto10.jpg"
+    },
+    {
+      "id": 11,
+      "title": "Student Council",
+      "description": "Student leaders in action",
+      "category": "School Life",
+      "taken_on": "February 20, 2024",
+      "sort_order": 11,
+      "is_published": true,
+      "image_url": "/images/foto19.jpg"
+    },
+    {
+      "id": 12,
+      "title": "Student Council",
+      "description": "Student leaders in action",
+      "category": "School Life",
+      "taken_on": "February 20, 2024",
+      "sort_order": 12,
+      "is_published": true,
+      "image_url": "/images/foto12.jpg"
+    },
+    {
+      "id": 13,
+      "title": "Student Council",
+      "description": "Student leaders in action",
+      "category": "School Life",
+      "taken_on": "February 20, 2024",
+      "sort_order": 13,
+      "is_published": true,
+      "image_url": "/images/foto13.jpg"
+    },
+    {
+      "id": 14,
+      "title": "Student Life",
+      "description": "Students enjoying campus activities",
+      "category": "School Life",
+      "taken_on": "March 15, 2024",
+      "sort_order": 14,
+      "is_published": true,
+      "image_url": "/images/foto14.jpg"
+    },
+    {
+      "id": 15,
+      "title": "Library",
+      "description": "Our state-of-the-art library facility",
+      "category": "Academics",
+      "taken_on": "March 10, 2024",
+      "sort_order": 15,
+      "is_published": true,
+      "image_url": "/images/foto15.jpg"
+    },
+    {
+      "id": 16,
+      "title": "Annual Sports Meet",
+      "description": "Highlights from our annual sports day",
+      "category": "Sports",
+      "taken_on": "March 5, 2024",
+      "sort_order": 16,
+      "is_published": true,
+      "image_url": "/images/foto16.jpg"
+    },
+    {
+      "id": 17,
+      "title": "Cultural Festival",
+      "description": "Celebrating diversity through cultural performances",
+      "category": "Events",
+      "taken_on": "March 1, 2024",
+      "sort_order": 17,
+      "is_published": true,
+      "image_url": "/images/foto17.jpg"
+    },
+    {
+      "id": 18,
+      "title": "Science Fair",
+      "description": "Students showcasing their scientific projects",
+      "category": "Activities",
+      "taken_on": "February 25, 2024",
+      "sort_order": 18,
+      "is_published": true,
+      "image_url": "/images/foto18.jpg"
+    }
+  ],
+  "contactSubmissions": [],
+  "videos": [
+    {
+      "id": 1,
+      "title": "Introduction to Vedanga International School",
+      "subtitle": "A brief overview of our values and goals",
+      "url": "https://www.youtube.com/embed/NA-ZUDBEtZc",
+      "sort_order": 1,
+      "is_published": true
+    },
+    {
+      "id": 2,
+      "title": "Annual Function 2081 (Part 1)",
+      "subtitle": "Watch part 1 of the highlights from our annual program at Vedanga International School",
+      "url": "https://www.youtube.com/embed/UPza3U4_hF4",
+      "sort_order": 2,
+      "is_published": true
+    },
+    {
+      "id": 3,
+      "title": "Annual Function 2081 (Part 2)",
+      "subtitle": "Watch part 2 of the highlights from our annual program at Vedanga International School",
+      "url": "https://www.youtube.com/embed/63Oy7xrfM2g?si=z-4Dn6dxlyjt8p24",
+      "sort_order": 3,
+      "is_published": true
+    }
+  ],
+  "teamMembers": [
+    {
+      "id": 1,
+      "name": "Bhawesh Sapkota, M.Sc.Humanities (TU)",
+      "position": "Principal",
+      "image_url": "/images/ppp.png",
+      "qualifications": "Masters in Humanities (TU)",
+      "subject": "Science and Mathematics",
+      "email": "s.johnson@school.edu",
+      "phone": "+1 (555) 123-4567",
+      "team_group": "academic",
+      "show_on_homepage": true,
+      "sort_order": 1,
+      "is_published": true
+    },
+    {
+      "id": 2,
+      "name": "Sharada Adhikari, STEAM Educator",
+      "position": "Academic Director",
+      "image_url": "/images/Team8.png",
+      "qualifications": "M.Ed. in Educational Administration",
+      "subject": "Steam Educator",
+      "email": "j.smith@school.edu",
+      "phone": "+1 (555) 234-5678",
+      "team_group": "academic",
+      "show_on_homepage": true,
+      "sort_order": 2,
+      "is_published": true
+    },
+    {
+      "id": 3,
+      "name": "Sudip Shrestha",
+      "position": "ECA Coordinator/Futsal Coach (ANFA 1st Batch)",
+      "image_url": "/images/Team5.jpg",
+      "qualifications": "Former National Player, Former APF Coach 'A' Division, AFC 'C' Licence Coach",
+      "subject": "Physical Education",
+      "email": "s.shrestha@school.edu",
+      "phone": "+977 (123) 456-7890",
+      "team_group": "eca",
+      "show_on_homepage": false,
+      "sort_order": 3,
+      "is_published": true
+    },
+    {
+      "id": 4,
+      "name": "Dambar Bahadur Ale Magar",
+      "position": "Karate Instructor",
+      "image_url": "/images/Team2.jpg",
+      "qualifications": "Former Karate National Player, National Referee, Nepal",
+      "subject": "Karate",
+      "email": "d.magar@school.edu",
+      "phone": "+977 (123) 567-8901",
+      "team_group": "eca",
+      "show_on_homepage": false,
+      "sort_order": 4,
+      "is_published": true
+    },
+    {
+      "id": 5,
+      "name": "Yogina Shrestha",
+      "position": "Skater Instructor",
+      "image_url": "/images/Team1.jpg",
+      "qualifications": "National Player Roll Ball, Indo-Nepal Skate Race Gold Medalist (2015)",
+      "subject": "Skating",
+      "email": "y.shrestha@school.edu",
+      "phone": "+977 (123) 678-9012",
+      "team_group": "eca",
+      "show_on_homepage": false,
+      "sort_order": 5,
+      "is_published": true
+    },
+    {
+      "id": 6,
+      "name": "Bishnu Shrestha",
+      "position": "Arts & Crafts Instructor (Visual and Sculpting)",
+      "image_url": "/images/Team7.jpg",
+      "qualifications": "Lecturer of Arts (Tribhuvan University)",
+      "subject": "Arts & Crafts",
+      "email": "b.shrestha@school.edu",
+      "phone": "+977 (123) 789-0123",
+      "team_group": "eca",
+      "show_on_homepage": false,
+      "sort_order": 6,
+      "is_published": true
+    },
+    {
+      "id": 7,
+      "name": "Raj Shrestha",
+      "position": "Dance Instructor",
+      "image_url": "/images/Team6.jpg",
+      "qualifications": "Director, Let's Dance",
+      "subject": "Dance",
+      "email": "r.shrestha@school.edu",
+      "phone": "+977 (123) 890-1234",
+      "team_group": "eca",
+      "show_on_homepage": false,
+      "sort_order": 7,
+      "is_published": true
+    },
+    {
+      "id": 8,
+      "name": "Subash Chandra Joshi",
+      "position": "Senior Music Instructor (Eastern Music)",
+      "image_url": "/images/Team3.jpg",
+      "qualifications": "Music Composer/Singer, Image Fm Music Award Winner",
+      "subject": "Eastern Music",
+      "email": "s.joshi@school.edu",
+      "phone": "+977 (123) 901-2345",
+      "team_group": "eca",
+      "show_on_homepage": false,
+      "sort_order": 8,
+      "is_published": true
+    }
+  ],
+  "clubs": [
+    {
+      "id": 1,
+      "name": "Robotics Club",
+      "slug": "robotics-club",
+      "description": "Learn coding, circuits, and AI-driven technology. Work on real-world robotics projects and automation. Collaborate on hardware cum software innovations for competitions.",
+      "icon_name": "code",
+      "members": 40,
+      "meeting_day": "Thursday",
+      "activities": [
+        "Coding Workshops",
+        "Robotics Projects",
+        "Competitions"
+      ],
+      "advisor": "Ms. Sarah Chen",
+      "image_url": "/images/foto18.jpg",
+      "sort_order": 1,
+      "is_published": true
+    },
+    {
+      "id": 2,
+      "name": "Digital Content Creation Club",
+      "slug": "digital-content-creation-club",
+      "description": "Learn video editing, animation, and graphic design. Create content for social media, school projects, and events. Work on branding and multimedia storytelling.",
+      "icon_name": "camera",
+      "members": 30,
+      "meeting_day": "Friday",
+      "activities": [
+        "Video Editing",
+        "Animation",
+        "Graphic Design"
+      ],
+      "advisor": "Mr. James Wilson",
+      "image_url": "/images/foto21.jpg",
+      "sort_order": 2,
+      "is_published": true
+    },
+    {
+      "id": 3,
+      "name": "Studio Club",
+      "slug": "studio-club",
+      "description": "Record and edit podcasts on student life, tech, and creativity. Share your voice through poetry readings and storytelling sessions. Collaborate with the Digital Content Club for high-quality productions.",
+      "icon_name": "mic",
+      "members": 25,
+      "meeting_day": "Monday",
+      "activities": [
+        "Podcasting",
+        "Poetry Readings",
+        "Storytelling"
+      ],
+      "advisor": "Mrs. Lisa Chen",
+      "image_url": "/images/foto15.jpg",
+      "sort_order": 3,
+      "is_published": true
+    },
+    {
+      "id": 4,
+      "name": "Arts Club",
+      "slug": "arts-club",
+      "description": "Explore sketching, painting, and creative writing. Work on mural projects and school exhibitions.",
+      "icon_name": "palette",
+      "members": 32,
+      "meeting_day": "Wednesday",
+      "activities": [
+        "Sketching",
+        "Painting",
+        "Creative Writing"
+      ],
+      "advisor": "Mr. Robert Taylor",
+      "image_url": "/images/foto5.jpg",
+      "sort_order": 4,
+      "is_published": true
+    },
+    {
+      "id": 5,
+      "name": "Music & Dance Club",
+      "slug": "music-and-dance-club",
+      "description": "Learn instrumental and vocal performance at school competitions. Explore different genres from classical to modern.",
+      "icon_name": "music",
+      "members": 40,
+      "meeting_day": "Monday",
+      "activities": [
+        "Instrumental Practice",
+        "Vocal Performance",
+        "Competitions"
+      ],
+      "advisor": "Mrs. Lisa Chen",
+      "image_url": "/images/foto7.jpg",
+      "sort_order": 5,
+      "is_published": true
+    }
+  ],
+  "jobOpenings": [],
+  "nextIds": {
+    "hero-slides": 6,
+    "notices": 4,
+    "news": 4,
+    "events": 5,
+    "gallery-images": 19,
+    "contact-submissions": 1,
+    "videos": 4,
+    "team-members": 9,
+    "clubs": 6,
+    "job-openings": 1
+  }
+}

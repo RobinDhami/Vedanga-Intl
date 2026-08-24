@@ -3,7 +3,7 @@ import type { Metadata } from 'next';
 import { MainNav } from "@/components/main-nav";
 import { School } from 'lucide-react';
 import Link from 'next/link';
-import NoticeOverlay from './components/NoticeOverlay';
+// import NoticeOverlay from './components/NoticeOverlay';
 import { Toaster } from 'sonner';
 import Footer from '@/components/Footer';
 import BackToTopButton from '@/components/BackToTopButton';
@@ -23,7 +23,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <body>
-        <NoticeOverlay />
+        {/* <NoticeOverlay /> */}
         <nav className="sticky top-0 z-50 bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/60 border-b border-gray-200">
           <div className="max-w-7xl mx-auto px-4 h-20 flex items-center">
             <MainNav />

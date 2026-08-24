@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { BookOpen, Clock, Image as ImageIcon } from "lucide-react";
+import { BookOpen, Image as ImageIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { ProgramDetail } from "../programData";
@@ -125,34 +125,6 @@ export default function ProgramContent({ program }: ProgramContentProps) {
                     </div>
                 </motion.section>
 
-                {/* Daily Schedule */}
-                <motion.section
-                    className="mb-20"
-                    initial={{ opacity: 0 }}
-                    whileInView={{ opacity: 1 }}
-                    viewport={{ once: true, margin: "-100px" }}
-                >
-                    <h2 className="text-2xl md:text-3xl  font-bold text-gray-900 mb-8 flex items-center gap-3">
-                        <Clock size={20} className="text-[#D41D33]" />
-                        <span>Daily Schedule</span>
-                    </h2>
-                    <div className="bg-white rounded-xl shadow-md overflow-hidden">
-                        <div className="divide-y divide-gray-200">
-                            {program.dailySchedule.map((item, index) => (
-                                <div key={index} className="p-6 flex items-start gap-6">
-                                    <div className="flex-shrink-0 w-fit">
-                                        <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-[#D41D33]/10 text-[#D41D33]">
-                                            {item.time}
-                                        </span>
-                                    </div>
-                                    <div>
-                                        <h3 className="text-lg font-medium text-gray-800">{item.activity}</h3>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                </motion.section>
                 {/* Features Section */}
                 <motion.section
                     className="mb-20"

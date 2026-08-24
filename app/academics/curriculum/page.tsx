@@ -53,15 +53,16 @@ const subjects: Subjects = {
       description: "Digital literacy, programming basics, and practical applications of technology."
     },
     {
-      name: "Nepali",
-      icon: <Languages />,
-      description: "Cultural heritage and language mastery through literature and communication skills."
-    },
-    {
       name: "Moral and Civic Education",
       icon: <Smile />,
       description: "Building ethical values, civic responsibility, and social awareness."
-    },],
+    },
+    {
+      name: "Environmental and Sustainability Education",
+      icon: <Leaf />,
+      description: "Building awareness and responsibility for the environment and sustainable living."
+    },
+  ],
   "Languages": [
     {
       name: "Nepali",
@@ -87,7 +88,14 @@ const subjects: Subjects = {
   "Technology": [
     { name: "Coding", icon: <Code />, description: "Modern programming languages and concepts" },
     { name: "Robotics", icon: <Rocket />, description: "Engineering and creativity combined" },
-    { name: "AI Basics", icon: <BrainCircuit />, description: "Introduction to future technologies" }
+    { name: "AI Basics", icon: <BrainCircuit />, description: "Introduction to future technologies" },
+    { name: "STEM", icon: <FlaskConical />, description: "Integrated science, technology, engineering, and mathematics learning" }
+  ],
+  "Life & Career": [
+    { name: "Entrepreneurship and Financial Literacy", icon: <IndianRupee />, description: "Building initiative, financial awareness, and practical decision-making" },
+    { name: "Life Skills", icon: <Smile />, description: "Developing communication, resilience, problem-solving, and everyday independence" },
+    { name: "Community Service", icon: <HandHeart />, description: "Encouraging meaningful service and contribution to the wider community" },
+    { name: "Career Education", icon: <Rocket />, description: "Helping students explore interests, pathways, and future opportunities" }
   ],
   "Sports": [
     { name: "Basketball", icon: <HopOff />, description: "Agility, teamwork and strategy on court" },
@@ -100,6 +108,7 @@ const subjects: Subjects = {
   ],
   "ECA": [
     { name: "Dance", icon: <Turtle />, description: "Creative expression and movement" },
+    { name: "Drama", icon: <Palette />, description: "Creative expression through performance, storytelling, and collaboration" },
     { name: "Skating", icon: <Footprints />, description: "Balance, agility, and fun" },
     { name: "Karate classes", icon: <Shield />, description: "Discipline and self-defense" },
     { name: "Woodwork", icon: <FolderOpenDot />, description: "Hands-on creativity with tools" },
@@ -118,24 +127,44 @@ const subjects: Subjects = {
 
 const programPillars: Pillar[] = [
   {
-    title: "Future Skills",
+    title: "Academic Excellence",
+    icon: <BookOpen className="w-5 h-5" />,
+    description: "Rigorous learning aligned with national standards."
+  },
+  {
+    title: "Character and Citizenship",
+    icon: <HandHeart className="w-5 h-5" />,
+    description: "Integrity, empathy, leadership, and service."
+  },
+  {
+    title: "Innovation and Creativity",
     icon: <Rocket className="w-5 h-5" />,
-    description: "Preparing students for evolving careers"
+    description: "Design thinking, arts, and entrepreneurship."
   },
   {
-    title: "Global Outlook",
+    title: "Technology and Digital Fluency",
+    icon: <Computer className="w-5 h-5" />,
+    description: "Responsible and effective use of digital tools."
+  },
+  {
+    title: "Health and Well-being",
+    icon: <Smile className="w-5 h-5" />,
+    description: "Physical fitness, emotional resilience, and mental wellness."
+  },
+  {
+    title: "Global Competence",
     icon: <Globe className="w-5 h-5" />,
-    description: "International perspective in all subjects"
+    description: "Cultural understanding, communication, and sustainability."
   },
   {
-    title: "Sustainability",
-    icon: <Leaf className="w-5 h-5" />,
-    description: "Eco-conscious learning integrated throughout"
+    title: "Community Partnership",
+    icon: <Handshake className="w-5 h-5" />,
+    description: "Strong collaboration with families and local organizations."
   },
   {
-    title: "Mindful Growth",
+    title: "Continuous Improvement",
     icon: <BrainCircuit className="w-5 h-5" />,
-    description: "Social-emotional development alongside academics"
+    description: "Evidence-based planning and reflective practice."
   }
 ];
 
@@ -202,7 +231,7 @@ export default function Curriculum() {
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-gray-900 mb-2">Our <span className="text-[#D41D33]">Educational </span>Pillars</h2>
             <p className="text-gray-600 max-w-xl mx-auto">
-              Foundational principles guiding our curriculum design
+              The framework rests on eight interconnected pillars.
             </p>
           </div>
 

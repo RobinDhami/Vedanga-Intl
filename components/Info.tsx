@@ -9,7 +9,7 @@ const Info = () => {
                     <MapPin className="h-8 w-8 md:h-10 md:w-10 text-[#D41D33]" />
                     <div>
                         <h3 className="font-semibold text-gray-600 mb-1">Location</h3>
-                        <p className="text-gray-900 font-semibold text-xl ">Rabi Bhawan</p>
+                        <p className="text-gray-900 font-semibold text-xl ">Rabibhawan</p>
                     </div>
                 </div> 
 

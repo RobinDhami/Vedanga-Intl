@@ -1,44 +1,10 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { GraduationCap, Book, Globe, Calculator, Microscope, Palette, ChevronRight } from "lucide-react";
+import { ChevronRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-
-const programs = [
-  {
-    title: "Primary Education",
-    grades: "Grades 1-5",
-    description: "Our foundational program emphasizes holistic development through engaging, age-appropriate learning experiences that spark curiosity and build essential skills.",
-    icon: <Book className="h-8 w-8" />,
-    features: ["English Medium Instruction", "STEAM Integration", "Physical Education", "Arts & Music"],
-    image: "/images/foto4.jpg",
-    color: "bg-blue-100 text-blue-600"
-    ,slug:'primary-education'
-  },
-  {
-    title: "Middle School",
-    grades: "Grades 6-8",
-    description: "Transitional years that deepen subject knowledge while developing critical thinking and independent learning skills through project-based approaches.",
-    icon: <Calculator className="h-8 w-8" />,
-    features: ["Advanced Mathematics", "Science Labs", "Language Arts", "Social Studies"],
-    image: "/images/foto13.jpg",
-    color: "bg-purple-100 text-purple-600"
-    , slug: 'middle-school'
-  },
-  {
-    title: "Secondary Education",
-    grades: "Grades 9-10",
-    description: "Comprehensive preparation for national examinations with specialized tracks and intensive support to ensure academic success and career readiness.",
-    icon: <GraduationCap className="h-8 w-8" />,
-    features: ["SEE Preparation", "Career Counseling", "Advanced Sciences", "Computer Studies"],
-    image: "/images/foto12.jpg",
-    color: "bg-green-100 text-green-600"
-    ,slug:'secondary-education'
-
-  },
-  
-];
+import { PROGRAM_LIST } from "./programData";
 
 export default function Programs() {
   return (
@@ -68,7 +34,7 @@ export default function Programs() {
 
         {/* Programs Grid */}
         <div className="grid md:grid-cols-2 gap-8">
-          {programs.map((program, index) => (
+          {PROGRAM_LIST.map((program, index) => (
             <motion.div
               key={program.title}
               className="group relative bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100 hover:shadow-2xl transition-all duration-300"
@@ -90,7 +56,6 @@ export default function Programs() {
                 <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
                 <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
                   <h3 className="text-2xl font-bold">{program.title}</h3>
-                  <p className="text-white/90">{program.grades}</p>
                 </div>
               </div>
 
@@ -99,11 +64,6 @@ export default function Programs() {
                 <div className="flex items-center gap-4 mb-4">
                   <div className={`p-3 ${program.color} rounded-lg`}>
                     {program.icon}
-                  </div>
-                  <div>
-                    <span className={`text-xs font-medium px-2 py-1 rounded-full ${program.color}`}>
-                      {program.grades}
-                    </span>
                   </div>
                 </div>
 

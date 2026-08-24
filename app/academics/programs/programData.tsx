@@ -5,6 +5,7 @@ import {
   Calculator,
   GraduationCap,
   Globe,
+  Palette,
 } from "lucide-react";
 
 export interface ProgramDetail {
@@ -46,6 +47,44 @@ export interface ProgramListItem {
 }
 
 export const PROGRAM_DATA: Record<string, ProgramDetail> = {
+  "early-years": {
+    title: "Early Years Program",
+    grades: "Ages 3-6",
+    overview:
+      "Focus on play-based, inquiry-driven learning that develops language, motor skills, social-emotional growth, and curiosity.",
+    heroImage: "/images/foto1.jpg",
+    features: [
+      {
+        title: "Play-Based Learning",
+        description: "Meaningful play that builds confidence, creativity, and early skills.",
+        icon: <Palette className="h-6 w-6" />,
+      },
+      {
+        title: "Growing Independence",
+        description: "Daily routines that support communication, self-care, and social growth.",
+        icon: <Users className="h-6 w-6" />,
+      },
+      {
+        title: "Curious Minds",
+        description: "Hands-on exploration that encourages children to ask questions and discover.",
+        icon: <Globe className="h-6 w-6" />,
+      },
+    ],
+    curriculum: {
+      coreSubjects: [
+        "Language & Literacy",
+        "Early Numeracy",
+        "Creative Arts",
+        "Movement & Motor Skills",
+        "Social-Emotional Learning",
+      ],
+      specialSubjects: ["Music & Movement", "Storytelling", "Outdoor Play"],
+      approach:
+        "Our Early Years program creates a safe, joyful environment where children learn through play, inquiry, movement, stories, and positive relationships.",
+    },
+    dailySchedule: [],
+    gallery: ["/images/foto1.jpg", "/images/foto6.jpg", "/images/foto8.jpg"],
+  },
   "primary-education": {
     title: "Primary Education Program",
     grades: "Grades 1-5",
@@ -243,48 +282,59 @@ export const PROGRAM_DATA: Record<string, ProgramDetail> = {
 
 export const PROGRAM_LIST: ProgramListItem[] = [
   {
-    title: "Primary Education",
+    title: "Early Years (Ages 3-6)",
+    grades: "Ages 3-6",
+    description:
+      "Focus on play-based, inquiry-driven learning that develops language, motor skills, social-emotional growth, and curiosity.",
+    icon: <Palette className="h-8 w-8" />,
+    features: ["Play-Based Learning", "Language Development", "Creative Exploration", "Social-Emotional Growth"],
+    image: "/images/foto1.jpg",
+    color: "bg-rose-100 text-rose-600",
+    slug: "early-years",
+  },
+  {
+    title: "Primary School (Grades 1-5)",
     grades: "Grades 1-5",
     description:
-      "Our foundational program emphasizes holistic development through engaging, age-appropriate learning experiences that spark curiosity and build essential skills.",
+      "Emphasize foundational literacy and numeracy, creativity, project work, and integrated thematic learning.",
     icon: <Book className="h-8 w-8" />,
     features: [
-      "English Medium Instruction",
-      "STEAM Integration",
-      "Physical Education",
-      "Arts & Music",
+      "Foundational Literacy",
+      "Numeracy Skills",
+      "Project-Based Learning",
+      "Creative Arts",
     ],
     image: "/images/foto4.jpg",
     color: "bg-blue-100 text-blue-600",
     slug: "primary-education",
   },
   {
-    title: "Middle School",
+    title: "Middle School (Grades 6-8)",
     grades: "Grades 6-8",
     description:
-      "Transitional years that deepen subject knowledge while developing critical thinking and independent learning skills through project-based approaches.",
+      "Develop analytical thinking, collaboration, research skills, and increasing student independence through interdisciplinary projects.",
     icon: <Calculator className="h-8 w-8" />,
     features: [
-      "Advanced Mathematics",
-      "Science Labs",
-      "Language Arts",
-      "Social Studies",
+      "Analytical Thinking",
+      "Research Skills",
+      "Collaborative Learning",
+      "Interdisciplinary Projects",
     ],
     image: "/images/foto13.jpg",
     color: "bg-purple-100 text-purple-600",
     slug: "middle-school",
   },
   {
-    title: "Secondary Education",
-    grades: "Grades 9-10",
+    title: "Secondary School (Grades 9-12)",
+    grades: "Grades 9-12",
     description:
-      "Comprehensive preparation for national examinations with specialized tracks and intensive support to ensure academic success and career readiness.",
+      "Prepare students for higher education and careers with advanced academics, leadership opportunities, internships, entrepreneurship, and career guidance.",
     icon: <GraduationCap className="h-8 w-8" />,
     features: [
-      "SEE Preparation",
-      "Career Counseling",
-      "Advanced Sciences",
-      "Computer Studies",
+      "Advanced Academics",
+      "Leadership Opportunities",
+      "Career Guidance",
+      "Entrepreneurship",
     ],
     image: "/images/foto12.jpg",
     color: "bg-green-100 text-green-600",

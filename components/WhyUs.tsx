@@ -155,6 +155,117 @@ const WhyUs = () => {
                 </div>
             </section>
 
+            {/* Teaching and Technology Section */}
+            <section className="py-16 bg-white">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <motion.div
+                        variants={sectionVariants}
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={{ once: true, margin: "-100px" }}
+                        className="text-center mb-12"
+                    >
+                        <span className="inline-block px-4 py-1 text-sm font-semibold text-[#C40618] bg-[#C40618]/10 rounded-full mb-4">
+                            Learning for Tomorrow
+                        </span>
+                        <h3 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
+                            How We Help Students <span className="text-[#C40618]">Thrive</span>
+                        </h3>
+                        <p className="text-lg text-gray-600 max-w-3xl mx-auto">
+                            Our teaching and technology choices are designed to give students confidence, independence, and practical skills for a changing world.
+                        </p>
+                    </motion.div>
+
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                        <motion.article
+                            variants={featureCardVariants}
+                            initial="hidden"
+                            whileInView="visible"
+                            viewport={{ once: true }}
+                            className="rounded-2xl border border-gray-100 bg-gradient-to-br from-[#C40618]/5 to-white p-8 shadow-lg"
+                        >
+                            <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-full bg-[#C40618]/10 text-[#C40618]">
+                                <BookOpen className="h-6 w-6" />
+                            </div>
+                            <h4 className="text-2xl font-bold text-gray-900 mb-4">Pedagogical Model</h4>
+                            <p className="text-gray-600 mb-5">
+                                Students learn by questioning, making, testing, and reflecting. Teachers guide each child with the right level of challenge and support, helping learning become active, collaborative, and meaningful.
+                            </p>
+                            <ul className="space-y-3 text-gray-700">
+                                {[
+                                    "Inquiry, projects, and real-world problem-solving build confident critical thinkers.",
+                                    "Hands-on and cooperative experiences turn classroom learning into lasting understanding.",
+                                    "Flexible, differentiated teaching helps every learner progress with independence."
+                                ].map((point) => (
+                                    <li key={point} className="flex gap-3">
+                                        <Check className="mt-1 h-4 w-4 shrink-0 text-[#C40618]" />
+                                        <span>{point}</span>
+                                    </li>
+                                ))}
+                            </ul>
+                        </motion.article>
+
+                        <motion.article
+                            variants={featureCardVariants}
+                            initial="hidden"
+                            whileInView="visible"
+                            viewport={{ once: true }}
+                            transition={{ delay: 0.1 }}
+                            className="rounded-2xl border border-gray-100 bg-gradient-to-br from-[#FD9B21]/10 to-white p-8 shadow-lg"
+                        >
+                            <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-full bg-[#FD9B21]/20 text-[#C40618]">
+                                <Laptop className="h-6 w-6" />
+                            </div>
+                            <h4 className="text-2xl font-bold text-gray-900 mb-4">Technology Framework</h4>
+                            <p className="text-gray-600 mb-5">
+                                Technology strengthens excellent teaching instead of replacing it. Students use well-supported digital tools to create, collaborate, document their progress, and develop responsible digital habits.
+                            </p>
+                            <ul className="space-y-3 text-gray-700">
+                                {[
+                                    "Smart classrooms and learning platforms keep learning organized, engaging, and connected.",
+                                    "Coding, robotics, digital portfolios, and age-appropriate AI build future-ready capability.",
+                                    "Safe online access and trained teachers ensure technology is used thoughtfully and ethically."
+                                ].map((point) => (
+                                    <li key={point} className="flex gap-3">
+                                        <Check className="mt-1 h-4 w-4 shrink-0 text-[#C40618]" />
+                                        <span>{point}</span>
+                                    </li>
+                                ))}
+                            </ul>
+                        </motion.article>
+
+                        <motion.article
+                            variants={featureCardVariants}
+                            initial="hidden"
+                            whileInView="visible"
+                            viewport={{ once: true }}
+                            transition={{ delay: 0.2 }}
+                            className="rounded-2xl border border-gray-100 bg-gradient-to-br from-[#C40618]/5 to-white p-8 shadow-lg"
+                        >
+                            <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-full bg-[#C40618]/10 text-[#C40618]">
+                                <GraduationCap className="h-6 w-6" />
+                            </div>
+                            <h4 className="text-2xl font-bold text-gray-900 mb-4">Quality Assurance</h4>
+                            <p className="text-gray-600 mb-5">
+                                We continuously review how students learn and how our school can improve, so families can trust that quality remains a daily commitment rather than a one-time promise.
+                            </p>
+                            <ul className="space-y-3 text-gray-700">
+                                {[
+                                    "Clear annual planning and classroom observation keep teaching focused and responsive.",
+                                    "Student progress, teacher development, and family feedback guide meaningful improvements.",
+                                    "Benchmarking and accreditation readiness help us maintain high standards over time."
+                                ].map((point) => (
+                                    <li key={point} className="flex gap-3">
+                                        <Check className="mt-1 h-4 w-4 shrink-0 text-[#C40618]" />
+                                        <span>{point}</span>
+                                    </li>
+                                ))}
+                            </ul>
+                        </motion.article>
+                    </div>
+                </div>
+            </section>
+
             {/* Curriculum Sections */}
             <section className="py-16 bg-white">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

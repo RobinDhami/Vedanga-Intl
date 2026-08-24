@@ -71,12 +71,6 @@ const academicsItems = [
     description: "Specialized academic offerings",
     icon: <GraduationCap className="h-5 w-5 text-[#D41D33]" />
   },
-  {
-    title: "Calendar",
-    href: "/academics/calendar",
-    description: "Academic year schedule and events",
-    icon: <Calendar className="h-5 w-5 text-[#D41D33]" />
-  },
 ];
 
 const schoolLifeItems = [

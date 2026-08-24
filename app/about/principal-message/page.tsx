@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Mail, Phone, Award, BookOpen, Quote } from "lucide-react";
+import { Mail, Phone, Quote } from "lucide-react";
 import Image from "next/image";
 
 export default function PrincipalMessage() {
@@ -58,31 +58,11 @@ export default function PrincipalMessage() {
               <div className="p-4 sm:p-6 space-y-4 sm:space-y-5">
                 <div className="flex items-start gap-3 sm:gap-4">
                   <div className="p-2 bg-[#FF981F]/10 rounded-lg">
-                    <Award className="h-5 w-5 sm:h-6 sm:w-6 text-[#FF981F]" />
-                  </div>
-                  <div>
-                    <h3 className="text-xs sm:text-sm font-medium text-gray-500">Qualifications</h3>
-                    <p className="text-gray-700 text-sm font-semibold sm:text-base">Masters in Humanities</p>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-3 sm:gap-4">
-                  <div className="p-2 bg-[#FF981F]/10 rounded-lg">
-                    <BookOpen className="h-5 w-5 sm:h-6 sm:w-6 text-[#FF981F]" />
-                  </div>
-                  <div>
-                    <h3 className="text-xs sm:text-sm font-medium text-gray-500">Experience</h3>
-                    <p className="text-gray-700 text-sm font-semibold sm:text-base">30+ years in education</p>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-3 sm:gap-4">
-                  <div className="p-2 bg-[#FF981F]/10 rounded-lg">
                     <Mail className="h-5 w-5 sm:h-6 sm:w-6 text-[#FF981F]" />
                   </div>
                   <div>
                     <h3 className="text-xs sm:text-sm font-medium text-gray-500">Email</h3>
-                    <p className="text-gray-700 text-sm sm:text-base font-semibold break-all">sapkotabhaweshvedanga@gmail.com</p>
+                    <p className="text-gray-700 text-sm sm:text-base font-semibold break-all">principal@vedanga.edu.np</p>
                   </div>
                 </div>
 
@@ -92,7 +72,7 @@ export default function PrincipalMessage() {
                   </div>
                   <div>
                     <h3 className="text-xs sm:text-sm font-medium text-gray-500">Phone</h3>
-                    <p className="text-gray-700 text-sm font-semibold sm:text-base">+977 98</p>
+                    <p className="text-gray-700 text-sm font-semibold sm:text-base">+9779812345678</p>
                   </div>
                 </div>
               </div>

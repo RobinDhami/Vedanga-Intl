@@ -1,33 +1,57 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Target, Star, Compass, Award, Heart, ArrowRight, GraduationCap, FlaskConical, BookOpen, Users } from "lucide-react";
+import { Target, Star, Compass, Award, Heart, GraduationCap, FlaskConical, BookOpen, Users, HandHeart, Leaf } from "lucide-react";
 import Image from "next/image";
 
 export default function VisionMission() {
   const values = [
     {
-      title: "Excellence",
-      description: "Striving for the highest standards in education and character development",
-      icon: <Star className="h-6 w-6" />,
+      title: "Purpose",
+      description: "Learning with clear intention, direction, and meaning.",
+      icon: <Target className="h-6 w-6" />,
       color: "bg-[#D41D33]/10 text-[#D41D33]"
     },
     {
-      title: "Innovation",
-      description: "Embracing new ideas and methods in teaching and learning",
-      icon: <Compass className="h-6 w-6" />,
+      title: "Respect",
+      description: "Honouring every person, perspective, culture, and community.",
+      icon: <Heart className="h-6 w-6" />,
       color: "bg-[#FF981F]/10 text-[#FF981F]"
     },
     {
-      title: "Leadership",
-      description: "Developing future leaders with strong moral values",
+      title: "Ownership",
+      description: "Taking initiative and accountability for our choices and learning.",
       icon: <Award className="h-6 w-6" />,
       color: "bg-[#D41D33]/10 text-[#D41D33]"
     },
     {
-      title: "Community",
-      description: "Fostering a supportive and inclusive learning environment",
-      icon: <Heart className="h-6 w-6" />,
+      title: "Growth Mindset",
+      description: "Embracing challenges as opportunities to learn and improve.",
+      icon: <Compass className="h-6 w-6" />,
+      color: "bg-[#FF981F]/10 text-[#FF981F]"
+    },
+    {
+      title: "Responsibility",
+      description: "Making thoughtful choices and contributing positively every day.",
+      icon: <Users className="h-6 w-6" />,
+      color: "bg-[#D41D33]/10 text-[#D41D33]"
+    },
+    {
+      title: "Excellence",
+      description: "Pursuing high standards in learning, character, and service.",
+      icon: <Star className="h-6 w-6" />,
+      color: "bg-[#FF981F]/10 text-[#FF981F]"
+    },
+    {
+      title: "Service",
+      description: "Using our time and strengths to care for others.",
+      icon: <HandHeart className="h-6 w-6" />,
+      color: "bg-[#D41D33]/10 text-[#D41D33]"
+    },
+    {
+      title: "Sustainability",
+      description: "Caring for our environment and resources for the future.",
+      icon: <Leaf className="h-6 w-6" />,
       color: "bg-[#FF981F]/10 text-[#FF981F]"
     }
   ];
@@ -59,7 +83,7 @@ export default function VisionMission() {
               Educating the <span className="text-[#FF981F]">Leaders</span> of  <span className="text-[#FF981F]">Tomorrow</span>
             </h1>
             <p className="text-white/90 text-lg max-w-3xl mx-auto">
-              Our vision and mission prepare students for careers that will shape the future of healthcare and technology
+              Our vision and mission shape confident, compassionate, and future-ready learners
             </p>
           </div>
         </motion.div>
@@ -72,7 +96,7 @@ export default function VisionMission() {
 
           {/* Vision Card */}
           <motion.div
-            className="relative bg-white rounded-2xl p-8 shadow-xl border border-gray-100 overflow-hidden"
+            className="relative bg-white rounded-2xl p-8 shadow-xl border border-gray-100 overflow-hidden min-h-[320px]"
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6 }}
@@ -89,8 +113,7 @@ export default function VisionMission() {
               </div>
             </div>
             <p className="text-gray-600 leading-relaxed text-lg">
-              To cultivate the next generation of medical pioneers engineering innovators,
-              equipping them with both technical expertise and compassionate leadership to solve humanity&apos;s greatest challenges.
+              To become Nepal&apos;s leading progressive school that inspires every learner to think critically, act ethically, innovate confidently, and contribute meaningfully to society.
             </p>
             <div className="mt-6 flex gap-4">
               <div className="flex items-center gap-2 text-sm text-[#FF981F]">
@@ -106,7 +129,7 @@ export default function VisionMission() {
 
           {/* Mission Card */}
           <motion.div
-            className="relative bg-white rounded-2xl p-8 shadow-xl border border-gray-100 overflow-hidden"
+            className="relative bg-white rounded-2xl p-8 shadow-xl border border-gray-100 overflow-hidden min-h-[320px]"
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6 }}
@@ -123,8 +146,7 @@ export default function VisionMission() {
               </div>
             </div>
             <p className="text-gray-600 leading-relaxed text-lg">
-              Through cutting-edge STEM programs and hands-on professional training,
-              we prepare students for careers that will advance medical science, technological innovation and advancments.
+              We deliver child-centered, future-focused learning that builds academic excellence, character, creativity, leadership, environmental responsibility, and strong partnerships with families and the wider community.
             </p>
             <div className="mt-6 flex gap-4">
               <div className="flex items-center gap-2 text-sm text-[#FF981F]">
@@ -148,7 +170,7 @@ export default function VisionMission() {
         >
           <h2 className="text-3xl font-bold text-gray-900 mb-4">Our <span className="text-[#D41D33]">Core Values</span></h2>
           <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-            The fundamental principles that guide our STEM-focused education
+            The school's culture can be summarized through the acronym PROGRESS.
           </p>
         </motion.div>
 

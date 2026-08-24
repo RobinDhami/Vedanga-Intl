@@ -34,12 +34,12 @@ const Footer = () => {
                         </div>
                         <p className="text-gray-400">Nurturing Minds, Shaping Futures</p>
                         <div className="space-y-2">
-                            <p className="text-gray-400">Rabi Bhawan, Kathmandu</p>
+                            <p className="text-gray-400">Rabibhawan, Kathmandu</p>
 
                             <p className="text-gray-400"> <Link href="tel:01-5372578 ">Phone: 01-5372578 </Link></p>
 
 
-                            <p className="text-gray-400"> <Link href="mailto:vedanga79@gmail.com">Email: vedanga79@gmail.com </Link></p>
+                            <p className="text-gray-400"> <Link href="mailto:info@vedanga.edu.np">Email: info@vedanga.edu.np </Link></p>
                         </div>
                         <div className="flex space-x-4 mt-4">
                             {socialLinks.map((social, index) => (
@@ -64,7 +64,6 @@ const Footer = () => {
                         <h3 className="font-bold text-lg mb-4">Academics</h3>
                         <div className="space-y-2">
                             <Link href="/academics/curriculum" className="block text-gray-400 hover:text-white transition-colors">Curriculum</Link>
-                            <Link href="/academics/calendar" className="block text-gray-400 hover:text-white transition-colors">Academic Calendar</Link>
                             <Link href="/school-life/clubs" className="block text-gray-400 hover:text-white transition-colors">Student Clubs</Link>
                             <Link href="/careers" className="block text-gray-400 hover:text-white transition-colors">Career Opportunities</Link>
                         </div>
