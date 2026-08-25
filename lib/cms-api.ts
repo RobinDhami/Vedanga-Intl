@@ -37,6 +37,12 @@ function getApiBaseUrl() {
   return "http://localhost:3000/api";
 }
 
+function getApiUrl(path: string) {
+  const [pathname, query] = path.split("?");
+  const normalizedPath = pathname === "/" ? "" : pathname.replace(/\/+$/, "");
+  return `${getApiBaseUrl()}${normalizedPath}${query ? `?${query}` : ""}`;
+}
+
 const REQUEST_TIMEOUT_MS = 8000;
 
 function createTimeoutSignal(timeoutMs = REQUEST_TIMEOUT_MS) {
@@ -58,7 +64,7 @@ function getCookie(name: string) {
 
 async function fetchJson<T>(path: string): Promise<T> {
   const { signal, clear } = createTimeoutSignal();
-  const response = await fetch(`${getApiBaseUrl()}${path}`, {
+  const response = await fetch(getApiUrl(path), {
     cache: "no-store",
     signal,
   }).finally(clear);
@@ -72,7 +78,7 @@ async function fetchJson<T>(path: string): Promise<T> {
 
 async function fetchAdminJson<T>(path: string): Promise<T> {
   const { signal, clear } = createTimeoutSignal();
-  const response = await fetch(`${getApiBaseUrl()}${path}`, {
+  const response = await fetch(getApiUrl(path), {
     credentials: "include",
     cache: "no-store",
     signal,
@@ -237,7 +243,7 @@ export async function getAdminPhaseTwoCollections(): Promise<PhaseTwoCollections
 
 export async function getSessionUser(): Promise<CmsSessionUser> {
   const { signal, clear } = createTimeoutSignal();
-  const response = await fetch(`${getApiBaseUrl()}/auth/me/`, {
+  const response = await fetch(getApiUrl("/auth/me/"), {
     credentials: "include",
     cache: "no-store",
     signal,
@@ -253,7 +259,7 @@ export async function getSessionUser(): Promise<CmsSessionUser> {
 }
 
 export async function ensureCsrfCookie() {
-  await fetch(`${getApiBaseUrl()}/auth/csrf/`, {
+  await fetch(getApiUrl("/auth/csrf/"), {
     credentials: "include",
     cache: "no-store",
   });
@@ -262,7 +268,7 @@ export async function ensureCsrfCookie() {
 export async function loginToCms(username: string, password: string) {
   await ensureCsrfCookie();
 
-  const response = await fetch(`${getApiBaseUrl()}/auth/login/`, {
+  const response = await fetch(getApiUrl("/auth/login/"), {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -283,7 +289,7 @@ export async function loginToCms(username: string, password: string) {
 export async function logoutFromCms() {
   await ensureCsrfCookie();
 
-  const response = await fetch(`${getApiBaseUrl()}/auth/logout/`, {
+  const response = await fetch(getApiUrl("/auth/logout/"), {
     method: "POST",
     headers: {
       "X-CSRFToken": getCookie("csrftoken"),
@@ -331,8 +337,7 @@ async function sendAdminMutation(
 ) {
   await ensureCsrfCookie();
 
-  const apiBaseUrl = getApiBaseUrl();
-  const response = await fetch(`${apiBaseUrl}${buildAdminItemPath(collection, identifier)}`, {
+  const response = await fetch(getApiUrl(buildAdminItemPath(collection, identifier)), {
     method,
     headers: {
       "Content-Type": "application/json",
@@ -437,7 +442,7 @@ export async function submitContactSubmission(payload: {
   phone: string;
   message?: string;
 }) {
-  const response = await fetch(`${getApiBaseUrl()}/contact-submissions/`, {
+  const response = await fetch(getApiUrl("/contact-submissions/"), {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
