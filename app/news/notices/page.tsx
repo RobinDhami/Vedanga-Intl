@@ -1,37 +1,19 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ChevronRight } from "lucide-react";
-import { CalendarDays, Megaphone, School, Clock } from "lucide-react";
+import { ChevronRight, Clock, Megaphone } from "lucide-react";
+import Link from "next/link";
+import { useEffect, useState } from "react";
 
+import { getNotices } from "@/lib/cms-api";
+import type { Notice } from "@/types/cms";
 
 export default function Notices() {
-  const notices = [
-    {
-      title: "Admission Open for Academic Year 2024-25",
-      date: "2024-02-15",
-      category: "Admissions",
-      content: "Applications are now being accepted for all grades. Limited seats available. Early applications receive priority consideration for scholarships and financial aid.",
-      icon: <School className="h-5 w-5" />,
-      color: "bg-blue-100 text-blue-600"
-    },
-    {
-      title: "Parent-Teacher Meeting Schedule",
-      date: "2024-02-10",
-      category: "Academic",
-      content: "The first term parent-teacher meeting will be held on March 1st, 2024 from 2:00 PM to 5:00 PM. Please schedule your appointment through the parent portal.",
-      icon: <Megaphone className="h-5 w-5" />,
-      color: "bg-purple-100 text-purple-600"
-    },
-    {
-      title: "Holiday Notice: Holi Festival",
-      date: "2024-02-05",
-      category: "Holiday",
-      content: "School will remain closed on March 25th, 2024 for Holi celebrations. Classes will resume on March 27th. Wishing all our students and staff a colorful and safe celebration!",
-      icon: <CalendarDays className="h-5 w-5" />,
-      color: "bg-green-100 text-green-600"
-    }
-  ];
+  const [notices, setNotices] = useState<Notice[]>([]);
+
+  useEffect(() => {
+    void getNotices().then(setNotices);
+  }, []);
 
   const getTimeAgo = (dateString: string) => {
     const date = new Date(dateString);
@@ -58,7 +40,7 @@ export default function Notices() {
         <div className="space-y-4">
           {notices.map((notice, index) => (
             <motion.div
-              key={index}
+              key={notice.id}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.1, delay: index * 0.05 }}
@@ -67,27 +49,29 @@ export default function Notices() {
             >
               <div className="p-6">
                 <div className="flex items-start gap-4">
-                  <div className={`p-3 ${notice.color} rounded-lg`}>
-                    {notice.icon}
+                  <div className="p-3 bg-red-100 text-[#D41D33] rounded-lg">
+                    <Megaphone className="h-5 w-5" />
                   </div>
                   <div className="flex-1">
                     <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-3">
-                      <span className={`px-3 py-1 ${notice.color} bg-opacity-20 rounded-full text-xs font-medium w-fit`}>
-                        {notice.category}
+                      <span className="px-3 py-1 bg-red-100 text-[#D41D33] rounded-full text-xs font-medium w-fit">
+                        Notice
                       </span>
                       <div className="flex items-center text-sm text-gray-500">
                         <Clock className="h-4 w-4 mr-1" />
-                        <span>{getTimeAgo(notice.date)}</span>
+                        <span>{getTimeAgo(notice.published_at || new Date().toISOString())}</span>
                       </div>
                     </div>
 
                     <h2 className="text-xl font-semibold text-gray-800 mb-2">{notice.title}</h2>
-                    <p className="text-gray-600 mb-4 line-clamp-2">{notice.content}</p>
+                    <p className="text-gray-600 mb-4 line-clamp-2">{notice.excerpt}</p>
 
-                    <button className="flex items-center text-[#D41D33] hover:text-[#d54359] font-medium transition-colors group mr-2">
-                      Read full notice
-                      <ChevronRight size={18} />
-                    </button>
+                    {notice.link && (
+                      <Link href={notice.link} className="flex items-center text-[#D41D33] hover:text-[#d54359] font-medium transition-colors group mr-2">
+                        Read full notice
+                        <ChevronRight size={18} />
+                      </Link>
+                    )}
                   </div>
                 </div>
               </div>

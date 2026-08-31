@@ -133,10 +133,7 @@ export async function getAdminPhaseOneCollections(): Promise<PhaseOneCollections
 export async function getPhaseThreeCollections(): Promise<PhaseThreeCollections> {
   try {
     const [videos, teamMembers] = await Promise.all([fetchJson<VideoItem[]>("/videos/"), getTeamMembers()]);
-    return {
-      videos: videos.length ? videos : phaseThreeSeed.videos,
-      teamMembers: teamMembers.length ? teamMembers : phaseThreeSeed.teamMembers,
-    };
+    return { videos, teamMembers };
   } catch {
     return phaseThreeSeed;
   }
@@ -156,7 +153,7 @@ export async function getPhaseFourCollections(): Promise<PhaseFourCollections> {
       fetchJson<JobOpeningItem[]>("/job-openings/"),
       fetchJson<ClubItem[]>("/clubs/"),
     ]);
-    return { jobOpenings, clubs: clubs.length ? clubs : phaseFourSeed.clubs };
+    return { jobOpenings, clubs };
   } catch {
     return phaseFourSeed;
   }
@@ -172,10 +169,7 @@ export async function getAdminPhaseFourCollections(): Promise<PhaseFourCollectio
 
 export async function getClubs() {
   try {
-    const clubs = await fetchJson<ClubItem[]>("/clubs/");
-    if (clubs.length) {
-      return clubs;
-    }
+    return await fetchJson<ClubItem[]>("/clubs/");
   } catch {
     // Fall back below.
   }
@@ -194,11 +188,7 @@ export async function getTeamMembers(options?: { group?: "academic" | "eca"; hom
     }
 
     const path = params.size ? `/team-members/?${params.toString()}` : "/team-members/";
-    const teamMembers = await fetchJson<TeamMemberItem[]>(path);
-
-    if (teamMembers.length) {
-      return teamMembers;
-    }
+    return await fetchJson<TeamMemberItem[]>(path);
   } catch {
     // Fall back to seed data below.
   }
@@ -221,7 +211,7 @@ export async function getPhaseTwoCollections(): Promise<PhaseTwoCollections> {
     const galleryImages = await fetchJson<GalleryImageItem[]>("/gallery-images/");
 
     return {
-      galleryImages: galleryImages.length ? galleryImages : phaseTwoSeed.galleryImages,
+      galleryImages,
       contactSubmissions: [],
     };
   } catch {
@@ -321,6 +311,80 @@ export type AdminCollection =
   | "clubs"
   | "job-openings";
 
+export type ImageUploadCollection = Exclude<
+  AdminCollection,
+  "contact-submissions" | "videos"
+>;
+
+export async function uploadCmsImage(file: File, collection: ImageUploadCollection) {
+  await ensureCsrfCookie();
+
+  const formData = new FormData();
+  formData.set("file", file);
+  formData.set("collection", collection);
+
+  const response = await fetch(getApiUrl("/admin/uploads/"), {
+    method: "POST",
+    headers: {
+      "X-CSRFToken": getCookie("csrftoken"),
+    },
+    credentials: "include",
+    body: formData,
+  });
+
+  const result = (await response.json().catch(() => null)) as
+    | { url?: string; detail?: string }
+    | null;
+
+  if (!response.ok || !result?.url) {
+    throw new Error(result?.detail || "Image upload failed.");
+  }
+
+  return result.url;
+}
+
+export async function getHeroSlides(): Promise<HeroSlide[]> {
+  try {
+    return await fetchJson<HeroSlide[]>("/hero-slides/");
+  } catch {
+    return phaseOneSeed.heroSlides;
+  }
+}
+
+export async function getNotices(): Promise<Notice[]> {
+  try {
+    return await fetchJson<Notice[]>("/notices/");
+  } catch {
+    return phaseOneSeed.notices;
+  }
+}
+
+export async function getNewsArticles(): Promise<NewsArticle[]> {
+  try {
+    return await fetchJson<NewsArticle[]>("/news/");
+  } catch {
+    return phaseOneSeed.news;
+  }
+}
+
+export async function getNewsArticle(slug: string): Promise<NewsArticle | null> {
+  const articles = await getNewsArticles();
+  return articles.find((article) => article.slug === slug) ?? null;
+}
+
+export async function getEvents(): Promise<EventItem[]> {
+  try {
+    return await fetchJson<EventItem[]>("/events/");
+  } catch {
+    return phaseOneSeed.events;
+  }
+}
+
+export async function getEvent(slug: string): Promise<EventItem | null> {
+  const events = await getEvents();
+  return events.find((event) => event.slug === slug) ?? null;
+}
+
 function buildAdminItemPath(collection: AdminCollection, identifier?: string | number) {
   if (identifier === undefined || identifier === null) {
     return `/admin/${collection}/`;
@@ -392,6 +456,10 @@ export function validatePhaseOnePayload(
     return { valid: false, message: "Title is required." };
   }
 
+  if (collection === "hero-slides" && !payload.image_url?.trim()) {
+    return { valid: false, message: "Hero image is required." };
+  }
+
   if (collection === "notices" && !payload.excerpt?.trim()) {
     return { valid: false, message: "Notice summary is required." };
   }
@@ -410,7 +478,7 @@ export function validatePhaseOnePayload(
       return { valid: false, message: "Content is required." };
     }
     if (!payload.image_url?.trim()) {
-      return { valid: false, message: "News image path is required." };
+      return { valid: false, message: "News image is required." };
     }
   }
 
@@ -428,7 +496,7 @@ export function validatePhaseOnePayload(
       return { valid: false, message: "Event date is required." };
     }
     if (!payload.image_url?.trim()) {
-      return { valid: false, message: "Event image path is required." };
+      return { valid: false, message: "Event image is required." };
     }
   }
 

@@ -1,11 +1,19 @@
 'use client'
-import { latestNews } from '@/data/dummy'
+import { getNewsArticles } from '@/lib/cms-api'
+import type { NewsArticle } from '@/types/cms'
 import { motion } from 'framer-motion'
 import { Calendar, ChevronRight, Tag } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useEffect, useState } from 'react'
 
 const LatestNews = () => {
+    const [newsItems, setNewsItems] = useState<NewsArticle[]>([])
+
+    useEffect(() => {
+        void getNewsArticles().then(setNewsItems)
+    }, [])
+
     return (
         <section className="py-12 sm:py-14 lg:py-16 bg-gradient-to-b bg-white">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -22,15 +30,15 @@ const LatestNews = () => {
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    {latestNews.slice(0, 3).map((newsItem, index) => (
+                    {newsItems.slice(0, 3).map((newsItem) => (
                         <div
-                            key={index}
+                            key={newsItem.id}
                             className="group relative bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-all duration-300 border border-gray-100"
                         >
                             <div className="relative h-48 overflow-hidden">
                                 <Image
                                     loading='lazy'
-                                    src={newsItem.image}
+                                    src={newsItem.image_url}
                                     alt={newsItem.title}
                                     fill
                                     className="object-cover transition-transform duration-500 group-hover:scale-105"
@@ -46,7 +54,7 @@ const LatestNews = () => {
                                 <div className="flex items-center gap-2 text-sm text-gray-500 mb-3">
                                     <Calendar className="h-4 w-4 text-[#D41D33]" />
                                     <span>
-                                        {new Date(newsItem.date).toLocaleDateString('en-US', {
+                                        {new Date(newsItem.published_at || Date.now()).toLocaleDateString('en-US', {
                                             year: 'numeric',
                                             month: 'long',
                                             day: 'numeric'

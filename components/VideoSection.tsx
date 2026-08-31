@@ -6,18 +6,8 @@ import Link from 'next/link';
 import { getPhaseThreeCollections } from '@/lib/cms-api';
 import type { VideoItem } from '@/types/cms';
 import { useEffect, useState } from 'react';
-import { legacyVideos } from '@/data/cms-legacy';
-
-export const videos = legacyVideos;
 const VideoSection = () => {
-    const [videoItems, setVideoItems] = useState<VideoItem[]>(videos.map((video) => ({
-        id: video.id,
-        title: video.title,
-        subtitle: video.subtitle,
-        url: video.url,
-        sort_order: video.id,
-        is_published: true,
-    })));
+    const [videoItems, setVideoItems] = useState<VideoItem[]>([]);
 
     useEffect(() => {
         const load = async () => {

@@ -5,24 +5,11 @@ import React from 'react';
 import { getTeamMembers } from '@/lib/cms-api';
 import type { TeamMemberItem } from '@/types/cms';
 import { useEffect, useState } from 'react';
-import { legacyTeamMembers } from '@/data/cms-legacy';
-
-export const teamMembers = legacyTeamMembers;
 
 const placeholderImage = '/images/NoImage.png'; // Path to your placeholder image
 
 const Team = () => {
-    const [memberItems, setMemberItems] = useState<TeamMemberItem[]>(
-        teamMembers.filter((member) => member.show_on_homepage).map((member, index) => ({
-            id: index + 1,
-            name: member.name,
-            position: member.position,
-            image_url: member.image,
-            show_on_homepage: member.show_on_homepage,
-            sort_order: index + 1,
-            is_published: true,
-        }))
-    );
+    const [memberItems, setMemberItems] = useState<TeamMemberItem[]>([]);
 
     useEffect(() => {
         const load = async () => {

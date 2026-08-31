@@ -3,9 +3,8 @@ generator client {
 }
 
 datasource db {
-  provider  = "postgresql"
+  provider = "mysql"
   url      = env("DATABASE_URL")
-  directUrl = env("DIRECT_URL")
 }
 
 model HeroSlide {
@@ -136,6 +135,7 @@ model JobOpening {
   experience     String
   education      String
   description    String   @db.Text
+  imageUrl       String   @default("")
   sortOrder      Int      @default(0)
   isPublished    Boolean  @default(false)
   createdAt      DateTime @default(now())

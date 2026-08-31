@@ -7,7 +7,7 @@ import { getClubs } from "@/lib/cms-api";
 import type { ClubItem } from "@/types/cms";
 
 export default function ClubDetailPageClient({ slug }: { slug: string }) {
-  const [club, setClub] = useState<ClubItem | null>(null);
+  const [club, setClub] = useState<ClubItem | null | undefined>(undefined);
 
   useEffect(() => {
     const load = async () => {
@@ -17,6 +17,10 @@ export default function ClubDetailPageClient({ slug }: { slug: string }) {
 
     void load();
   }, [slug]);
+
+  if (club === undefined) {
+    return <div className="min-h-screen flex items-center justify-center text-gray-600">Loading club…</div>;
+  }
 
   if (!club) {
     return <div className="min-h-screen flex items-center justify-center text-gray-600">Club not found</div>;

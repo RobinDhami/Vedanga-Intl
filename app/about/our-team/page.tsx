@@ -6,54 +6,15 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 
-import { legacyTeamMembers } from "@/data/cms-legacy";
 import { getTeamMembers } from "@/lib/cms-api";
 import type { TeamMemberItem } from "@/types/cms";
 
 const placeholderImage = "/images/NoImage.png";
 
-const seededAcademicTeam = legacyTeamMembers
-  .filter((member) => member.team_group === "academic")
-  .map(
-    (member, index): TeamMemberItem => ({
-      id: index + 1,
-      name: member.name,
-      position: member.position,
-      image_url: member.image,
-      qualifications: member.qualifications,
-      subject: member.subject,
-      email: member.email,
-      phone: member.phone,
-      team_group: member.team_group,
-      show_on_homepage: member.show_on_homepage,
-      sort_order: index + 1,
-      is_published: true,
-    })
-  );
-
-const seededEcaTeam = legacyTeamMembers
-  .filter((member) => member.team_group === "eca")
-  .map(
-    (member, index): TeamMemberItem => ({
-      id: index + 101,
-      name: member.name,
-      position: member.position,
-      image_url: member.image,
-      qualifications: member.qualifications,
-      subject: member.subject,
-      email: member.email,
-      phone: member.phone,
-      team_group: member.team_group,
-      show_on_homepage: member.show_on_homepage,
-      sort_order: index + 1,
-      is_published: true,
-    })
-  );
-
 export default function OurTeam() {
   const [activeTab, setActiveTab] = useState<"academic" | "eca">("academic");
-  const [academicTeam, setAcademicTeam] = useState<TeamMemberItem[]>(seededAcademicTeam);
-  const [ecaTeam, setEcaTeam] = useState<TeamMemberItem[]>(seededEcaTeam);
+  const [academicTeam, setAcademicTeam] = useState<TeamMemberItem[]>([]);
+  const [ecaTeam, setEcaTeam] = useState<TeamMemberItem[]>([]);
 
   useEffect(() => {
     const load = async () => {

@@ -1,12 +1,20 @@
 'use client'
 
-import { latestEvents } from '@/data/dummy'
+import { getEvents } from '@/lib/cms-api'
+import type { EventItem } from '@/types/cms'
 import Image from 'next/image'
 import { Calendar, ChevronRight, MapPin } from 'lucide-react'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
+import { useEffect, useState } from 'react'
 
 const LatestEvents = () => {
+    const [eventItems, setEventItems] = useState<EventItem[]>([])
+
+    useEffect(() => {
+        void getEvents().then(setEventItems)
+    }, [])
+
     return (
         <section className="py-12 sm:py-14 lg:py-16 bg-gradient-to-b from-gray-100 to-gray-50">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -29,9 +37,9 @@ const LatestEvents = () => {
                 </motion.div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-                    {latestEvents.slice(0,3).map((event, index) => (
+                    {eventItems.slice(0,3).map((event, index) => (
                         <motion.div
-                            key={index}
+                            key={event.id}
                             className="group relative bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 border border-gray-100 overflow-hidden"
                             initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
@@ -41,7 +49,7 @@ const LatestEvents = () => {
                         >
                             <div className="relative h-48 sm:h-52 md:h-60 overflow-hidden">
                                 <Image
-                                    src={event.image}
+                                    src={event.image_url}
                                     alt={event.title}
                                     fill
                                     className="object-cover transition-transform duration-500 group-hover:scale-110"

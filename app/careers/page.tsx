@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { Briefcase, Clock, GraduationCap, XCircle } from "lucide-react";
 import { useEffect, useState } from "react";
+import Image from "next/image";
 
 import { getPhaseFourCollections } from "@/lib/cms-api";
 import type { JobOpeningItem } from "@/types/cms";
@@ -53,6 +54,11 @@ export default function Careers() {
                   transition={{ duration: 0.1, delay: index * 0.025 }}
                   whileHover={{ y: -5 }}
                 >
+                  {job.image_url ? (
+                    <div className="relative h-48 w-full">
+                      <Image src={job.image_url} alt={job.title} fill className="object-cover" sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw" />
+                    </div>
+                  ) : null}
                   <div className="p-6 h-full flex flex-col">
                     <div className="flex items-start space-x-4 mb-4">
                       <div className="p-3 rounded-lg bg-red-100 text-red-600">

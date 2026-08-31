@@ -1,19 +1,30 @@
 "use client";
 
-import { Eventcategories, events } from "@/data/dummy";
+import { getEvents } from "@/lib/cms-api";
+import type { EventItem } from "@/types/cms";
 import { motion } from "framer-motion";
 import { Calendar, MapPin, ChevronRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 export default function Events() {
+  const [eventItems, setEventItems] = useState<EventItem[]>([]);
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [visibleEvents, setVisibleEvents] = useState(6);
 
+  useEffect(() => {
+    void getEvents().then(setEventItems);
+  }, []);
+
+  const categories = useMemo(
+    () => ["All", ...Array.from(new Set(eventItems.map((event) => event.category).filter(Boolean)))],
+    [eventItems]
+  );
+
   const filteredEvents = selectedCategory === "All"
-    ? events
-    : events.filter((event) => event.category === selectedCategory);
+    ? eventItems
+    : eventItems.filter((event) => event.category === selectedCategory);
 
   const loadMoreEvents = () => {
     setVisibleEvents((prev) => prev + 6);
@@ -54,7 +65,7 @@ export default function Events() {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5 }}
         >
-          {[...Eventcategories].map((category) => (
+          {categories.map((category) => (
             <button
               key={category}
               onClick={() => {
@@ -87,7 +98,7 @@ export default function Events() {
                   <div className="absolute inset-0 bg-gradient-to-t from-black/10 via-black/5 to-transparent group-hover:from-black/20 transition-colors z-10" />
                   <Image
                     loading="lazy"
-                    src={event.image}
+                    src={event.image_url}
                     alt={event.title}
                     fill
                     className="object-cover"

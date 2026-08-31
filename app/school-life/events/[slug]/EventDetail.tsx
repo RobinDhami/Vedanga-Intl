@@ -3,22 +3,9 @@
 import { Calendar, ChevronRight, MapPin } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import type { EventItem } from "@/types/cms";
 
-interface Event {
-  title: string;
-  date: string;
-  time: string;
-  venue: string;
-  image: string;
-  description: string;
-  schedule: {
-    day: string;
-    date: string;
-    events: string[];
-  }[];
-}
-
-export function EventDetail({ event }: { event: Event }) {
+export function EventDetail({ event }: { event: EventItem }) {
   const getFormattedDate = (dateString: string) => {
     const date = new Date(dateString);
     return date.toLocaleDateString("en-US", {
@@ -68,7 +55,7 @@ export function EventDetail({ event }: { event: Event }) {
           <div className="relative h-[50vh] max-h-[600px]">
             <Image
               loading="lazy"
-              src={event.image}
+              src={event.image_url}
               alt={event.title}
               fill
               className="object-cover"
@@ -83,7 +70,7 @@ export function EventDetail({ event }: { event: Event }) {
                 <div className="flex flex-wrap items-center gap-4 text-white">
                   <div className="flex items-center gap-2 text-sm">
                     <Calendar className="h-4 w-4" />
-                    <span>{getFormattedDate(event.date)} • {event.time}</span>
+                    <span>{getFormattedDate(event.date)}{event.time ? ` • ${event.time}` : ""}</span>
                   </div>
                   <div className="flex items-center gap-2 text-sm">
                     <MapPin className="h-4 w-4" />
@@ -102,7 +89,7 @@ export function EventDetail({ event }: { event: Event }) {
 
             <h2 className="text-2xl font-bold text-gray-800 mb-6">Event Schedule</h2>
             <div className="grid md:grid-cols-3 gap-6 mb-12">
-              {event.schedule.map((day) => (
+              {(event.schedule ?? []).map((day) => (
                 <div
                   key={day.day}
                   className="bg-gray-50 rounded-lg p-6 border border-gray-200 hover:border-[#D41D33] transition-colors"

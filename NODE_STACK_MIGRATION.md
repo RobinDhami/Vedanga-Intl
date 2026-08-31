@@ -21,6 +21,8 @@ This project can now run as a single Next.js app with built-in API routes instea
   - `CMS_ADMIN_PASSWORD`
   - `CMS_SESSION_SECRET`
   - `DATABASE_URL`
+  - `CMS_UPLOAD_DIR` (a persistent writable directory outside the deployed app)
+  - `CMS_UPLOAD_PUBLIC_URL` (for example `https://cms.vedanga.edu.np/uploads`)
 
 ### Important note
 
@@ -49,8 +51,9 @@ The current implementation now uses Prisma with MySQL. That avoids the Python ho
    - `npm run prisma:generate`
    - `npm run prisma:push`
    - `npm run build`
-7. Start the Node app through cPanel/Passenger. cPanel's docs recommend an `app.js` startup file for Node apps.
-8. Test:
+7. Create the directory configured by `CMS_UPLOAD_DIR` and make sure the Node application user can write to it.
+8. Start the Node app through cPanel/Passenger. cPanel's docs recommend an `app.js` startup file for Node apps.
+9. Test:
    - public pages
    - `/admin`
    - contact form

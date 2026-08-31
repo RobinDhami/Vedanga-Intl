@@ -5,6 +5,7 @@ import { useEffect, useMemo, useState } from "react";
 import { ArrowLeft, Pencil, RefreshCw, Trash2 } from "lucide-react";
 
 import { adminCollectionConfig, type AdminCollectionRoute } from "@/components/admin/admin-collection-config";
+import { ImageUploadField } from "@/components/admin/ImageUploadField";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import {
@@ -144,6 +145,7 @@ function getEditForm(route: AdminCollectionRoute, item: CollectionItem): AdminSa
         subtitle: hero.subtitle,
         cta_text: hero.cta_text,
         cta_link: hero.cta_link,
+        image_url: hero.image_url,
         is_published: hero.is_published ?? false,
       };
     }
@@ -153,6 +155,7 @@ function getEditForm(route: AdminCollectionRoute, item: CollectionItem): AdminSa
         title: notice.title,
         excerpt: notice.excerpt,
         link: notice.link,
+        image_url: notice.image_url,
         show_in_overlay: notice.show_in_overlay ?? false,
         is_published: notice.is_published ?? false,
       };
@@ -224,6 +227,7 @@ function getEditForm(route: AdminCollectionRoute, item: CollectionItem): AdminSa
         experience: job.experience,
         education: job.education,
         description: job.description,
+        image_url: job.image_url,
         is_published: job.is_published ?? false,
       };
     }
@@ -253,7 +257,7 @@ function validatePayload(route: AdminCollectionRoute, payload: AdminSavePayload)
 
   if (route === "gallery-images") {
     if (!payload.title?.trim()) return { valid: false, message: "Title is required." };
-    if (!payload.image_url?.trim()) return { valid: false, message: "Gallery image path is required." };
+    if (!payload.image_url?.trim()) return { valid: false, message: "Gallery image is required." };
     return { valid: true };
   }
 
@@ -272,7 +276,7 @@ function validatePayload(route: AdminCollectionRoute, payload: AdminSavePayload)
   if (route === "clubs") {
     if (!payload.name?.trim()) return { valid: false, message: "Club name is required." };
     if (!payload.description?.trim()) return { valid: false, message: "Description is required." };
-    if (!payload.image_url?.trim()) return { valid: false, message: "Club image path is required." };
+    if (!payload.image_url?.trim()) return { valid: false, message: "Club image is required." };
     return { valid: true };
   }
 
@@ -546,6 +550,7 @@ export function AdminCollectionPage({ route }: { route: AdminCollectionRoute }) 
                     <input className="rounded-xl border border-gray-200 px-4 py-3 outline-none transition focus:border-[#D41D33]" value={form.cta_link ?? ""} onChange={(event) => setForm((current) => ({ ...current, cta_link: event.target.value }))} />
                   </label>
                 </div>
+                <ImageUploadField collection="hero-slides" value={form.image_url} onChange={(image_url) => setForm((current) => ({ ...current, image_url }))} required />
               </>
             )}
 
@@ -563,6 +568,7 @@ export function AdminCollectionPage({ route }: { route: AdminCollectionRoute }) 
                   Notice link
                   <input className="rounded-xl border border-gray-200 px-4 py-3 outline-none transition focus:border-[#D41D33]" value={form.link ?? ""} onChange={(event) => setForm((current) => ({ ...current, link: event.target.value }))} />
                 </label>
+                <ImageUploadField collection="notices" value={form.image_url} onChange={(image_url) => setForm((current) => ({ ...current, image_url }))} />
                 <label className="flex items-center gap-3 rounded-xl border border-gray-200 px-4 py-3 text-sm font-medium text-gray-700">
                   <input type="checkbox" checked={Boolean(form.show_in_overlay)} onChange={(event) => setForm((current) => ({ ...current, show_in_overlay: event.target.checked }))} />
                   Show this notice in homepage overlay
@@ -599,10 +605,7 @@ export function AdminCollectionPage({ route }: { route: AdminCollectionRoute }) 
                   Content
                   <textarea className="min-h-[180px] rounded-xl border border-gray-200 px-4 py-3 outline-none transition focus:border-[#D41D33]" value={form.content ?? ""} onChange={(event) => setForm((current) => ({ ...current, content: event.target.value }))} />
                 </label>
-                <label className="grid gap-2 text-sm font-medium text-gray-700">
-                  Image path
-                  <input placeholder="/images/foto3.jpg" className="rounded-xl border border-gray-200 px-4 py-3 outline-none transition focus:border-[#D41D33]" value={form.image_url ?? ""} onChange={(event) => setForm((current) => ({ ...current, image_url: event.target.value }))} />
-                </label>
+                <ImageUploadField collection="news" value={form.image_url} onChange={(image_url) => setForm((current) => ({ ...current, image_url }))} required />
               </>
             )}
 
@@ -637,10 +640,7 @@ export function AdminCollectionPage({ route }: { route: AdminCollectionRoute }) 
                     <input type="date" className="rounded-xl border border-gray-200 px-4 py-3 outline-none transition focus:border-[#D41D33]" value={form.date ?? ""} onChange={(event) => setForm((current) => ({ ...current, date: event.target.value }))} />
                   </label>
                 </div>
-                <label className="grid gap-2 text-sm font-medium text-gray-700">
-                  Image path
-                  <input placeholder="/images/foto4.jpg" className="rounded-xl border border-gray-200 px-4 py-3 outline-none transition focus:border-[#D41D33]" value={form.image_url ?? ""} onChange={(event) => setForm((current) => ({ ...current, image_url: event.target.value }))} />
-                </label>
+                <ImageUploadField collection="events" value={form.image_url} onChange={(image_url) => setForm((current) => ({ ...current, image_url }))} required />
               </>
             )}
 
@@ -665,10 +665,7 @@ export function AdminCollectionPage({ route }: { route: AdminCollectionRoute }) 
                   Description
                   <textarea className="min-h-[120px] rounded-xl border border-gray-200 px-4 py-3 outline-none transition focus:border-[#D41D33]" value={form.description ?? ""} onChange={(event) => setForm((current) => ({ ...current, description: event.target.value }))} />
                 </label>
-                <label className="grid gap-2 text-sm font-medium text-gray-700">
-                  Image path
-                  <input placeholder="/images/foto1.jpg" className="rounded-xl border border-gray-200 px-4 py-3 outline-none transition focus:border-[#D41D33]" value={form.image_url ?? ""} onChange={(event) => setForm((current) => ({ ...current, image_url: event.target.value }))} />
-                </label>
+                <ImageUploadField collection="gallery-images" value={form.image_url} onChange={(image_url) => setForm((current) => ({ ...current, image_url }))} required />
               </>
             )}
 
@@ -699,10 +696,7 @@ export function AdminCollectionPage({ route }: { route: AdminCollectionRoute }) 
                   Position
                   <input className="rounded-xl border border-gray-200 px-4 py-3 outline-none transition focus:border-[#D41D33]" value={form.position ?? ""} onChange={(event) => setForm((current) => ({ ...current, position: event.target.value }))} />
                 </label>
-                <label className="grid gap-2 text-sm font-medium text-gray-700">
-                  Image path or URL
-                  <input className="rounded-xl border border-gray-200 px-4 py-3 outline-none transition focus:border-[#D41D33]" value={form.image_url ?? ""} onChange={(event) => setForm((current) => ({ ...current, image_url: event.target.value }))} />
-                </label>
+                <ImageUploadField collection="team-members" value={form.image_url} onChange={(image_url) => setForm((current) => ({ ...current, image_url }))} />
                 <label className="grid gap-2 text-sm font-medium text-gray-700">
                   Team Group
                   <select className="rounded-xl border border-gray-200 bg-white px-4 py-3 outline-none transition focus:border-[#D41D33]" value={form.team_group ?? "academic"} onChange={(event) => setForm((current) => ({ ...current, team_group: event.target.value as "academic" | "eca" }))}>
@@ -761,6 +755,7 @@ export function AdminCollectionPage({ route }: { route: AdminCollectionRoute }) 
                   Description
                   <textarea className="min-h-[120px] rounded-xl border border-gray-200 px-4 py-3 outline-none transition focus:border-[#D41D33]" value={form.description ?? ""} onChange={(event) => setForm((current) => ({ ...current, description: event.target.value }))} />
                 </label>
+                <ImageUploadField collection="job-openings" value={form.image_url} onChange={(image_url) => setForm((current) => ({ ...current, image_url }))} />
               </>
             )}
 
@@ -802,10 +797,7 @@ export function AdminCollectionPage({ route }: { route: AdminCollectionRoute }) 
                   Activities
                   <textarea className="min-h-[100px] rounded-xl border border-gray-200 px-4 py-3 outline-none transition focus:border-[#D41D33]" value={Array.isArray(form.activities) ? form.activities.join("\n") : ""} onChange={(event) => setForm((current) => ({ ...current, activities: event.target.value.split(/\r?\n|,/).map((item) => item.trim()).filter(Boolean) }))} />
                 </label>
-                <label className="grid gap-2 text-sm font-medium text-gray-700">
-                  Image path
-                  <input placeholder="/images/foto18.jpg" className="rounded-xl border border-gray-200 px-4 py-3 outline-none transition focus:border-[#D41D33]" value={form.image_url ?? ""} onChange={(event) => setForm((current) => ({ ...current, image_url: event.target.value }))} />
-                </label>
+                <ImageUploadField collection="clubs" value={form.image_url} onChange={(image_url) => setForm((current) => ({ ...current, image_url }))} required />
               </>
             )}
 

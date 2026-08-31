@@ -3,6 +3,7 @@ import "server-only";
 import type { Prisma } from "@prisma/client";
 
 import { phaseFourSeed, phaseOneSeed, phaseThreeSeed, phaseTwoSeed } from "@/lib/cms-seed";
+import { deleteManagedImage } from "@/lib/server/image-storage";
 import { prisma } from "@/lib/server/prisma";
 import type {
   AdminSavePayload,
@@ -31,6 +32,12 @@ export type CmsCollectionKey =
   | "job-openings";
 
 let seedPromise: Promise<void> | null = null;
+
+async function cleanupReplacedImage(previousUrl: string, nextUrl: string) {
+  if (previousUrl && previousUrl !== nextUrl) {
+    await deleteManagedImage(previousUrl);
+  }
+}
 
 function slugify(value: string) {
   return (
@@ -228,6 +235,7 @@ function mapJobOpening(item: Awaited<ReturnType<typeof prisma.jobOpening.findFir
     experience: item.experience,
     education: item.education,
     description: item.description,
+    image_url: item.imageUrl,
     sort_order: item.sortOrder,
     is_published: item.isPublished,
   };
@@ -410,6 +418,7 @@ async function seedIfNeeded() {
           experience: item.experience,
           education: item.education,
           description: item.description,
+          imageUrl: item.image_url || "",
           sortOrder: item.sort_order ?? index,
           isPublished: Boolean(item.is_published),
         })),
@@ -722,6 +731,7 @@ export async function createAdminItem(key: CmsCollectionKey, payload: AdminSaveP
           experience: payload.experience?.trim() || "",
           education: payload.education?.trim() || "",
           description: payload.description?.trim() || "",
+          imageUrl: payload.image_url?.trim() || "",
           sortOrder,
           isPublished: Boolean(payload.is_published),
         },
@@ -744,8 +754,10 @@ export async function updateAdminItem(key: CmsCollectionKey, identifier: string,
 
   switch (key) {
     case "hero-slides": {
+      const current = await prisma.heroSlide.findUnique({ where: { id: Number(identifier) } });
+      if (!current) return null;
       const item = await prisma.heroSlide.update({
-        where: { id: Number(identifier) },
+        where: { id: current.id },
         data: {
           title: payload.title?.trim() || "",
           subtitle: payload.subtitle?.trim() || "",
@@ -754,8 +766,9 @@ export async function updateAdminItem(key: CmsCollectionKey, identifier: string,
           imageUrl: payload.image_url?.trim() || "",
           isPublished: Boolean(payload.is_published),
         },
-      }).catch(() => null);
-      return item ? mapHeroSlide(item) : null;
+      });
+      await cleanupReplacedImage(current.imageUrl, item.imageUrl);
+      return mapHeroSlide(item);
     }
     case "notices": {
       const current = await prisma.notice.findUnique({ where: { id: Number(identifier) } });
@@ -781,6 +794,7 @@ export async function updateAdminItem(key: CmsCollectionKey, identifier: string,
           publishedAt: nextItem.published_at || null,
         },
       });
+      await cleanupReplacedImage(current.imageUrl, item.imageUrl);
       return mapNotice(item);
     }
     case "news": {
@@ -811,6 +825,7 @@ export async function updateAdminItem(key: CmsCollectionKey, identifier: string,
           publishedAt: nextItem.published_at || null,
         },
       });
+      await cleanupReplacedImage(current.imageUrl, item.imageUrl);
       return mapNews(item);
     }
     case "events": {
@@ -841,11 +856,14 @@ export async function updateAdminItem(key: CmsCollectionKey, identifier: string,
           publishedAt: nextItem.published_at || null,
         },
       });
+      await cleanupReplacedImage(current.imageUrl, item.imageUrl);
       return mapEvent(item);
     }
     case "gallery-images": {
+      const current = await prisma.galleryImage.findUnique({ where: { id: Number(identifier) } });
+      if (!current) return null;
       const item = await prisma.galleryImage.update({
-        where: { id: Number(identifier) },
+        where: { id: current.id },
         data: {
           title: payload.title?.trim() || "",
           description: payload.description?.trim() || "",
@@ -853,8 +871,9 @@ export async function updateAdminItem(key: CmsCollectionKey, identifier: string,
           imageUrl: payload.image_url?.trim() || "",
           isPublished: Boolean(payload.is_published),
         },
-      }).catch(() => null);
-      return item ? mapGalleryImage(item) : null;
+      });
+      await cleanupReplacedImage(current.imageUrl, item.imageUrl);
+      return mapGalleryImage(item);
     }
     case "videos": {
       const item = await prisma.video.update({
@@ -869,8 +888,10 @@ export async function updateAdminItem(key: CmsCollectionKey, identifier: string,
       return item ? mapVideo(item) : null;
     }
     case "team-members": {
+      const current = await prisma.teamMember.findUnique({ where: { id: Number(identifier) } });
+      if (!current) return null;
       const item = await prisma.teamMember.update({
-        where: { id: Number(identifier) },
+        where: { id: current.id },
         data: {
           name: payload.name?.trim() || "",
           position: payload.position?.trim() || "",
@@ -883,8 +904,9 @@ export async function updateAdminItem(key: CmsCollectionKey, identifier: string,
           showOnHomepage: Boolean(payload.show_on_homepage),
           isPublished: Boolean(payload.is_published),
         },
-      }).catch(() => null);
-      return item ? mapTeamMember(item) : null;
+      });
+      await cleanupReplacedImage(current.imageUrl, item.imageUrl);
+      return mapTeamMember(item);
     }
     case "clubs": {
       const current = await prisma.club.findUnique({ where: { slug: identifier } });
@@ -905,11 +927,14 @@ export async function updateAdminItem(key: CmsCollectionKey, identifier: string,
           isPublished: Boolean(payload.is_published),
         },
       });
+      await cleanupReplacedImage(current.imageUrl, item.imageUrl);
       return mapClub(item);
     }
     case "job-openings": {
+      const current = await prisma.jobOpening.findUnique({ where: { id: Number(identifier) } });
+      if (!current) return null;
       const item = await prisma.jobOpening.update({
-        where: { id: Number(identifier) },
+        where: { id: current.id },
         data: {
           title: payload.title?.trim() || "",
           department: payload.department?.trim() || "",
@@ -917,10 +942,12 @@ export async function updateAdminItem(key: CmsCollectionKey, identifier: string,
           experience: payload.experience?.trim() || "",
           education: payload.education?.trim() || "",
           description: payload.description?.trim() || "",
+          imageUrl: payload.image_url?.trim() || "",
           isPublished: Boolean(payload.is_published),
         },
-      }).catch(() => null);
-      return item ? mapJobOpening(item) : null;
+      });
+      await cleanupReplacedImage(current.imageUrl, item.imageUrl);
+      return mapJobOpening(item);
     }
     case "contact-submissions":
       return null;
@@ -933,19 +960,19 @@ export async function deleteAdminItem(key: CmsCollectionKey, identifier: string)
   try {
     switch (key) {
       case "hero-slides":
-        await prisma.heroSlide.delete({ where: { id: Number(identifier) } });
+        await deleteManagedImage((await prisma.heroSlide.delete({ where: { id: Number(identifier) } })).imageUrl);
         return true;
       case "notices":
-        await prisma.notice.delete({ where: { id: Number(identifier) } });
+        await deleteManagedImage((await prisma.notice.delete({ where: { id: Number(identifier) } })).imageUrl);
         return true;
       case "news":
-        await prisma.newsArticle.delete({ where: { slug: identifier } });
+        await deleteManagedImage((await prisma.newsArticle.delete({ where: { slug: identifier } })).imageUrl);
         return true;
       case "events":
-        await prisma.event.delete({ where: { slug: identifier } });
+        await deleteManagedImage((await prisma.event.delete({ where: { slug: identifier } })).imageUrl);
         return true;
       case "gallery-images":
-        await prisma.galleryImage.delete({ where: { id: Number(identifier) } });
+        await deleteManagedImage((await prisma.galleryImage.delete({ where: { id: Number(identifier) } })).imageUrl);
         return true;
       case "contact-submissions":
         await prisma.contactSubmission.delete({ where: { id: Number(identifier) } });
@@ -954,13 +981,13 @@ export async function deleteAdminItem(key: CmsCollectionKey, identifier: string)
         await prisma.video.delete({ where: { id: Number(identifier) } });
         return true;
       case "team-members":
-        await prisma.teamMember.delete({ where: { id: Number(identifier) } });
+        await deleteManagedImage((await prisma.teamMember.delete({ where: { id: Number(identifier) } })).imageUrl);
         return true;
       case "clubs":
-        await prisma.club.delete({ where: { slug: identifier } });
+        await deleteManagedImage((await prisma.club.delete({ where: { slug: identifier } })).imageUrl);
         return true;
       case "job-openings":
-        await prisma.jobOpening.delete({ where: { id: Number(identifier) } });
+        await deleteManagedImage((await prisma.jobOpening.delete({ where: { id: Number(identifier) } })).imageUrl);
         return true;
     }
   } catch {

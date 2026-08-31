@@ -1,6 +1,7 @@
 "use client";
 
-import { heroSlides } from "@/data/dummy";
+import { getHeroSlides } from "@/lib/cms-api";
+import type { HeroSlide } from "@/types/cms";
 import { ChevronLeft, ChevronRight, MoveRight } from "lucide-react";
 import Link from "next/link";
 import { useState, useEffect } from "react";
@@ -8,12 +9,27 @@ import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 
 const Hero = () => {
+    const [slideItems, setSlideItems] = useState<HeroSlide[]>([]);
+    const [slidesLoaded, setSlidesLoaded] = useState(false);
     const [currentIndex, setCurrentIndex] = useState(0);
     const [direction, setDirection] = useState<"left" | "right">("right");
     const [isAutoPlaying, setIsAutoPlaying] = useState(true);
     const [isMobile, setIsMobile] = useState(false);
 
-    const totalSlides = heroSlides.length;
+    const totalSlides = slideItems.length;
+
+    useEffect(() => {
+        void getHeroSlides().then((items) => {
+            setSlideItems(items);
+            setSlidesLoaded(true);
+        });
+    }, []);
+
+    useEffect(() => {
+        if (currentIndex >= totalSlides && totalSlides > 0) {
+            setCurrentIndex(0);
+        }
+    }, [currentIndex, totalSlides]);
 
     // Check mobile on mount and resize
     useEffect(() => {
@@ -27,7 +43,7 @@ const Hero = () => {
 
     // Auto-play functionality
     useEffect(() => {
-        if (!isAutoPlaying || isMobile) return;
+        if (!isAutoPlaying || isMobile || totalSlides < 2) return;
 
         const interval = setInterval(() => {
             setDirection("right");
@@ -112,6 +128,12 @@ const Hero = () => {
         }
     };
 
+    if (!slidesLoaded) {
+        return <div className="h-screen max-h-[800px] min-h-[600px] animate-pulse bg-gray-200" aria-label="Loading hero slides" />;
+    }
+
+    if (totalSlides === 0) return null;
+
     return (
         <section
             className="relative h-screen max-h-[800px] min-h-[600px] overflow-hidden"
@@ -130,8 +152,8 @@ const Hero = () => {
                     className="absolute inset-0 z-0"
                 >
                     <Image
-                        src={heroSlides[currentIndex].image}
-                        alt={heroSlides[currentIndex].title}
+                        src={slideItems[currentIndex].image_url}
+                        alt={slideItems[currentIndex].title}
                         fill
                         className="object-cover"
                         priority
@@ -162,13 +184,13 @@ const Hero = () => {
                                 className="text-4xl sm:text-5xl md:text-6xl lg:text-6xl xl:text-7xl font-bold leading-tight mb-4 md:mb-6"
                                 variants={textVariants}
                             >
-                                {heroSlides[currentIndex].title}
+                                {slideItems[currentIndex].title}
                             </motion.h1>
                             <motion.p
                                 className="text-base md:text-lg lg:text-xl mb-6 md:mb-8 text-white/90 leading-relaxed"
                                 variants={textVariants}
                             >
-                                {heroSlides[currentIndex].subtitle}
+                                {slideItems[currentIndex].subtitle}
                             </motion.p>
                             <motion.div
                                 variants={textVariants}
@@ -180,10 +202,10 @@ const Hero = () => {
                                     className="inline-flex"
                                 >
                                 <Link
-                                    href="/contact"
+                                    href={slideItems[currentIndex].cta_link || "/contact"}
                                     className="inline-flex items-center px-6 py-3 md:px-8 md:py-4 text-base md:text-lg font-bold bg-[#da973e] text-white rounded-full hover:shadow-xl transition-all group"
                                 >
-                                    Contact Us
+                                    {slideItems[currentIndex].cta_text || "Contact Us"}
                                     <ChevronRight className="ml-1 h-4 w-4 md:h-5 md:w-5 group-hover:translate-x-1 transition-transform" />
                                 </Link>
                                 </motion.div>
@@ -215,14 +237,14 @@ const Hero = () => {
                                             }}
                                         >
                                             <Image
-                                                src={heroSlides[idx].image}
-                                                alt={heroSlides[idx].title}
+                                                src={slideItems[idx].image_url}
+                                                alt={slideItems[idx].title}
                                                 fill
                                                 className="object-cover"
                                             />
                                             <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
                                             <div className="absolute bottom-0 left-0 right-0 p-4">
-                                                <h3 className="text-[#fba61e] font-bold text-lg">{heroSlides[idx].title}</h3>
+                                                <h3 className="text-[#fba61e] font-bold text-lg">{slideItems[idx].title}</h3>
                                             </div>
                                             {idx === currentIndex && (
                                                 <div className="absolute top-2 right-2 w-3 h-3 rounded-full bg-yellow-400 shadow-md" />
@@ -312,7 +334,7 @@ const Hero = () => {
                         transition: { delay: 0.5 }
                     }}
                 >
-                    {heroSlides.map((_, idx) => (
+                    {slideItems.map((_, idx) => (
                         <motion.button
                             key={idx}
                             onClick={() => {

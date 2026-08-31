@@ -123,6 +123,7 @@ export interface JobOpeningItem {
   experience: string;
   education: string;
   description: string;
+  image_url?: string;
   sort_order?: number;
   is_published?: boolean;
 }

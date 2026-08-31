@@ -4,19 +4,9 @@ import type { VideoItem } from '@/types/cms'
 import { motion } from 'framer-motion'
 import React from 'react'
 import { useEffect, useState } from 'react'
-import { videos as legacyVideos } from '@/components/VideoSection'
 
 const Videos = () => {
-    const [videoItems, setVideoItems] = useState<VideoItem[]>(
-        legacyVideos.map((video) => ({
-            id: video.id,
-            title: video.title,
-            subtitle: video.subtitle,
-            url: video.url,
-            sort_order: video.id,
-            is_published: true,
-        }))
-    );
+    const [videoItems, setVideoItems] = useState<VideoItem[]>([]);
 
     useEffect(() => {
         const load = async () => {

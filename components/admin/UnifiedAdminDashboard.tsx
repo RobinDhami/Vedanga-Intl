@@ -20,6 +20,7 @@ import {
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
+import { ImageUploadField } from "@/components/admin/ImageUploadField";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Dialog,
@@ -85,13 +86,13 @@ type UnifiedCounts = {
 function emptyFormFor(collection: CreateCollectionKey): AdminSavePayload {
   switch (collection) {
     case "hero-slides":
-      return { title: "", subtitle: "", cta_text: "", cta_link: "", is_published: true };
+      return { title: "", subtitle: "", cta_text: "", cta_link: "", image_url: "", is_published: true };
     case "news":
       return { title: "", category: "", excerpt: "", author: "", content: "", image_url: "", is_published: true };
     case "events":
       return { title: "", category: "", description: "", venue: "", date: "", image_url: "", is_published: true };
     case "notices":
-      return { title: "", excerpt: "", link: "", show_in_overlay: false, is_published: true };
+      return { title: "", excerpt: "", link: "", image_url: "", show_in_overlay: false, is_published: true };
     case "gallery-images":
       return { title: "", category: "", description: "", image_url: "", is_published: true };
     case "videos":
@@ -99,7 +100,7 @@ function emptyFormFor(collection: CreateCollectionKey): AdminSavePayload {
     case "team-members":
       return { name: "", position: "", image_url: "", qualifications: "", subject: "", email: "", phone: "", team_group: "academic", show_on_homepage: false, is_published: true };
     case "job-openings":
-      return { title: "", department: "", employment_type: "", experience: "", education: "", description: "", is_published: true };
+      return { title: "", department: "", employment_type: "", experience: "", education: "", description: "", image_url: "", is_published: true };
     case "clubs":
       return { name: "", description: "", icon_name: "code", members: 0, meeting_day: "", activities: [], advisor: "", image_url: "", is_published: true };
   }
@@ -221,7 +222,7 @@ export function UnifiedAdminDashboard() {
 
     if (activeCollection === "gallery-images") {
       if (!form.title?.trim()) return { valid: false, message: "Title is required." };
-      if (!form.image_url?.trim()) return { valid: false, message: "Gallery image path is required." };
+      if (!form.image_url?.trim()) return { valid: false, message: "Gallery image is required." };
       return { valid: true };
     }
 
@@ -240,7 +241,7 @@ export function UnifiedAdminDashboard() {
     if (activeCollection === "clubs") {
       if (!form.name?.trim()) return { valid: false, message: "Name is required." };
       if (!form.description?.trim()) return { valid: false, message: "Description is required." };
-      if (!form.image_url?.trim()) return { valid: false, message: "Club image path is required." };
+      if (!form.image_url?.trim()) return { valid: false, message: "Club image is required." };
       return { valid: true };
     }
 
@@ -256,13 +257,13 @@ export function UnifiedAdminDashboard() {
   const buildPayload = (): AdminSavePayload => {
     switch (activeCollection) {
       case "hero-slides":
-        return { title: form.title, subtitle: form.subtitle, cta_text: form.cta_text, cta_link: form.cta_link, is_published: form.is_published };
+        return { title: form.title, subtitle: form.subtitle, cta_text: form.cta_text, cta_link: form.cta_link, image_url: form.image_url, is_published: form.is_published };
       case "news":
         return { title: form.title, category: form.category, excerpt: form.excerpt, author: form.author, content: form.content, image_url: form.image_url, is_published: form.is_published };
       case "events":
         return { title: form.title, category: form.category, description: form.description, venue: form.venue, date: form.date, image_url: form.image_url, is_published: form.is_published };
       case "notices":
-        return { title: form.title, excerpt: form.excerpt, link: form.link, show_in_overlay: form.show_in_overlay, is_published: form.is_published };
+        return { title: form.title, excerpt: form.excerpt, link: form.link, image_url: form.image_url, show_in_overlay: form.show_in_overlay, is_published: form.is_published };
       case "gallery-images":
         return { title: form.title, category: form.category, description: form.description, image_url: form.image_url, is_published: form.is_published };
       case "videos":
@@ -272,7 +273,7 @@ export function UnifiedAdminDashboard() {
       case "clubs":
         return { name: form.name, description: form.description, icon_name: form.icon_name, members: form.members, meeting_day: form.meeting_day, activities: form.activities, advisor: form.advisor, image_url: form.image_url, is_published: form.is_published };
       case "job-openings":
-        return { title: form.title, department: form.department, employment_type: form.employment_type, experience: form.experience, education: form.education, description: form.description, is_published: form.is_published };
+        return { title: form.title, department: form.department, employment_type: form.employment_type, experience: form.experience, education: form.education, description: form.description, image_url: form.image_url, is_published: form.is_published };
       default:
         return {};
     }
@@ -322,7 +323,7 @@ export function UnifiedAdminDashboard() {
               <div>
                 <CardTitle className="text-3xl">Staff sign in</CardTitle>
                 <CardDescription>
-                  Use your Django staff account to manage website content from one unified dashboard.
+                  Use your website administrator account to manage content from one unified dashboard.
                 </CardDescription>
               </div>
             </CardHeader>
@@ -493,6 +494,7 @@ export function UnifiedAdminDashboard() {
                       <input className="rounded-xl border border-gray-200 px-4 py-3 outline-none transition focus:border-[#D41D33]" value={form.cta_link ?? ""} onChange={(event) => setForm((current) => ({ ...current, cta_link: event.target.value }))} />
                     </label>
                   </div>
+                  <ImageUploadField collection="hero-slides" value={form.image_url} onChange={(image_url) => setForm((current) => ({ ...current, image_url }))} required />
                 </>
               )}
 
@@ -510,6 +512,7 @@ export function UnifiedAdminDashboard() {
                     Notice link
                     <input className="rounded-xl border border-gray-200 px-4 py-3 outline-none transition focus:border-[#D41D33]" value={form.link ?? ""} onChange={(event) => setForm((current) => ({ ...current, link: event.target.value }))} />
                   </label>
+                  <ImageUploadField collection="notices" value={form.image_url} onChange={(image_url) => setForm((current) => ({ ...current, image_url }))} />
                   <label className="flex items-center gap-3 rounded-xl border border-gray-200 px-4 py-3 text-sm font-medium text-gray-700">
                     <input type="checkbox" checked={Boolean(form.show_in_overlay)} onChange={(event) => setForm((current) => ({ ...current, show_in_overlay: event.target.checked }))} />
                     Show this notice in homepage overlay
@@ -546,10 +549,7 @@ export function UnifiedAdminDashboard() {
                     Content
                     <textarea className="min-h-[180px] rounded-xl border border-gray-200 px-4 py-3 outline-none transition focus:border-[#D41D33]" value={form.content ?? ""} onChange={(event) => setForm((current) => ({ ...current, content: event.target.value }))} />
                   </label>
-                  <label className="grid gap-2 text-sm font-medium text-gray-700">
-                    Image path
-                    <input placeholder="/images/foto3.jpg" className="rounded-xl border border-gray-200 px-4 py-3 outline-none transition focus:border-[#D41D33]" value={form.image_url ?? ""} onChange={(event) => setForm((current) => ({ ...current, image_url: event.target.value }))} />
-                  </label>
+                  <ImageUploadField collection="news" value={form.image_url} onChange={(image_url) => setForm((current) => ({ ...current, image_url }))} required />
                 </>
               )}
 
@@ -584,10 +584,7 @@ export function UnifiedAdminDashboard() {
                       <input type="date" className="rounded-xl border border-gray-200 px-4 py-3 outline-none transition focus:border-[#D41D33]" value={form.date ?? ""} onChange={(event) => setForm((current) => ({ ...current, date: event.target.value }))} />
                     </label>
                   </div>
-                  <label className="grid gap-2 text-sm font-medium text-gray-700">
-                    Image path
-                    <input placeholder="/images/foto4.jpg" className="rounded-xl border border-gray-200 px-4 py-3 outline-none transition focus:border-[#D41D33]" value={form.image_url ?? ""} onChange={(event) => setForm((current) => ({ ...current, image_url: event.target.value }))} />
-                  </label>
+                  <ImageUploadField collection="events" value={form.image_url} onChange={(image_url) => setForm((current) => ({ ...current, image_url }))} required />
                 </>
               )}
 
@@ -612,10 +609,7 @@ export function UnifiedAdminDashboard() {
                     Description
                     <textarea className="min-h-[120px] rounded-xl border border-gray-200 px-4 py-3 outline-none transition focus:border-[#D41D33]" value={form.description ?? ""} onChange={(event) => setForm((current) => ({ ...current, description: event.target.value }))} />
                   </label>
-                  <label className="grid gap-2 text-sm font-medium text-gray-700">
-                    Image path
-                    <input placeholder="/images/foto1.jpg" className="rounded-xl border border-gray-200 px-4 py-3 outline-none transition focus:border-[#D41D33]" value={form.image_url ?? ""} onChange={(event) => setForm((current) => ({ ...current, image_url: event.target.value }))} />
-                  </label>
+                  <ImageUploadField collection="gallery-images" value={form.image_url} onChange={(image_url) => setForm((current) => ({ ...current, image_url }))} required />
                 </>
               )}
 
@@ -646,10 +640,7 @@ export function UnifiedAdminDashboard() {
                     Position
                     <input className="rounded-xl border border-gray-200 px-4 py-3 outline-none transition focus:border-[#D41D33]" value={form.position ?? ""} onChange={(event) => setForm((current) => ({ ...current, position: event.target.value }))} />
                   </label>
-                  <label className="grid gap-2 text-sm font-medium text-gray-700">
-                    Image path or URL
-                    <input className="rounded-xl border border-gray-200 px-4 py-3 outline-none transition focus:border-[#D41D33]" value={form.image_url ?? ""} onChange={(event) => setForm((current) => ({ ...current, image_url: event.target.value }))} />
-                  </label>
+                  <ImageUploadField collection="team-members" value={form.image_url} onChange={(image_url) => setForm((current) => ({ ...current, image_url }))} />
                   <label className="grid gap-2 text-sm font-medium text-gray-700">
                     Team Group
                     <select className="rounded-xl border border-gray-200 bg-white px-4 py-3 outline-none transition focus:border-[#D41D33]" value={form.team_group ?? "academic"} onChange={(event) => setForm((current) => ({ ...current, team_group: event.target.value as "academic" | "eca" }))}>
@@ -718,10 +709,7 @@ export function UnifiedAdminDashboard() {
                     Activities
                     <textarea className="min-h-[100px] rounded-xl border border-gray-200 px-4 py-3 outline-none transition focus:border-[#D41D33]" placeholder="One per line or comma separated" value={Array.isArray(form.activities) ? form.activities.join("\n") : ""} onChange={(event) => setForm((current) => ({ ...current, activities: event.target.value.split(/\r?\n|,/).map((item) => item.trim()).filter(Boolean) }))} />
                   </label>
-                  <label className="grid gap-2 text-sm font-medium text-gray-700">
-                    Image path
-                    <input placeholder="/images/foto18.jpg" className="rounded-xl border border-gray-200 px-4 py-3 outline-none transition focus:border-[#D41D33]" value={form.image_url ?? ""} onChange={(event) => setForm((current) => ({ ...current, image_url: event.target.value }))} />
-                  </label>
+                  <ImageUploadField collection="clubs" value={form.image_url} onChange={(image_url) => setForm((current) => ({ ...current, image_url }))} required />
                 </>
               )}
 
@@ -753,6 +741,7 @@ export function UnifiedAdminDashboard() {
                     Description
                     <textarea className="min-h-[120px] rounded-xl border border-gray-200 px-4 py-3 outline-none transition focus:border-[#D41D33]" value={form.description ?? ""} onChange={(event) => setForm((current) => ({ ...current, description: event.target.value }))} />
                   </label>
+                  <ImageUploadField collection="job-openings" value={form.image_url} onChange={(image_url) => setForm((current) => ({ ...current, image_url }))} />
                 </>
               )}
 

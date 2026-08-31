@@ -1,19 +1,30 @@
 "use client";
 
-import { news, Newscategories } from "@/data/dummy";
+import { getNewsArticles } from "@/lib/cms-api";
+import type { NewsArticle } from "@/types/cms";
 import { motion } from "framer-motion";
 import { ChevronRight, Clock, User } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
 export default function News() {
+  const [newsItems, setNewsItems] = useState<NewsArticle[]>([]);
   const [selectedCategory, setSelectedCategory] = useState("All");
+
+  useEffect(() => {
+    void getNewsArticles().then(setNewsItems);
+  }, []);
+
+  const categories = useMemo(
+    () => ["All", ...Array.from(new Set(newsItems.map((item) => item.category).filter(Boolean)))],
+    [newsItems]
+  );
 
   // Filter news based on selected category
   const filteredNews = selectedCategory === "All"
-    ? news
-    : news.filter(item => item.category === selectedCategory);
+    ? newsItems
+    : newsItems.filter(item => item.category === selectedCategory);
 
   const getTimeAgo = (dateString: string) => {
     const date = new Date(dateString);
@@ -48,7 +59,7 @@ export default function News() {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5 }}
         >
-          {Newscategories.map((category) => (
+          {categories.map((category) => (
             <button
               key={category}
               onClick={() => setSelectedCategory(category)}
@@ -78,14 +89,14 @@ export default function News() {
                   <div className="absolute inset-0 bg-black/10 group-hover:bg-black/20 transition-colors z-10" />
                   <Image
                     loading="lazy"
-                    src={item.image}
+                    src={item.image_url}
                     alt={item.title}
                     fill
                     className="object-cover"
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   />
                   {/* Category tag with better visibility */}
-                  <div className={`absolute top-4 right-4 ${item.color} px-3 py-1 rounded-full text-sm font-medium z-20 shadow-md`}>
+                  <div className="absolute top-4 right-4 bg-[#D41D33] text-white px-3 py-1 rounded-full text-sm font-medium z-20 shadow-md">
                     {item.category}
                   </div>
                 </div>
@@ -103,7 +114,7 @@ export default function News() {
                       </div>
                       <div className="flex items-center">
                         <Clock className="h-4 w-4 mr-1" />
-                        <span>{getTimeAgo(item.date)}</span>
+                        <span>{getTimeAgo(item.published_at || new Date().toISOString())}</span>
                       </div>
                     </div>
                     <div className="flex items-center text-[#D41D33] font-medium group-hover:text-[#A3162A] transition-colors">

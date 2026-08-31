@@ -1,13 +1,13 @@
 "use client";
 
-import { news } from "@/data/dummy";
+import type { NewsArticle } from "@/types/cms";
 import { Calendar, ChevronLeft, ChevronRight, Facebook, Linkedin, Share2, Tag, Twitter, User } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 
-export function NewsDetail({ article }: { article: typeof news[0] }) {
+export function NewsDetail({ article }: { article: NewsArticle }) {
     const pathname = usePathname();
     const [showShareTooltip, setShowShareTooltip] = useState(false);
 
@@ -70,7 +70,7 @@ export function NewsDetail({ article }: { article: typeof news[0] }) {
                     <div className="relative h-[50vh] max-h-[600px]">
                         <Image
                             loading="lazy"
-                            src={article.image}
+                            src={article.image_url}
                             alt={article.title}
                             fill
                             className="object-cover"
@@ -85,7 +85,7 @@ export function NewsDetail({ article }: { article: typeof news[0] }) {
                                     </span>
                                     <div className="flex items-center gap-2 text-sm">
                                         <Calendar className="h-4 w-4" />
-                                        <span>{getFormattedDate(article.date)}</span>
+                                        <span>{getFormattedDate(article.published_at || new Date().toISOString())}</span>
                                     </div>
                                     <div className="flex items-center gap-2 text-sm">
                                         <User className="h-4 w-4" />
