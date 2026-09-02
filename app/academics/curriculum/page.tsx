@@ -52,22 +52,12 @@ const subjects: Subjects = {
       icon: <Computer />,
       description: "Digital literacy, programming basics, and practical applications of technology."
     },
-    {
-      name: "Moral and Civic Education",
-      icon: <Smile />,
-      description: "Building ethical values, civic responsibility, and social awareness."
-    },
-    {
-      name: "Environmental and Sustainability Education",
-      icon: <Leaf />,
-      description: "Building awareness and responsibility for the environment and sustainable living."
-    },
   ],
   "Languages": [
     {
-      name: "Nepali",
+      name: "Nepali and Sero Fero",
       icon: <IndianRupee />,
-      description: "Cultural heritage and language mastery through literature and communication skills."
+      description: "Nepali language, local context, and cultural learning through communication and exploration."
     },
     {
       name: "English",
@@ -75,7 +65,7 @@ const subjects: Subjects = {
       description: "Global communication skills and literary exploration."
     },
     {
-      name: "Newari",
+      name: "Nepal Bhasa",
       icon: <Languages />,
       description: "Preservation and promotion of local language and cultural heritage."
     },

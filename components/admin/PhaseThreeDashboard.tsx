@@ -368,15 +368,6 @@ export function PhaseThreeDashboard() {
                   </label>
 
                   <label className="grid gap-2 text-sm font-medium text-gray-700">
-                    Qualifications
-                    <textarea
-                      className="min-h-[100px] rounded-xl border border-gray-200 px-4 py-3 outline-none transition focus:border-[#D41D33]"
-                      value={form.qualifications ?? ""}
-                      onChange={(event) => setForm((current) => ({ ...current, qualifications: event.target.value }))}
-                    />
-                  </label>
-
-                  <label className="grid gap-2 text-sm font-medium text-gray-700">
                     Subject or Specialty
                     <input
                       className="rounded-xl border border-gray-200 px-4 py-3 outline-none transition focus:border-[#D41D33]"

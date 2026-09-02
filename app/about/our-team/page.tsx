@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Award, Mail, Phone } from "lucide-react";
+import { Mail, Phone } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -106,16 +106,6 @@ export default function OurTeam() {
               </div>
 
               <div className="p-6">
-                <div className="space-y-3 mb-6">
-                  <div className="flex items-start gap-3">
-                    <Award className="h-5 w-5 mt-0.5 text-[#D41D33] flex-shrink-0" />
-                    <div>
-                      <p className="text-sm font-medium text-gray-500">Experience</p>
-                      <p className="text-gray-700">{member.qualifications || "Details coming soon"}</p>
-                    </div>
-                  </div>
-                </div>
-
                 <div className="flex gap-3">
                   <Link
                     href={member.email ? `mailto:${member.email}` : "#"}
