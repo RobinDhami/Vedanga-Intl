@@ -172,6 +172,8 @@ export default function Gallery() {
             >
               <div className="relative aspect-[4/3] overflow-hidden">
                 <Image
+                  priority={index < 3}
+                  loading={index < 3 ? "eager" : "lazy"}
                   src={image.image_url}
                   alt={image.title}
                   fill

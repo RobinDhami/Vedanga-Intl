@@ -24,6 +24,21 @@ This project can now run as a single Next.js app with built-in API routes instea
   - `CMS_UPLOAD_DIR` (a persistent writable directory outside the deployed app)
   - `CMS_UPLOAD_PUBLIC_URL` (for example `https://cms.vedanga.edu.np/uploads`)
 
+### cPanel environment values
+
+Use these values in the Node.js application's **Environment variables** section. Keep passwords and the database connection private; do not commit them to Git.
+
+| Name | Value |
+| --- | --- |
+| `NODE_ENV` | `production` |
+| `NEXT_PUBLIC_SITE_URL` | `https://www.vedanga.edu.np` |
+| `NEXT_PUBLIC_CMS_API_BASE_URL` | `https://cms.vedanga.edu.np/api` |
+| `CMS_ALLOWED_ORIGINS` | `https://vedanga.edu.np,https://www.vedanga.edu.np,https://cms.vedanga.edu.np` |
+| `CMS_UPLOAD_DIR` | `/home/CPANEL_USERNAME/vedanga_uploads` |
+| `CMS_UPLOAD_PUBLIC_URL` | `https://cms.vedanga.edu.np/uploads` |
+
+Keep the existing `CMS_ADMIN_USERNAME`, `CMS_ADMIN_PASSWORD`, `CMS_SESSION_SECRET`, and `DATABASE_URL` values private. `DATABASE_URL` must use the MySQL database user, URL-encoded password, and database name created in cPanel.
+
 ### Important note
 
 This stack-change path replaces the old Django API with:
@@ -39,7 +54,7 @@ The current implementation now uses Prisma with MySQL. That avoids the Python ho
 
 ### Next deployment steps
 
-1. Create a MySQL database and user in cPanel, then grant the user full access to that database.
+1. Create or confirm a MySQL database and user in cPanel, then grant the user full access to that database.
 2. Upload the whole project to the Node application directory, not just the old `out/` folder.
 3. Register the app in Application Manager with:
    - Domain: your selected site domain
@@ -51,7 +66,7 @@ The current implementation now uses Prisma with MySQL. That avoids the Python ho
    - `npm run prisma:generate`
    - `npm run prisma:push`
    - `npm run build`
-7. Create the directory configured by `CMS_UPLOAD_DIR` and make sure the Node application user can write to it.
+7. Create the directory configured by `CMS_UPLOAD_DIR` outside `cms-app` and make sure the Node application user can write to it. For example: `/home/CPANEL_USERNAME/vedanga_uploads`.
 8. Start the Node app through cPanel/Passenger. cPanel's docs recommend an `app.js` startup file for Node apps.
 9. Test:
    - public pages

@@ -31,7 +31,10 @@ export type CmsCollectionKey =
   | "clubs"
   | "job-openings";
 
+// Seed only once per server process. Re-running nine count queries before every
+// request makes the CMS feel slow and can overload a small cPanel database.
 let seedPromise: Promise<void> | null = null;
+let seeded = false;
 
 async function cleanupReplacedImage(previousUrl: string, nextUrl: string) {
   if (previousUrl && previousUrl !== nextUrl) {
@@ -428,10 +431,16 @@ async function seedIfNeeded() {
 }
 
 async function ensureSeeded() {
+  if (seeded) return;
+
   if (!seedPromise) {
-    seedPromise = seedIfNeeded().finally(() => {
-      seedPromise = null;
-    });
+    seedPromise = seedIfNeeded()
+      .then(() => {
+        seeded = true;
+      })
+      .finally(() => {
+        seedPromise = null;
+      });
   }
 
   return seedPromise;
