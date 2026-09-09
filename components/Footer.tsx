@@ -1,4 +1,4 @@
-import { School, Facebook, Instagram, Twitter, Linkedin } from 'lucide-react';
+import { School, Facebook, Instagram, Linkedin } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
@@ -7,7 +7,6 @@ const Footer = () => {
     const socialLinks = [
         { icon: Facebook, url: 'https://www.facebook.com/vedangaInternationalschool' },
         { icon: Instagram, url: 'https://www.instagram.com/vedangainternational' },
-        { icon: Twitter, url: 'https://twitter.com/vedanga' },
         { icon: Linkedin, url: 'https://www.linkedin.com/company/vedanga-international-school' },
     ];
 
@@ -39,7 +38,7 @@ const Footer = () => {
                             <p className="text-gray-400"> <Link href="tel:01-5372578 ">Phone: 01-5372578 </Link></p>
 
 
-                            <p className="text-gray-400"> <Link href="mailto:info@vedanga.edu.np">Email: info@vedanga.edu.np </Link></p>
+                            <p className="text-gray-400"> <Link href="mailto:vedanga79@gmail.com">Email: vedanga79@gmail.com </Link></p>
                         </div>
                         <div className="flex space-x-4 mt-4">
                             {socialLinks.map((social, index) => (

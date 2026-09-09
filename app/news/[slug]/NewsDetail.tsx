@@ -1,7 +1,7 @@
 "use client";
 
 import type { NewsArticle } from "@/types/cms";
-import { Calendar, ChevronLeft, ChevronRight, Facebook, Linkedin, Share2, Tag, Twitter, User } from "lucide-react";
+import { Calendar, ChevronLeft, ChevronRight, Facebook, Linkedin, Share2, Tag, User } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -149,15 +149,6 @@ export function NewsDetail({ article }: { article: NewsArticle }) {
                                         aria-label="Share on Facebook"
                                     >
                                         <Facebook className="h-5 w-5 text-blue-600" />
-                                    </a>
-                                    <a
-                                        href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(shareTitle)}&url=${encodeURIComponent(shareUrl)}`}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="p-2 hover:bg-gray-100 rounded-full transition-colors"
-                                        aria-label="Share on Twitter"
-                                    >
-                                        <Twitter className="h-5 w-5 text-blue-400" />
                                     </a>
                                     <a
                                         href={`https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(shareUrl)}&title=${encodeURIComponent(shareTitle)}`}

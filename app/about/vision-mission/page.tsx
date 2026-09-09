@@ -80,7 +80,7 @@ export default function VisionMission() {
               Shaping Future Professionals
             </span>
             <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
-              Educating the <span className="text-[#FF981F]">Leaders</span> of  <span className="text-[#FF981F]">Tomorrow</span>
+              Learning <span className="text-[#FF981F]">Today</span>, Leading <span className="text-[#FF981F]">Tomorrow</span>
             </h1>
             <p className="text-white/90 text-lg max-w-3xl mx-auto">
               Our vision and mission shape confident, compassionate, and future-ready learners

@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Mail, Phone, MapPin, Clock, Send, PhoneCall, Facebook, Instagram, Twitter, Music } from "lucide-react";
+import { Mail, Phone, MapPin, Clock, Send, PhoneCall, Facebook, Instagram, Music } from "lucide-react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -57,7 +57,6 @@ export default function Contact() {
   const socialLinks = [
     { icon: Facebook, name: "Facebook", url: "https://www.facebook.com/vedangaInternationalschool" },
     { icon: Instagram, name: "Instagram", url: "https://www.instagram.com/vedangainternational" },
-    { icon: Twitter, name: "Twitter", url: "https://twitter.com/vedanga" },
     { icon: Music, name: "TikTok", url: "https://www.tiktok.com/@vedanga.internati" },
   ];
 
@@ -118,12 +117,12 @@ export default function Contact() {
                     </div>
                     <div>
                       <h3 className="font-medium text-gray-800">Email</h3>
-                      <p className="text-gray-600 mt-1">info@vedanga.edu.np
+                      <p className="text-gray-600 mt-1">vedanga79@gmail.com
                       </p>
                     </div>
                   </div>
                   <Link
-                    href="mailto:info@vedanga.edu.np"
+                    href="mailto:vedanga79@gmail.com"
                     className="flex items-center justify-center gap-2 px-4 py-2 bg-[#D41D33] hover:bg-[#b31828] text-white rounded-lg transition-colors"
                   >
                     <Mail className="h-4 w-4" />
