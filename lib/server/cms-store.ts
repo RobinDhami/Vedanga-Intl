@@ -261,7 +261,10 @@ function mapContactSubmission(
 }
 
 async function seedIfNeeded() {
-  await prisma.$transaction(async (tx) => {
+  // Vercel serverless functions can close a long transaction while the
+  // first request seeds all CMS collections. Use the shared Prisma client
+  // directly so each collection write can complete independently.
+  const tx = prisma;
     const [
       heroCount,
       noticeCount,
@@ -427,7 +430,6 @@ async function seedIfNeeded() {
         })),
       });
     }
-  });
 }
 
 async function ensureSeeded() {
