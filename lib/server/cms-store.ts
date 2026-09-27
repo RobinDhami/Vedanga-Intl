@@ -318,6 +318,7 @@ async function seedIfNeeded() {
 
     if (newsCount === 0) {
       await tx.newsArticle.createMany({
+        skipDuplicates: true,
         data: phaseOneSeed.news.map((item, index) => ({
           title: item.title,
           slug: item.slug,
@@ -336,6 +337,7 @@ async function seedIfNeeded() {
 
     if (eventCount === 0) {
       await tx.event.createMany({
+        skipDuplicates: true,
         data: phaseOneSeed.events.map((item, index) => ({
           title: item.title,
           slug: item.slug,
@@ -399,6 +401,7 @@ async function seedIfNeeded() {
 
     if (clubCount === 0) {
       await tx.club.createMany({
+        skipDuplicates: true,
         data: phaseFourSeed.clubs.map((item, index) => ({
           name: item.name,
           slug: item.slug,
