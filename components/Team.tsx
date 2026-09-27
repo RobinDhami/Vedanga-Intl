@@ -51,7 +51,7 @@ const Team = () => {
                             loading='lazy'
                             src={member.image_url || placeholderImage}
                             alt={member.name}
-                            className="w-full h-64 sm:h-72 md:h-80 lg:h-96 object-cover transform group-hover:scale-105 transition duration-300"
+                            className="w-full h-64 sm:h-72 md:h-80 lg:h-96 object-contain bg-gray-100 transform group-hover:scale-105 transition duration-300"
                             height={100}
                             width={100}
                         />
