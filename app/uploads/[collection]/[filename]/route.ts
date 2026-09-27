@@ -18,10 +18,13 @@ export async function GET(
     return new Response("Not found", { status: 404 });
   }
 
+  const extension = params.filename.toLowerCase().split(".").pop();
+  const contentType = extension === "png" ? "image/png" : extension === "webp" ? "image/webp" : "image/jpeg";
+
   return new Response(new Uint8Array(image), {
     headers: {
       "Cache-Control": "public, max-age=31536000, immutable",
-      "Content-Type": "image/webp",
+      "Content-Type": contentType,
       "Content-Disposition": "inline",
       "X-Content-Type-Options": "nosniff",
     },

@@ -7,9 +7,6 @@ import path from "path";
 
 export const MAX_IMAGE_UPLOAD_BYTES = 8 * 1024 * 1024;
 
-const MAX_IMAGE_PIXELS = 40_000_000;
-const MAX_IMAGE_DIMENSION = 1600;
-const WEBP_QUALITY = 82;
 const MANAGED_IMAGE_PATH = "/uploads/";
 
 const uploadCollections = [
@@ -26,7 +23,11 @@ const uploadCollections = [
 export type ImageUploadCollection = (typeof uploadCollections)[number];
 
 const allowedMimeTypes = new Set(["image/jpeg", "image/png", "image/webp"]);
-const allowedImageFormats = new Set(["jpeg", "png", "webp"]);
+const extensionByMimeType = new Map([
+  ["image/jpeg", "jpg"],
+  ["image/png", "png"],
+  ["image/webp", "webp"],
+]);
 
 export function isImageUploadCollection(value: string): value is ImageUploadCollection {
   return uploadCollections.includes(value as ImageUploadCollection);
@@ -61,30 +62,9 @@ export async function storeUploadedImage(file: File, collection: ImageUploadColl
     throw new Error("Images must be no larger than 8 MB.");
   }
 
-  const { default: sharp } = await import("sharp");
   const input = Buffer.from(await file.arrayBuffer());
-  const transformer = sharp(input, {
-    failOn: "error",
-    limitInputPixels: MAX_IMAGE_PIXELS,
-    sequentialRead: true,
-  });
-  const metadata = await transformer.metadata();
-  if (!metadata.format || !allowedImageFormats.has(metadata.format)) {
-    throw new Error("Only JPEG, PNG, and WebP images are supported.");
-  }
-
-  const output = await transformer
-    .rotate()
-    .resize({
-      width: MAX_IMAGE_DIMENSION,
-      height: MAX_IMAGE_DIMENSION,
-      fit: "inside",
-      withoutEnlargement: true,
-    })
-    .webp({ quality: WEBP_QUALITY, smartSubsample: true })
-    .toBuffer();
-
-  const filename = `${Date.now()}-${randomUUID()}.webp`;
+  const extension = extensionByMimeType.get(file.type) || "webp";
+  const filename = `${Date.now()}-${randomUUID()}.${extension}`;
   const relativePath = path.join(collection, filename);
   const outputPath = resolveManagedPath(relativePath);
   if (!outputPath) {
@@ -92,11 +72,11 @@ export async function storeUploadedImage(file: File, collection: ImageUploadColl
   }
 
   await mkdir(path.dirname(outputPath), { recursive: true });
-  await writeFile(outputPath, output, { flag: "wx" });
+  await writeFile(outputPath, input, { flag: "wx" });
 
   return {
     relativePath,
-    size: output.length,
+    size: input.length,
   };
 }
 
@@ -106,7 +86,7 @@ export async function readManagedImage(pathSegments: string[]) {
   }
 
   const filename = pathSegments[1];
-  if (!/^[0-9]+-[0-9a-f-]+\.webp$/i.test(filename)) {
+  if (!/^[0-9]+-[0-9a-f-]+\.(?:jpg|jpeg|png|webp)$/i.test(filename)) {
     return null;
   }
 
