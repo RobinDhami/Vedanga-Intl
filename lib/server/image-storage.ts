@@ -4,7 +4,6 @@ import { randomUUID } from "crypto";
 import { mkdir, readFile, unlink, writeFile } from "fs/promises";
 import path from "path";
 
-import sharp from "sharp";
 
 export const MAX_IMAGE_UPLOAD_BYTES = 8 * 1024 * 1024;
 
@@ -62,6 +61,7 @@ export async function storeUploadedImage(file: File, collection: ImageUploadColl
     throw new Error("Images must be no larger than 8 MB.");
   }
 
+  const { default: sharp } = await import("sharp");
   const input = Buffer.from(await file.arrayBuffer());
   const transformer = sharp(input, {
     failOn: "error",
