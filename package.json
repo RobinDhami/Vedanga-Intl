@@ -13,6 +13,10 @@
     "prisma:deploy": "prisma migrate deploy",
     "prisma:studio": "prisma studio"
   },
+  "optionalDependencies": {
+    "@img/sharp-linux-x64": "0.33.5",
+    "@img/sharp-libvips-linux-x64": "1.0.4"
+  },
   "dependencies": {
     "@hookform/resolvers": "^3.10.0",
     "@next/swc-wasm-nodejs": "13.5.1",

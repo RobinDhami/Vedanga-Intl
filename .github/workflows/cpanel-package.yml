@@ -1,0 +1,45 @@
+name: Build cPanel production package
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+concurrency:
+  group: cpanel-package-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci --include=optional
+      - name: Verify Linux image processor
+        run: node -e "require('sharp'); console.log('Linux Sharp loaded successfully')"
+      - name: Build standalone application
+        run: npm run build
+        env:
+          CPANEL_BUILD: '1'
+          DATABASE_URL: mysql://build:build@127.0.0.1:3306/build
+      - name: Prepare production archive
+        run: |
+          cp -r public .next/standalone/public
+          mkdir -p .next/standalone/.next
+          cp -r .next/static .next/standalone/.next/static
+          cp -r prisma .next/standalone/prisma
+          cd .next/standalone
+          node -e "require('sharp'); require('@prisma/client'); console.log('Production dependencies loaded successfully')"
+          zip -qr ../../vedanga-cpanel-production.zip .
+      - uses: actions/upload-artifact@v4
+        with:
+          name: vedanga-cpanel-production
+          path: vedanga-cpanel-production.zip
+          retention-days: 7
