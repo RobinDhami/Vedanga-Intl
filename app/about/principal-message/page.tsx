@@ -72,7 +72,7 @@ export default function PrincipalMessage() {
                   </div>
                   <div>
                     <h3 className="text-xs sm:text-sm font-medium text-gray-500">Phone</h3>
-                    <p className="text-gray-700 text-sm font-semibold sm:text-base">+9779812345678</p>
+                    <p className="text-gray-700 text-sm font-semibold sm:text-base">+977 9841398513</p>
                   </div>
                 </div>
               </div>

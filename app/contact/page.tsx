@@ -98,7 +98,7 @@ export default function Contact() {
                     </div>
                     <div>
                       <h3 className="font-medium text-gray-800">Phone</h3>
-                      <p className="text-gray-600 mt-1">+977 015372578</p>
+                      <p className="text-gray-600 mt-1">+977 9841398513</p>
                     </div>
                   </div>
                   <Link
@@ -136,7 +136,7 @@ export default function Contact() {
                   </div>
                   <div>
                     <h3 className="font-medium text-gray-800">Office Hours</h3>
-                    <p className="text-gray-600 mt-1">Monday - Friday: 8:00 AM - 4:00 PM</p>
+                    <p className="text-gray-600 mt-1">Monday - Friday: 7:00 AM - 5:00 PM</p>
                     <p className="text-gray-600">Saturday: 8:00 AM - 12:00 PM</p>
                   </div>
                 </div>
