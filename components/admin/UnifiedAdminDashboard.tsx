@@ -377,25 +377,6 @@ export function UnifiedAdminDashboard() {
           </div>
         </section>
 
-        <section className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-          {[...createCollections, ...reviewCollections].map(({ title, description, icon: Icon, countKey }) => (
-            <Card key={title} className="border-gray-200 shadow-sm">
-              <CardHeader className="space-y-4">
-                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#D41D33]/10 text-[#D41D33]">
-                  <Icon className="h-6 w-6" />
-                </div>
-                <div>
-                  <CardTitle className="text-xl">{title}</CardTitle>
-                  <CardDescription>{description}</CardDescription>
-                </div>
-              </CardHeader>
-              <CardContent>
-                <p className="text-4xl font-bold text-gray-900">{loading ? "--" : counts[countKey]}</p>
-              </CardContent>
-            </Card>
-          ))}
-        </section>
-
         <section className="space-y-6">
           <div className="space-y-2">
             <h2 className="text-2xl font-bold text-gray-900">Content Collections</h2>
