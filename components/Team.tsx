@@ -57,7 +57,7 @@ const Team = () => {
                         />
                         <div className="absolute z-50 bottom-0 left-0 right-0 px-4 py-3">
                             <h4 className="text-white font-semibold text-lg">{member.name}</h4>
-                            <p className="text-gray-300 text-sm">{member.position}</p>
+                            <p className="text-gray-300 text-sm">{member.subject || member.position}</p>
                         </div>
                     </div>
                 ))}

@@ -101,7 +101,7 @@ export default function OurTeam() {
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
                 <div className="absolute bottom-0 left-0 right-0 p-6">
                   <h3 className="text-xl font-bold text-white">{member.name}</h3>
-                  <p className="text-[#FAA02E] font-medium">{member.position}</p>
+                  <p className="text-[#FAA02E] font-medium">{member.subject || member.position}</p>
                 </div>
               </div>
 
