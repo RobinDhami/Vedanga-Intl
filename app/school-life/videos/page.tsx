@@ -5,6 +5,28 @@ import { motion } from 'framer-motion'
 import React from 'react'
 import { useEffect, useState } from 'react'
 
+function getVideoEmbedUrl(rawUrl: string) {
+    try {
+        const url = new URL(rawUrl);
+        const hostname = url.hostname.replace(/^www\./, '').toLowerCase();
+
+        if (hostname === 'youtu.be') {
+            const videoId = url.pathname.slice(1).split('/')[0];
+            return videoId ? `https://www.youtube.com/embed/${videoId}` : rawUrl;
+        }
+
+        if (hostname === 'youtube.com' || hostname === 'm.youtube.com') {
+            const videoId = url.searchParams.get('v')
+                || url.pathname.match(/^\/(?:embed|shorts|live)\/([^/?]+)/)?.[1];
+            return videoId ? `https://www.youtube.com/embed/${videoId}` : rawUrl;
+        }
+    } catch {
+        // Keep invalid or non-YouTube URLs unchanged so the iframe can report the issue.
+    }
+
+    return rawUrl;
+}
+
 const Videos = () => {
     const [videoItems, setVideoItems] = useState<VideoItem[]>([]);
 
@@ -44,7 +66,7 @@ const Videos = () => {
                             <div className="relative w-full h-0 pb-[56.25%]">
                                 <iframe
                                     className="absolute top-0 left-0 w-full h-full"
-                                    src={video.url}
+                                    src={getVideoEmbedUrl(video.url)}
                                     title={video.title}
                                     frameBorder="0"
                                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
