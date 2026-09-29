@@ -56,7 +56,6 @@ type CollectionItem =
 
 const NEWS_CATEGORY_OPTIONS = ["Academic", "Events", "Facilities", "International", "Sports"] as const;
 const EVENT_CATEGORY_OPTIONS = ["Academic", "Sports", "Cultural", "Community"] as const;
-const GALLERY_CATEGORY_OPTIONS = ["School Life", "Academics", "Sports", "Events", "Activities"] as const;
 
 function renderTitle(route: AdminCollectionRoute, item: CollectionItem) {
   if (route === "contact-submissions") {
@@ -257,7 +256,6 @@ function validatePayload(route: AdminCollectionRoute, payload: AdminSavePayload)
   }
 
   if (route === "gallery-images") {
-    if (!payload.title?.trim()) return { valid: false, message: "Title is required." };
     if (!payload.image_url?.trim()) return { valid: false, message: "Gallery image is required." };
     return { valid: true };
   }
@@ -647,25 +645,6 @@ export function AdminCollectionPage({ route }: { route: AdminCollectionRoute }) 
 
             {route === "gallery-images" && (
               <>
-                <label className="grid gap-2 text-sm font-medium text-gray-700">
-                  Title
-                  <input className="rounded-xl border border-gray-200 px-4 py-3 outline-none transition focus:border-[#D41D33]" value={form.title ?? ""} onChange={(event) => setForm((current) => ({ ...current, title: event.target.value }))} />
-                </label>
-                <label className="grid gap-2 text-sm font-medium text-gray-700">
-                  Category
-                  <select className="rounded-xl border border-gray-200 bg-white px-4 py-3 outline-none transition focus:border-[#D41D33]" value={form.category ?? ""} onChange={(event) => setForm((current) => ({ ...current, category: event.target.value }))}>
-                    <option value="">Select a category</option>
-                    {GALLERY_CATEGORY_OPTIONS.map((option) => (
-                      <option key={option} value={option}>
-                        {option}
-                      </option>
-                    ))}
-                  </select>
-                </label>
-                <label className="grid gap-2 text-sm font-medium text-gray-700">
-                  Description
-                  <textarea className="min-h-[120px] rounded-xl border border-gray-200 px-4 py-3 outline-none transition focus:border-[#D41D33]" value={form.description ?? ""} onChange={(event) => setForm((current) => ({ ...current, description: event.target.value }))} />
-                </label>
                 <ImageUploadField collection="gallery-images" value={form.image_url} onChange={(image_url) => setForm((current) => ({ ...current, image_url }))} required />
               </>
             )}

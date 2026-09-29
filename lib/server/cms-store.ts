@@ -672,7 +672,7 @@ export async function createAdminItem(key: CmsCollectionKey, payload: AdminSaveP
       const sortOrder = await prisma.galleryImage.count();
       const item = await prisma.galleryImage.create({
         data: {
-          title: payload.title?.trim() || "",
+          title: payload.title?.trim() || "Gallery image",
           description: payload.description?.trim() || "",
           category: payload.category?.trim() || "",
           takenOn: null,

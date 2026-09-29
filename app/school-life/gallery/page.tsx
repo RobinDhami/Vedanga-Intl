@@ -7,20 +7,17 @@ import {
   ChevronLeft,
   ChevronRight,
   Download,
-  Search,
   Share2,
   X,
   ZoomIn,
   ZoomOut,
 } from "lucide-react";
 import Image from "next/image";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function Gallery() {
   const [galleryImages, setGalleryImages] = useState<GalleryImageItem[]>([]);
   const [selectedImage, setSelectedImage] = useState<number | null>(null);
-  const [selectedCategory, setSelectedCategory] = useState("All");
-  const [searchQuery, setSearchQuery] = useState("");
   const [isZoomed, setIsZoomed] = useState(false);
 
   useEffect(() => {
@@ -32,18 +29,7 @@ export default function Gallery() {
     void load();
   }, []);
 
-  const categories = useMemo(() => {
-    const values = Array.from(new Set(galleryImages.map((item) => item.category).filter(Boolean)));
-    return ["All", ...values];
-  }, [galleryImages]);
-
-  const filteredImages = galleryImages
-    .filter((img) => selectedCategory === "All" || img.category === selectedCategory)
-    .filter(
-      (img) =>
-        img.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        img.description.toLowerCase().includes(searchQuery.toLowerCase())
-    );
+  const filteredImages = galleryImages;
 
   const selectedImageData = galleryImages.find((img) => img.id === selectedImage);
   const currentIndex = selectedImage ? galleryImages.findIndex((img) => img.id === selectedImage) : -1;
@@ -122,43 +108,6 @@ export default function Gallery() {
             Explore moments and memories from our school community through these captured images
           </p>
         </motion.div>
-
-        <div className="flex flex-col md:flex-row justify-between items-center gap-6 mb-12">
-          <motion.div
-            className="flex flex-wrap justify-center gap-4"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-          >
-            {categories.map((category) => (
-              <button
-                key={category}
-                onClick={() => setSelectedCategory(category)}
-                className={`px-6 py-2 rounded-full transition-all ${
-                  selectedCategory === category ? "bg-[#D41D33] text-white" : "bg-white text-gray-600 hover:bg-gray-100"
-                }`}
-              >
-                {category}
-              </button>
-            ))}
-          </motion.div>
-
-          <motion.div
-            className="relative w-full md:w-64"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.3 }}
-          >
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
-            <input
-              type="text"
-              placeholder="Search gallery..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 border border-gray-200 rounded-full focus:outline-none focus:ring-2 focus:ring-[#D41D33] focus:border-transparent"
-            />
-          </motion.div>
-        </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {filteredImages.map((image, index) => (
@@ -282,8 +231,6 @@ export default function Gallery() {
                 </div>
 
                 <div className="mt-4 text-white text-center">
-                  <h3 className="text-xl font-semibold">{selectedImageData.title}</h3>
-                  <p className="text-gray-300">{selectedImageData.description}</p>
                   <p className="text-sm text-gray-400 mt-2">
                     {currentIndex + 1} of {galleryImages.length}
                     {selectedImageData.taken_on ? ` • ${selectedImageData.taken_on}` : ""}
