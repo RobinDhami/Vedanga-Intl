@@ -697,7 +697,7 @@ export async function createAdminItem(key: CmsCollectionKey, payload: AdminSaveP
       return mapVideo(item);
     }
     case "team-members": {
-      const sortOrder = await prisma.teamMember.count();
+      const sortOrder = typeof payload.sort_order === "number" ? payload.sort_order : await prisma.teamMember.count();
       const item = await prisma.teamMember.create({
         data: {
           name: payload.name?.trim() || "",
@@ -916,6 +916,7 @@ export async function updateAdminItem(key: CmsCollectionKey, identifier: string,
           phone: payload.phone?.trim() || "",
           teamGroup: payload.team_group || "academic",
           showOnHomepage: Boolean(payload.show_on_homepage),
+          sortOrder: typeof payload.sort_order === "number" ? payload.sort_order : current.sortOrder,
           isPublished: Boolean(payload.is_published),
         },
       });

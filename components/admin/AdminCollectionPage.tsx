@@ -215,6 +215,7 @@ function getEditForm(route: AdminCollectionRoute, item: CollectionItem): AdminSa
         phone: member.phone,
         team_group: member.team_group ?? "academic",
         show_on_homepage: member.show_on_homepage ?? false,
+        sort_order: member.sort_order ?? 0,
         is_published: member.is_published ?? false,
       };
     }
@@ -691,6 +692,11 @@ export function AdminCollectionPage({ route }: { route: AdminCollectionRoute }) 
                 <label className="grid gap-2 text-sm font-medium text-gray-700">
                   Name
                   <input className="rounded-xl border border-gray-200 px-4 py-3 outline-none transition focus:border-[#D41D33]" value={form.name ?? ""} onChange={(event) => setForm((current) => ({ ...current, name: event.target.value }))} />
+                </label>
+                <label className="grid gap-2 text-sm font-medium text-gray-700">
+                  Display Order
+                  <span className="text-xs font-normal text-gray-500">Lower numbers appear first.</span>
+                  <input type="number" min="0" step="1" className="rounded-xl border border-gray-200 px-4 py-3 outline-none transition focus:border-[#D41D33]" value={form.sort_order ?? 0} onChange={(event) => setForm((current) => ({ ...current, sort_order: Number(event.target.value) }))} />
                 </label>
                 <label className="grid gap-2 text-sm font-medium text-gray-700">
                   Position

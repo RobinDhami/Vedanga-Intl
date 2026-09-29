@@ -180,6 +180,7 @@ export interface AdminSavePayload {
   phone?: string;
   team_group?: "academic" | "eca";
   show_on_homepage?: boolean;
+  sort_order?: number;
   employment_type?: string;
   experience?: string;
   education?: string;
