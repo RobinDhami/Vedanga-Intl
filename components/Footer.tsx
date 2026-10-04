@@ -31,7 +31,7 @@ const Footer = () => {
                                 <span className="font-bold text-base text-[#D41326] -mb-2">International School</span>
                             </div>
                         </div>
-                        <p className="text-gray-400">Nurturing Minds, Shaping Futures</p>
+                        <p className="text-gray-400">Learning Today, Leading Tomorrow</p>
                         <div className="space-y-2">
                             <p className="text-gray-400">Rabibhawan, Kathmandu</p>
 
