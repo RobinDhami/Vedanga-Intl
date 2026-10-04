@@ -281,8 +281,8 @@ const WhyUs = () => {
                             <Image
                                 height={100}
                                 width={100}
-                                src="/images/foto13.jpg"
-                                alt="Classroom activities at Vedanga Batika"
+                                src="/images/our-curriculum.jpg"
+                                alt="Students learning through creative, practical, and collaborative activities at Vedanga"
                                 className="relative w-full h-96 object-cover rounded-lg shadow-xl z-10"
                             />
                         </div>
