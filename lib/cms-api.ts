@@ -17,7 +17,7 @@ import type {
   TeamMemberItem,
   VideoItem,
 } from "@/types/cms";
-import { phaseFourSeed, phaseOneSeed, phaseThreeSeed, phaseTwoSeed } from "@/lib/cms-seed";
+import { heroSlidesSeed } from "@/lib/cms-seed";
 
 function getApiBaseUrl() {
   const configured = process.env.NEXT_PUBLIC_CMS_API_BASE_URL?.replace(/\/$/, "");
@@ -102,7 +102,7 @@ export async function getPhaseOneCollections(): Promise<PhaseOneCollections> {
 
     return { heroSlides, notices, news, events };
   } catch {
-    return phaseOneSeed;
+    return { heroSlides: heroSlidesSeed, notices: [], news: [], events: [] };
   }
 }
 
@@ -113,10 +113,10 @@ export async function getLatestNoticeOverlay(): Promise<Notice | null> {
       return notice;
     }
   } catch {
-    // Fall back to seeded data below.
+    // Dynamic notices must come from the CMS.
   }
 
-  return phaseOneSeed.notices.find((notice) => notice.show_in_overlay) ?? phaseOneSeed.notices[0] ?? null;
+  return null;
 }
 
 export async function getAdminPhaseOneCollections(): Promise<PhaseOneCollections> {
@@ -135,7 +135,7 @@ export async function getPhaseThreeCollections(): Promise<PhaseThreeCollections>
     const [videos, teamMembers] = await Promise.all([fetchJson<VideoItem[]>("/videos/"), getTeamMembers()]);
     return { videos, teamMembers };
   } catch {
-    return phaseThreeSeed;
+    return { videos: [], teamMembers: [] };
   }
 }
 
@@ -155,7 +155,7 @@ export async function getPhaseFourCollections(): Promise<PhaseFourCollections> {
     ]);
     return { jobOpenings, clubs };
   } catch {
-    return phaseFourSeed;
+    return { jobOpenings: [], clubs: [] };
   }
 }
 
@@ -171,10 +171,10 @@ export async function getClubs() {
   try {
     return await fetchJson<ClubItem[]>("/clubs/");
   } catch {
-    // Fall back below.
+    // Dynamic clubs must come from the CMS.
   }
 
-  return phaseFourSeed.clubs;
+  return [];
 }
 
 export async function getTeamMembers(options?: { group?: "academic" | "eca"; homepage?: boolean }) {
@@ -190,20 +190,10 @@ export async function getTeamMembers(options?: { group?: "academic" | "eca"; hom
     const path = params.size ? `/team-members/?${params.toString()}` : "/team-members/";
     return await fetchJson<TeamMemberItem[]>(path);
   } catch {
-    // Fall back to seed data below.
+    // Dynamic team members must come from the CMS.
   }
 
-  return phaseThreeSeed.teamMembers.filter((member) => {
-    if (options?.group && member.team_group !== options.group) {
-      return false;
-    }
-
-    if (options?.homepage && !member.show_on_homepage) {
-      return false;
-    }
-
-    return true;
-  });
+  return [];
 }
 
 export async function getPhaseTwoCollections(): Promise<PhaseTwoCollections> {
@@ -215,7 +205,7 @@ export async function getPhaseTwoCollections(): Promise<PhaseTwoCollections> {
       contactSubmissions: [],
     };
   } catch {
-    return phaseTwoSeed;
+    return { galleryImages: [], contactSubmissions: [] };
   }
 }
 
@@ -347,7 +337,7 @@ export async function getHeroSlides(): Promise<HeroSlide[]> {
   try {
     return await fetchJson<HeroSlide[]>("/hero-slides/");
   } catch {
-    return phaseOneSeed.heroSlides;
+    return heroSlidesSeed;
   }
 }
 
@@ -355,7 +345,7 @@ export async function getNotices(): Promise<Notice[]> {
   try {
     return await fetchJson<Notice[]>("/notices/");
   } catch {
-    return phaseOneSeed.notices;
+    return [];
   }
 }
 
@@ -363,7 +353,7 @@ export async function getNewsArticles(): Promise<NewsArticle[]> {
   try {
     return await fetchJson<NewsArticle[]>("/news/");
   } catch {
-    return phaseOneSeed.news;
+    return [];
   }
 }
 
@@ -376,7 +366,7 @@ export async function getEvents(): Promise<EventItem[]> {
   try {
     return await fetchJson<EventItem[]>("/events/");
   } catch {
-    return phaseOneSeed.events;
+    return [];
   }
 }
 

@@ -2,7 +2,7 @@ import "server-only";
 
 import type { Prisma } from "@prisma/client";
 
-import { phaseFourSeed, phaseOneSeed, phaseThreeSeed, phaseTwoSeed } from "@/lib/cms-seed";
+import { heroSlidesSeed } from "@/lib/cms-seed";
 import { deleteManagedImage } from "@/lib/server/image-storage";
 import { prisma } from "@/lib/server/prisma";
 import type {
@@ -265,31 +265,11 @@ async function seedIfNeeded() {
   // first request seeds all CMS collections. Use the shared Prisma client
   // directly so each collection write can complete independently.
   const tx = prisma;
-    const [
-      heroCount,
-      noticeCount,
-      newsCount,
-      eventCount,
-      galleryCount,
-      videoCount,
-      teamMemberCount,
-      clubCount,
-      jobOpeningCount,
-    ] = await Promise.all([
-      tx.heroSlide.count(),
-      tx.notice.count(),
-      tx.newsArticle.count(),
-      tx.event.count(),
-      tx.galleryImage.count(),
-      tx.video.count(),
-      tx.teamMember.count(),
-      tx.club.count(),
-      tx.jobOpening.count(),
-    ]);
+    const heroCount = await tx.heroSlide.count();
 
     if (heroCount === 0) {
       await tx.heroSlide.createMany({
-        data: phaseOneSeed.heroSlides.map((item, index) => ({
+          data: heroSlidesSeed.map((item, index) => ({
           title: item.title,
           subtitle: item.subtitle,
           imageUrl: item.image_url,
@@ -301,138 +281,6 @@ async function seedIfNeeded() {
       });
     }
 
-    if (noticeCount === 0) {
-      await tx.notice.createMany({
-        data: phaseOneSeed.notices.map((item, index) => ({
-          title: item.title,
-          excerpt: item.excerpt,
-          imageUrl: item.image_url || "",
-          link: item.link || "",
-          showInOverlay: Boolean(item.show_in_overlay),
-          sortOrder: index,
-          isPublished: Boolean(item.is_published),
-          publishedAt: item.published_at || null,
-        })),
-      });
-    }
-
-    if (newsCount === 0) {
-      await tx.newsArticle.createMany({
-        skipDuplicates: true,
-        data: phaseOneSeed.news.map((item, index) => ({
-          title: item.title,
-          slug: item.slug,
-          excerpt: item.excerpt,
-          content: item.content,
-          category: item.category,
-          author: item.author,
-          imageUrl: item.image_url || "",
-          tags: item.tags,
-          sortOrder: index,
-          isPublished: Boolean(item.is_published),
-          publishedAt: item.published_at || null,
-        })),
-      });
-    }
-
-    if (eventCount === 0) {
-      await tx.event.createMany({
-        skipDuplicates: true,
-        data: phaseOneSeed.events.map((item, index) => ({
-          title: item.title,
-          slug: item.slug,
-          description: item.description,
-          category: item.category,
-          venue: item.venue,
-          date: item.date,
-          time: item.time || "",
-          schedule: item.schedule ?? [],
-          imageUrl: item.image_url || "",
-          sortOrder: index,
-          isPublished: Boolean(item.is_published),
-          publishedAt: item.published_at || null,
-        })),
-      });
-    }
-
-    if (galleryCount === 0) {
-      await tx.galleryImage.createMany({
-        data: phaseTwoSeed.galleryImages.map((item, index) => ({
-          title: item.title,
-          description: item.description,
-          category: item.category,
-          takenOn: item.taken_on || null,
-          imageUrl: item.image_url || "",
-          sortOrder: item.sort_order ?? index,
-          isPublished: Boolean(item.is_published),
-        })),
-      });
-    }
-
-    if (videoCount === 0) {
-      await tx.video.createMany({
-        data: phaseThreeSeed.videos.map((item, index) => ({
-          title: item.title,
-          subtitle: item.subtitle,
-          url: item.url,
-          sortOrder: item.sort_order ?? index,
-          isPublished: Boolean(item.is_published),
-        })),
-      });
-    }
-
-    if (teamMemberCount === 0) {
-      await tx.teamMember.createMany({
-        data: phaseThreeSeed.teamMembers.map((item, index) => ({
-          name: item.name,
-          position: item.position,
-          imageUrl: item.image_url || "",
-          qualifications: item.qualifications || "",
-          subject: item.subject || "",
-          email: item.email || "",
-          phone: item.phone || "",
-          teamGroup: item.team_group || "academic",
-          showOnHomepage: Boolean(item.show_on_homepage),
-          sortOrder: item.sort_order ?? index,
-          isPublished: Boolean(item.is_published),
-        })),
-      });
-    }
-
-    if (clubCount === 0) {
-      await tx.club.createMany({
-        skipDuplicates: true,
-        data: phaseFourSeed.clubs.map((item, index) => ({
-          name: item.name,
-          slug: item.slug,
-          description: item.description,
-          iconName: item.icon_name,
-          members: item.members,
-          meetingDay: item.meeting_day || "",
-          activities: item.activities,
-          advisor: item.advisor || "",
-          imageUrl: item.image_url || "",
-          sortOrder: item.sort_order ?? index,
-          isPublished: Boolean(item.is_published),
-        })),
-      });
-    }
-
-    if (jobOpeningCount === 0) {
-      await tx.jobOpening.createMany({
-        data: phaseFourSeed.jobOpenings.map((item, index) => ({
-          title: item.title,
-          department: item.department,
-          employmentType: item.employment_type,
-          experience: item.experience,
-          education: item.education,
-          description: item.description,
-          imageUrl: item.image_url || "",
-          sortOrder: item.sort_order ?? index,
-          isPublished: Boolean(item.is_published),
-        })),
-      });
-    }
 }
 
 async function ensureSeeded() {
