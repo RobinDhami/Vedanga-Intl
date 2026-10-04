@@ -34,7 +34,7 @@ const subjects: Subjects = {
       description: "Problem-solving techniques with real-world applications and logical reasoning."
     },
     {
-      name: "Sciences",
+      name: "Science and Technology",
       icon: <FlaskConical />,
       description: "Hands-on experiments and theoretical knowledge across scientific disciplines."
     },
@@ -44,12 +44,12 @@ const subjects: Subjects = {
       description: "Exploration of history, geography, and social structures to foster global awareness."
     },
     {
-      name: "Health, Sanitation and Physical Education",
+      name: "Health, Physical Education and Creative Arts",
       icon: <ThermometerIcon />,
       description: "Promoting health, hygiene, and physical fitness through interactive activities."
     },
     {
-      name: "Computer",
+      name: "Computer Science",
       icon: <Computer />,
       description: "Digital literacy, programming basics, and practical applications of technology."
     },
@@ -70,17 +70,12 @@ const subjects: Subjects = {
       icon: <Languages />,
       description: "Preservation and promotion of local language and cultural heritage."
     },
-    {
-      name: "Spanish",
-      icon: <Languages />,
-      description: "Global opportunities and cultural exchange through language proficiency."
-    },
   ],
   "Technology": [
     { name: "Coding", icon: <Code />, description: "Modern programming languages and concepts" },
     { name: "Robotics", icon: <Rocket />, description: "Engineering and creativity combined" },
     { name: "AI Basics", icon: <BrainCircuit />, description: "Introduction to future technologies" },
-    { name: "STEM", icon: <FlaskConical />, description: "Integrated science, technology, engineering, and mathematics learning" }
+    { name: "STEAM", icon: <FlaskConical />, description: "Integrated science, technology, engineering, arts, and mathematics learning" }
   ],
   "Life & Career": [
     { name: "Entrepreneurship and Financial Literacy", icon: <IndianRupee />, description: "Building initiative, financial awareness, and practical decision-making" },

@@ -325,8 +325,8 @@ export const PROGRAM_LIST: ProgramListItem[] = [
     slug: "middle-school",
   },
   {
-    title: "Secondary School (Grades 9-12)",
-    grades: "Grades 9-12",
+    title: "Secondary School (Grades 9-10)",
+    grades: "Grades 9-10",
     description:
       "Prepare students for higher education and careers with advanced academics, leadership opportunities, internships, entrepreneurship, and career guidance.",
     icon: <GraduationCap className="h-8 w-8" />,
