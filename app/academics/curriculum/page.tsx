@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import { BookOpen, BrainCircuit, Calculator, Code, Computer, FlaskConical, FolderOpenDot, Footprints, Globe, HandHeart, Handshake, HopOff, IndianRupee, Languages, Leaf, Music, Network, Palette, Rocket, Shield, Smile, ThermometerIcon, ThermometerSnowflake, Turtle, Users, WholeWord } from "lucide-react";
+import Image from "next/image";
 import { useState } from "react";
 
 interface Subject {
@@ -279,16 +280,14 @@ export default function Curriculum() {
                 </div>
               </div>
             </div>
-            <div className="flex flex-col justify-center items-center bg-gray-50 p-8 lg:p-12 border-t lg:border-t-0 lg:border-l border-gray-200">
-              <div className="text-center">
-                <div className="text-5xl font-bold text-[#D41D33] mb-2">87%</div>
-                <p className="text-gray-600 text-2xl mb-6">
-                  of graduates feel exceptionally prepared for future challenges
-                </p>
-                <p className="text-gray-600 text-2xl">
-                  Preparing our future leaders
-                </p>
-              </div>
+            <div className="relative min-h-[320px] overflow-hidden border-t border-gray-200 bg-gray-50 lg:border-l lg:border-t-0">
+              <Image
+                src="/images/robotics.jpg"
+                alt="Students working together on a robotics project at Vedanga"
+                fill
+                sizes="(min-width: 1024px) 50vw, 100vw"
+                className="object-cover"
+              />
             </div>
           </div>
         </div>
