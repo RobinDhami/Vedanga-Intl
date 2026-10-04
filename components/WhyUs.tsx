@@ -445,7 +445,7 @@ const WhyUs = () => {
                                 title: "Cafeteria",
                                 desc: "Fresh & nutritious meals prepared under hygienic conditions by trained staff",
                                 icon: <Utensils className="w-8 h-8" />,
-                                img: "/images/foto1.jpg"
+                                img: "/images/cafeteria.jpg"
                             },
                             {
                                 title: "Library",
@@ -457,7 +457,7 @@ const WhyUs = () => {
                                 title: "Infirmary",
                                 desc: "Staffed with qualified nurses to provide first aid and maintain health records",
                                 icon: <HeartPulse className="w-8 h-8" />,
-                                img: "/images/foto13.jpg"
+                                img: "/images/infirmary.jpg"
                             },
                             {
                                 title: "Transportation",
