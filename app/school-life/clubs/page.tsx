@@ -44,7 +44,7 @@ export default function Clubs() {
           </p>
         </motion.div>
 
-        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid items-start gap-8 md:grid-cols-2 lg:grid-cols-3">
           {clubs.map((club, index) => {
             const Icon = iconMap[club.icon_name] ?? Code;
             return (
@@ -65,7 +65,7 @@ export default function Clubs() {
                     sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   />
                 </div>
-                <div className="p-6 h-full flex flex-col">
+                <div className="p-6">
                   <div className="flex items-start space-x-4 mb-4">
                     <div className="p-3 bg-[#D41D33]/10 text-[#D41D33] rounded-lg">
                       <Icon className="h-6 w-6" />
@@ -79,7 +79,7 @@ export default function Clubs() {
                     </div>
                   </div>
 
-                  <p className="text-gray-600 mb-5 flex-grow">{club.description}</p>
+                  <p className="mb-5 text-gray-600">{club.description}</p>
 
                   <div className="mb-5">
                     <h4 className="text-sm font-semibold text-gray-700 mb-2 uppercase tracking-wider">Activities</h4>
@@ -95,7 +95,7 @@ export default function Clubs() {
                     </div>
                   </div>
 
-                  <div className="mt-auto pt-4 border-t border-gray-100">
+                  <div className="border-t border-gray-100 pt-4">
                     <div className="flex flex-col xl:flex-row md:justify-between text-sm text-gray-500 mb-4">
                       <div className="flex items-center">
                         <span className="font-medium">Advisor:</span>
