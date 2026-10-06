@@ -245,7 +245,6 @@ export function UnifiedAdminDashboard() {
     if (activeCollection === "clubs") {
       if (!form.name?.trim()) return { valid: false, message: "Name is required." };
       if (!form.description?.trim()) return { valid: false, message: "Description is required." };
-      if (!form.image_url?.trim()) return { valid: false, message: "Club image is required." };
       return { valid: true };
     }
 
@@ -702,7 +701,7 @@ export function UnifiedAdminDashboard() {
                     Activities
                     <textarea className="min-h-[100px] rounded-xl border border-gray-200 px-4 py-3 outline-none transition focus:border-[#D41D33]" placeholder="One per line or comma separated" value={Array.isArray(form.activities) ? form.activities.join("\n") : ""} onChange={(event) => setForm((current) => ({ ...current, activities: event.target.value.split(/\r?\n|,/).map((item) => item.trim()).filter(Boolean) }))} />
                   </label>
-                  <ImageUploadField collection="clubs" value={form.image_url} onChange={(image_url) => setForm((current) => ({ ...current, image_url }))} required />
+                  <ImageUploadField collection="clubs" value={form.image_url} onChange={(image_url) => setForm((current) => ({ ...current, image_url }))} />
                 </>
               )}
 

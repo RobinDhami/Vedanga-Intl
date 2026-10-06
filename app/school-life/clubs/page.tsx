@@ -58,7 +58,7 @@ export default function Clubs() {
               >
                 <div className="relative h-52 w-full overflow-hidden bg-gray-100">
                   <Image
-                    src={club.image_url}
+                    src={club.image_url || "/images/foto18.jpg"}
                     alt={`${club.name} club`}
                     fill
                     className="object-cover transition-transform duration-500 group-hover:scale-105"

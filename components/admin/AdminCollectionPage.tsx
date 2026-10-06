@@ -274,7 +274,6 @@ function validatePayload(route: AdminCollectionRoute, payload: AdminSavePayload)
   if (route === "clubs") {
     if (!payload.name?.trim()) return { valid: false, message: "Club name is required." };
     if (!payload.description?.trim()) return { valid: false, message: "Description is required." };
-    if (!payload.image_url?.trim()) return { valid: false, message: "Club image is required." };
     return { valid: true };
   }
 
@@ -765,7 +764,7 @@ export function AdminCollectionPage({ route }: { route: AdminCollectionRoute }) 
                   Activities
                   <textarea className="min-h-[100px] rounded-xl border border-gray-200 px-4 py-3 outline-none transition focus:border-[#D41D33]" value={Array.isArray(form.activities) ? form.activities.join("\n") : ""} onChange={(event) => setForm((current) => ({ ...current, activities: event.target.value.split(/\r?\n|,/).map((item) => item.trim()).filter(Boolean) }))} />
                 </label>
-                <ImageUploadField collection="clubs" value={form.image_url} onChange={(image_url) => setForm((current) => ({ ...current, image_url }))} required />
+                <ImageUploadField collection="clubs" value={form.image_url} onChange={(image_url) => setForm((current) => ({ ...current, image_url }))} />
               </>
             )}
 

@@ -54,7 +54,7 @@ export const ClubDetail = ({ club }: { club: ClubItem }) => {
         <article className="bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100">
           <div className="relative h-[50vh] max-h-[600px]">
             <Image
-              src={club.image_url}
+              src={club.image_url || "/images/foto18.jpg"}
               alt={club.name}
               fill
               className="object-cover"
