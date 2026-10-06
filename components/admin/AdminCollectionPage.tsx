@@ -17,6 +17,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { subscribeToCmsAuthChanged } from "@/lib/cms-auth-events";
+import { convertBsDateToAd, formatAdDateAsBs } from "@/lib/nepali-date";
 import {
   deleteAdminItem,
   getAdminPhaseFourCollections,
@@ -102,7 +103,8 @@ function renderSummary(route: AdminCollectionRoute, item: CollectionItem) {
     }
     case "events": {
       const event = item as EventItem;
-      return [event.category, event.venue, event.date];
+      const bsDate = formatAdDateAsBs(event.date);
+      return [event.category, event.venue, bsDate ? `${bsDate} BS` : event.date];
     }
     case "gallery-images": {
       const gallery = item as GalleryImageItem;
@@ -299,6 +301,7 @@ export function AdminCollectionPage({ route }: { route: AdminCollectionRoute }) 
   const [editorOpen, setEditorOpen] = useState(false);
   const [editingItem, setEditingItem] = useState<CollectionItem | null>(null);
   const [form, setForm] = useState<AdminSavePayload>({});
+  const [eventBsDate, setEventBsDate] = useState("");
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState("");
 
@@ -311,6 +314,7 @@ export function AdminCollectionPage({ route }: { route: AdminCollectionRoute }) 
     setEditorOpen(false);
     setEditingItem(null);
     setForm({});
+    setEventBsDate("");
     setMessage("");
   };
 
@@ -374,6 +378,7 @@ export function AdminCollectionPage({ route }: { route: AdminCollectionRoute }) 
   const openEdit = (item: CollectionItem) => {
     setEditingItem(item);
     setForm(getEditForm(route, item));
+    setEventBsDate(route === "events" ? formatAdDateAsBs((item as EventItem).date) : "");
     setMessage("");
     setEditorOpen(true);
   };
@@ -635,8 +640,20 @@ export function AdminCollectionPage({ route }: { route: AdminCollectionRoute }) 
                     <input className="rounded-xl border border-gray-200 px-4 py-3 outline-none transition focus:border-[#D41D33]" value={form.venue ?? ""} onChange={(event) => setForm((current) => ({ ...current, venue: event.target.value }))} />
                   </label>
                   <label className="grid gap-2 text-sm font-medium text-gray-700">
-                    Event date
-                    <input type="date" className="rounded-xl border border-gray-200 px-4 py-3 outline-none transition focus:border-[#D41D33]" value={form.date ?? ""} onChange={(event) => setForm((current) => ({ ...current, date: event.target.value }))} />
+                    Event date (BS)
+                    <input
+                      type="text"
+                      inputMode="numeric"
+                      placeholder="YYYY-MM-DD"
+                      className="rounded-xl border border-gray-200 px-4 py-3 outline-none transition focus:border-[#D41D33]"
+                      value={eventBsDate}
+                      onChange={(event) => {
+                        const value = event.target.value;
+                        setEventBsDate(value);
+                        setForm((current) => ({ ...current, date: convertBsDateToAd(value) ?? "" }));
+                      }}
+                    />
+                    <span className="text-xs font-normal text-gray-500">Enter the date in Bikram Sambat (BS).</span>
                   </label>
                 </div>
                 <ImageUploadField collection="events" value={form.image_url} onChange={(image_url) => setForm((current) => ({ ...current, image_url }))} required />

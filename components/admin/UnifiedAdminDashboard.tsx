@@ -31,6 +31,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { emitCmsAuthChanged } from "@/lib/cms-auth-events";
+import { convertBsDateToAd } from "@/lib/nepali-date";
 import {
   type AdminCollection,
   getAdminPhaseFourCollections,
@@ -121,6 +122,7 @@ export function UnifiedAdminDashboard() {
   const [editorOpen, setEditorOpen] = useState(false);
   const [activeCollection, setActiveCollection] = useState<CreateCollectionKey | null>(null);
   const [form, setForm] = useState<AdminSavePayload>({});
+  const [eventBsDate, setEventBsDate] = useState("");
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState("");
 
@@ -172,6 +174,7 @@ export function UnifiedAdminDashboard() {
   const openCreate = (collection: CreateCollectionKey) => {
     setActiveCollection(collection);
     setForm(emptyFormFor(collection));
+    setEventBsDate("");
     setMessage("");
     setEditorOpen(true);
   };
@@ -180,6 +183,7 @@ export function UnifiedAdminDashboard() {
     setEditorOpen(false);
     setActiveCollection(null);
     setForm({});
+    setEventBsDate("");
     setMessage("");
   };
 
@@ -561,8 +565,20 @@ export function UnifiedAdminDashboard() {
                       <input className="rounded-xl border border-gray-200 px-4 py-3 outline-none transition focus:border-[#D41D33]" value={form.venue ?? ""} onChange={(event) => setForm((current) => ({ ...current, venue: event.target.value }))} />
                     </label>
                     <label className="grid gap-2 text-sm font-medium text-gray-700">
-                      Event date
-                      <input type="date" className="rounded-xl border border-gray-200 px-4 py-3 outline-none transition focus:border-[#D41D33]" value={form.date ?? ""} onChange={(event) => setForm((current) => ({ ...current, date: event.target.value }))} />
+                      Event date (BS)
+                      <input
+                        type="text"
+                        inputMode="numeric"
+                        placeholder="YYYY-MM-DD"
+                        className="rounded-xl border border-gray-200 px-4 py-3 outline-none transition focus:border-[#D41D33]"
+                        value={eventBsDate}
+                        onChange={(event) => {
+                          const value = event.target.value;
+                          setEventBsDate(value);
+                          setForm((current) => ({ ...current, date: convertBsDateToAd(value) ?? "" }));
+                        }}
+                      />
+                      <span className="text-xs font-normal text-gray-500">Enter the date in Bikram Sambat (BS).</span>
                     </label>
                   </div>
                   <ImageUploadField collection="events" value={form.image_url} onChange={(image_url) => setForm((current) => ({ ...current, image_url }))} required />

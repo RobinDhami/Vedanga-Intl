@@ -24,6 +24,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { emitCmsAuthChanged } from "@/lib/cms-auth-events";
+import { convertBsDateToAd } from "@/lib/nepali-date";
 import {
   getAdminPhaseOneCollections,
   getPhaseOneCollections,
@@ -93,6 +94,7 @@ export function PhaseOneDashboard() {
   const [editingIdentifier, setEditingIdentifier] = useState<string | number | null>(null);
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState<string>("");
+  const [eventBsDate, setEventBsDate] = useState("");
   const [form, setForm] = useState<AdminSavePayload>({
     title: "",
     subtitle: "",
@@ -129,6 +131,7 @@ export function PhaseOneDashboard() {
     setActiveEditor(null);
     setEditingIdentifier(null);
     setMessage("");
+    setEventBsDate("");
   };
 
   const load = async () => {
@@ -503,13 +506,20 @@ export function PhaseOneDashboard() {
                     />
                   </label>
                   <label className="grid gap-2 text-sm font-medium text-gray-700">
-                    Event date
+                    Event date (BS)
                     <input
-                      type="date"
+                      type="text"
+                      inputMode="numeric"
+                      placeholder="YYYY-MM-DD"
                       className="rounded-xl border border-gray-200 px-4 py-3 outline-none transition focus:border-[#D41D33]"
-                      value={form.date ?? ""}
-                      onChange={(event) => setForm((current) => ({ ...current, date: event.target.value }))}
+                      value={eventBsDate}
+                      onChange={(event) => {
+                        const value = event.target.value;
+                        setEventBsDate(value);
+                        setForm((current) => ({ ...current, date: convertBsDateToAd(value) ?? "" }));
+                      }}
                     />
+                    <span className="text-xs font-normal text-gray-500">Enter the date in Bikram Sambat (BS).</span>
                   </label>
                 </div>
               )}
