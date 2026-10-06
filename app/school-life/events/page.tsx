@@ -41,6 +41,7 @@ export default function Events() {
     if (eventDate < now && diffInDays < 7) return `Event finished ${Math.floor(diffInDays)} day${Math.floor(diffInDays) > 1 ? "s" : ""} ago `;
     if (eventDate > now && diffInDays * -1 > 7) return `${Math.floor(diffInDays * -1 / 7)} week${Math.floor(diffInDays * -1 / 7) > 1 ? "s" : ""} to go `;
     if (eventDate > now && diffInDays < 7) return ` ${Math.floor(diffInDays * -1)} day${Math.floor(diffInDays) < 1 ? "s" : ""} to go `;
+    if (Number.isNaN(eventDate.getTime())) return "Date to be announced";
     return eventDate.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
   };
 
@@ -53,7 +54,7 @@ export default function Events() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <h1 className="text-3xl sm:text-4xl font-bold text-[#D41D33] mb-3">Upcoming Major Events</h1>
+          <h1 className="text-3xl sm:text-4xl font-bold text-[#D41D33] mb-3">Events</h1>
           <p className="text-lg text-gray-600 max-w-3xl mx-auto">
             Discover exciting activities and important dates in our school community
           </p>
@@ -98,7 +99,7 @@ export default function Events() {
                   <div className="absolute inset-0 bg-gradient-to-t from-black/10 via-black/5 to-transparent group-hover:from-black/20 transition-colors z-10" />
                   <Image
                     loading="lazy"
-                    src={event.image_url}
+                    src={event.image_url || "/images/NoImage.png"}
                     alt={event.title}
                     fill
                     className="object-cover"

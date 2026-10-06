@@ -29,10 +29,10 @@ const LatestEvents = () => {
                         What&apos;s Happening
                     </span>
                     <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-3 sm:mb-4">
-                        Upcoming <span className="text-[#D41D33]">Events</span>
+                        <span className="text-[#D41D33]">Events</span>
                     </h2>
                     <p className="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto">
-                        Discover our upcoming activities and join the community
+                        Discover activities and memorable events from our school community
                     </p>
                 </motion.div>
 
@@ -49,7 +49,7 @@ const LatestEvents = () => {
                         >
                             <div className="relative h-48 sm:h-52 md:h-60 overflow-hidden">
                                 <Image
-                                    src={event.image_url}
+                                    src={event.image_url || '/images/NoImage.png'}
                                     alt={event.title}
                                     fill
                                     className="object-cover transition-transform duration-500 group-hover:scale-110"

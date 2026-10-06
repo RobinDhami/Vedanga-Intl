@@ -571,7 +571,7 @@ export function AdminCollectionPage({ route }: { route: AdminCollectionRoute }) 
                     <span className="text-xs font-normal text-gray-500">Enter the date in Bikram Sambat (BS).</span>
                   </label>
                 </div>
-                <ImageUploadField collection="events" value={form.image_url} onChange={(image_url) => setForm((current) => ({ ...current, image_url }))} required />
+                <ImageUploadField collection="events" value={form.image_url} onChange={(image_url) => setForm((current) => ({ ...current, image_url }))} />
               </>
             )}
 

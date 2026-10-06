@@ -55,7 +55,7 @@ export function EventDetail({ event }: { event: EventItem }) {
           <div className="relative h-[50vh] max-h-[600px]">
             <Image
               loading="lazy"
-              src={event.image_url}
+              src={event.image_url || "/images/NoImage.png"}
               alt={event.title}
               fill
               className="object-cover"
