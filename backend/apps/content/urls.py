@@ -8,7 +8,6 @@ from .views import (
     AdminGalleryImageViewSet,
     AdminHeroSlideViewSet,
     AdminJobOpeningViewSet,
-    AdminNewsArticleViewSet,
     AdminNoticeViewSet,
     AdminTeamMemberViewSet,
     AdminVideoViewSet,
@@ -18,7 +17,6 @@ from .views import (
     GalleryImageViewSet,
     HeroSlideViewSet,
     JobOpeningViewSet,
-    NewsArticleViewSet,
     NoticeViewSet,
     TeamMemberViewSet,
     VideoViewSet,
@@ -32,7 +30,6 @@ from .views import (
 router = DefaultRouter()
 router.register("hero-slides", HeroSlideViewSet, basename="hero-slide")
 router.register("notices", NoticeViewSet, basename="notice")
-router.register("news", NewsArticleViewSet, basename="news")
 router.register("events", EventViewSet, basename="event")
 router.register("gallery-images", GalleryImageViewSet, basename="gallery-image")
 router.register("clubs", ClubViewSet, basename="club")
@@ -44,7 +41,6 @@ router.register("contact-submissions", ContactSubmissionViewSet, basename="conta
 admin_router = DefaultRouter()
 admin_router.register("hero-slides", AdminHeroSlideViewSet, basename="admin-hero-slide")
 admin_router.register("notices", AdminNoticeViewSet, basename="admin-notice")
-admin_router.register("news", AdminNewsArticleViewSet, basename="admin-news")
 admin_router.register("events", AdminEventViewSet, basename="admin-event")
 admin_router.register("gallery-images", AdminGalleryImageViewSet, basename="admin-gallery-image")
 admin_router.register("clubs", AdminClubViewSet, basename="admin-club")

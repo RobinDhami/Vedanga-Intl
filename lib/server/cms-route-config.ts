@@ -3,7 +3,6 @@ import type { CmsCollectionKey } from "@/lib/server/cms-store";
 export const publicCollectionKeys = [
   "hero-slides",
   "notices",
-  "news",
   "events",
   "gallery-images",
   "contact-submissions",

@@ -7,7 +7,6 @@ from .models import (
     GalleryImage,
     HeroSlide,
     JobOpening,
-    NewsArticle,
     Notice,
     TeamMember,
     Video,
@@ -41,24 +40,6 @@ class NoticeSerializer(serializers.ModelSerializer):
             "is_published",
             "image_url",
             "show_in_overlay",
-        ]
-
-
-class NewsArticleSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = NewsArticle
-        fields = [
-            "id",
-            "title",
-            "slug",
-            "excerpt",
-            "content",
-            "category",
-            "author",
-            "tags",
-            "published_at",
-            "is_published",
-            "image_url",
         ]
 
 

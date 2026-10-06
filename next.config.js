@@ -1,5 +1,14 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  async redirects() {
+    return [
+      { source: "/news", destination: "/updates", permanent: true },
+      { source: "/news/notices", destination: "/updates", permanent: true },
+      { source: "/news/:slug", destination: "/updates", permanent: true },
+      { source: "/admin/news", destination: "/admin/updates", permanent: false },
+      { source: "/admin/notices", destination: "/admin/updates", permanent: false },
+    ];
+  },
   ...(process.env.CPANEL_BUILD === "1" ? { output: "standalone" } : {}),
   eslint: {
     ignoreDuringBuilds: true,

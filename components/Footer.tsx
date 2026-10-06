@@ -55,7 +55,7 @@ const Footer = () => {
                             <Link href="/about/principal-message" className="block text-gray-400 hover:text-white transition-colors">Principal&apos;s Message</Link>
                             <Link href="/academics/programs" className="block text-gray-400 hover:text-white transition-colors">Programs</Link>
                             <Link href="/school-life/events" className="block text-gray-400 hover:text-white transition-colors">Events</Link>
-                            <Link href="/news/notices" className="block text-gray-400 hover:text-white transition-colors">Notices</Link>
+                            <Link href="/updates" className="block text-gray-400 hover:text-white transition-colors">Updates</Link>
                         </div>
                     </div>
 

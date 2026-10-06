@@ -14,7 +14,6 @@ from .models import (
     GalleryImage,
     HeroSlide,
     JobOpening,
-    NewsArticle,
     Notice,
     TeamMember,
     Video,
@@ -26,7 +25,6 @@ from .serializers import (
     GalleryImageSerializer,
     HeroSlideSerializer,
     JobOpeningSerializer,
-    NewsArticleSerializer,
     NoticeSerializer,
     TeamMemberSerializer,
     VideoSerializer,
@@ -53,22 +51,8 @@ class NoticeViewSet(PublishedQuerysetMixin, viewsets.ReadOnlyModelViewSet):
     @action(detail=False, methods=["get"])
     def latest(self, request):
         notice = self.get_queryset().filter(show_in_overlay=True).first()
-        if notice is None:
-            notice = self.get_queryset().first()
         serializer = self.get_serializer(notice)
         return Response(serializer.data if notice else None)
-
-
-class NewsArticleViewSet(PublishedQuerysetMixin, viewsets.ReadOnlyModelViewSet):
-    queryset = NewsArticle.objects.all()
-    serializer_class = NewsArticleSerializer
-    lookup_field = "slug"
-
-    @action(detail=False, methods=["get"])
-    def latest(self, request):
-        queryset = self.get_queryset()[:3]
-        serializer = self.get_serializer(queryset, many=True)
-        return Response(serializer.data)
 
 
 class EventViewSet(PublishedQuerysetMixin, viewsets.ReadOnlyModelViewSet):
@@ -145,13 +129,6 @@ class AdminNoticeViewSet(viewsets.ModelViewSet):
     queryset = Notice.objects.all()
     serializer_class = NoticeSerializer
     permission_classes = [AdminPermission]
-
-
-class AdminNewsArticleViewSet(viewsets.ModelViewSet):
-    queryset = NewsArticle.objects.all()
-    serializer_class = NewsArticleSerializer
-    permission_classes = [AdminPermission]
-    lookup_field = "slug"
 
 
 class AdminEventViewSet(viewsets.ModelViewSet):

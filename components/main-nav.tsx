@@ -100,21 +100,6 @@ const schoolLifeItems = [
   },
 ];
 
-const newsItems = [
-  {
-    title: "Latest News",
-    href: "/news",
-    description: "Recent updates and announcements",
-    icon: <Newspaper className="h-5 w-5 text-[#D41D33]" />
-  },
-  {
-    title: "Notices",
-    href: "/news/notices",
-    description: "Important notifications and circulars",
-    icon: <Newspaper className="h-5 w-5 text-[#D41D33]" />
-  },
-];
-
 export function MainNav() {
   const [open, setOpen] = React.useState(false);
 
@@ -194,21 +179,14 @@ export function MainNav() {
           </NavigationMenuItem>
 
           <NavigationMenuItem>
-            <NavigationMenuTrigger className="bg-transparent hover:bg-gray-50">News & Updates</NavigationMenuTrigger>
-            <NavigationMenuContent>
-              <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2">
-                {newsItems.map((item) => (
-                  <ListItem
-                    key={item.href}
-                    title={item.title}
-                    href={item.href}
-                    icon={item.icon}
-                  >
-                    {item.description}
-                  </ListItem>
-                ))}
-              </ul>
-            </NavigationMenuContent>
+            <Link href="/updates" legacyBehavior passHref>
+              <NavigationMenuLink className={cn(navigationMenuTriggerStyle(), "bg-transparent hover:bg-gray-50")}>
+                <div className="flex items-center space-x-2">
+                  <Newspaper className="h-5 w-5" />
+                  <span>Updates</span>
+                </div>
+              </NavigationMenuLink>
+            </Link>
           </NavigationMenuItem>
 
           <NavigationMenuItem>
@@ -261,11 +239,10 @@ export function MainNav() {
                   items={schoolLifeItems}
                   onClose={() => setOpen(false)}
                 />
-                <MobileNavItem
-                  title="News & Updates"
-                  items={newsItems}
-                  onClose={() => setOpen(false)}
-                />
+                <Link href="/updates" className="flex items-center px-4 py-3 text-sm font-medium rounded-md hover:bg-gray-100" onClick={() => setOpen(false)}>
+                  <Newspaper className="h-5 w-5 mr-3 text-[#D41D33]" />
+                  Updates
+                </Link>
                 <Link
                   href="/careers"
                   className="flex items-center px-4 py-3 text-sm font-medium rounded-md hover:bg-gray-100"

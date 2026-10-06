@@ -7,7 +7,6 @@ from .models import (
     GalleryImage,
     HeroSlide,
     JobOpening,
-    NewsArticle,
     Notice,
     TeamMember,
     Video,
@@ -27,14 +26,6 @@ class NoticeAdmin(admin.ModelAdmin):
     list_filter = ("show_in_overlay", "is_published")
     list_editable = ("show_in_overlay",)
     search_fields = ("title", "excerpt")
-
-
-@admin.register(NewsArticle)
-class NewsArticleAdmin(admin.ModelAdmin):
-    list_display = ("title", "category", "author", "is_published", "published_at")
-    list_filter = ("category", "is_published")
-    search_fields = ("title", "excerpt", "content", "author")
-    prepopulated_fields = {"slug": ("title",)}
 
 
 @admin.register(Event)

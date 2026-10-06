@@ -4,7 +4,7 @@ const GalleryDisplay = lazy(() => import('@/components/GalleryDisplay'));
 const Hero = lazy(() => import('@/components/Hero'));
 const Info = lazy(() => import('@/components/Info'));
 const LatestEvents = lazy(() => import('@/components/LatestEvents'));
-const LatestNews = lazy(() => import('@/components/LatestNews'));
+const LatestUpdates = lazy(() => import('@/components/LatestUpdates'));
 const MapSection = lazy(() => import('@/components/MapSection'));
 const Principal = lazy(() => import('@/components/Principal'));
 const VideoSection = lazy(() => import('@/components/VideoSection'));
@@ -18,7 +18,7 @@ export default function Home() {
         <Principal />
         <GalleryDisplay />
         <LatestEvents />
-        <LatestNews />
+        <LatestUpdates />
         <VideoSection />
         <MapSection />
       </Suspense>

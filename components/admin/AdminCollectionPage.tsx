@@ -34,7 +34,6 @@ import type {
   GalleryImageItem,
   HeroSlide,
   JobOpeningItem,
-  NewsArticle,
   Notice,
   TeamMemberItem,
   VideoItem,
@@ -43,7 +42,6 @@ import type {
 type CollectionItem =
   | HeroSlide
   | Notice
-  | NewsArticle
   | EventItem
   | GalleryImageItem
   | ContactSubmissionItem
@@ -52,7 +50,6 @@ type CollectionItem =
   | ClubItem
   | JobOpeningItem;
 
-const NEWS_CATEGORY_OPTIONS = ["Academic", "Events", "Facilities", "International", "Sports"] as const;
 const EVENT_CATEGORY_OPTIONS = ["Academic", "Sports", "Cultural", "Community"] as const;
 
 function renderTitle(route: AdminCollectionRoute, item: CollectionItem) {
@@ -81,8 +78,8 @@ function renderStatus(item: CollectionItem, route: AdminCollectionRoute) {
 }
 
 function getIdentifier(route: AdminCollectionRoute, item: CollectionItem) {
-  if (route === "news" || route === "events" || route === "clubs") {
-    return (item as NewsArticle | EventItem | ClubItem).slug;
+  if (route === "events" || route === "clubs") {
+    return (item as EventItem | ClubItem).slug;
   }
 
   return item.id;
@@ -94,10 +91,6 @@ function renderSummary(route: AdminCollectionRoute, item: CollectionItem) {
       return [(item as HeroSlide).subtitle || "No subtitle"];
     case "notices":
       return [(item as Notice).excerpt || "No summary"];
-    case "news": {
-      const news = item as NewsArticle;
-      return [news.category, news.author, news.excerpt];
-    }
     case "events": {
       const event = item as EventItem;
       const bsDate = formatAdDateAsBs(event.date);
@@ -155,18 +148,6 @@ function getEditForm(route: AdminCollectionRoute, item: CollectionItem): AdminSa
         image_url: notice.image_url,
         show_in_overlay: notice.show_in_overlay ?? false,
         is_published: notice.is_published ?? false,
-      };
-    }
-    case "news": {
-      const news = item as NewsArticle;
-      return {
-        title: news.title,
-        category: news.category,
-        excerpt: news.excerpt,
-        author: news.author,
-        content: news.content,
-        image_url: news.image_url,
-        is_published: news.is_published ?? false,
       };
     }
     case "events": {
@@ -247,7 +228,7 @@ function getEditForm(route: AdminCollectionRoute, item: CollectionItem): AdminSa
 }
 
 function validatePayload(route: AdminCollectionRoute, payload: AdminSavePayload) {
-  if (route === "hero-slides" || route === "notices" || route === "news" || route === "events") {
+  if (route === "hero-slides" || route === "notices" || route === "events") {
     return validatePhaseOnePayload(route, payload);
   }
 
@@ -536,47 +517,14 @@ export function AdminCollectionPage({ route }: { route: AdminCollectionRoute }) 
                   <textarea className="min-h-[120px] rounded-xl border border-gray-200 px-4 py-3 outline-none transition focus:border-[#D41D33]" value={form.excerpt ?? ""} onChange={(event) => setForm((current) => ({ ...current, excerpt: event.target.value }))} />
                 </label>
                 <label className="grid gap-2 text-sm font-medium text-gray-700">
-                  Notice link
+                  Optional link
                   <input className="rounded-xl border border-gray-200 px-4 py-3 outline-none transition focus:border-[#D41D33]" value={form.link ?? ""} onChange={(event) => setForm((current) => ({ ...current, link: event.target.value }))} />
                 </label>
                 <ImageUploadField collection="notices" value={form.image_url} onChange={(image_url) => setForm((current) => ({ ...current, image_url }))} />
                 <label className="flex items-center gap-3 rounded-xl border border-gray-200 px-4 py-3 text-sm font-medium text-gray-700">
                   <input type="checkbox" checked={Boolean(form.show_in_overlay)} onChange={(event) => setForm((current) => ({ ...current, show_in_overlay: event.target.checked }))} />
-                  Show this notice in homepage overlay
+                  Show this update as the homepage popup
                 </label>
-              </>
-            )}
-
-            {route === "news" && (
-              <>
-                <label className="grid gap-2 text-sm font-medium text-gray-700">
-                  Title
-                  <input className="rounded-xl border border-gray-200 px-4 py-3 outline-none transition focus:border-[#D41D33]" value={form.title ?? ""} onChange={(event) => setForm((current) => ({ ...current, title: event.target.value }))} />
-                </label>
-                <label className="grid gap-2 text-sm font-medium text-gray-700">
-                  Category
-                  <select className="rounded-xl border border-gray-200 bg-white px-4 py-3 outline-none transition focus:border-[#D41D33]" value={form.category ?? ""} onChange={(event) => setForm((current) => ({ ...current, category: event.target.value }))}>
-                    <option value="">Select a category</option>
-                    {NEWS_CATEGORY_OPTIONS.map((option) => (
-                      <option key={option} value={option}>
-                        {option}
-                      </option>
-                    ))}
-                  </select>
-                </label>
-                <label className="grid gap-2 text-sm font-medium text-gray-700">
-                  Summary
-                  <textarea className="min-h-[120px] rounded-xl border border-gray-200 px-4 py-3 outline-none transition focus:border-[#D41D33]" value={form.excerpt ?? ""} onChange={(event) => setForm((current) => ({ ...current, excerpt: event.target.value }))} />
-                </label>
-                <label className="grid gap-2 text-sm font-medium text-gray-700">
-                  Author
-                  <input className="rounded-xl border border-gray-200 px-4 py-3 outline-none transition focus:border-[#D41D33]" value={form.author ?? ""} onChange={(event) => setForm((current) => ({ ...current, author: event.target.value }))} />
-                </label>
-                <label className="grid gap-2 text-sm font-medium text-gray-700">
-                  Content
-                  <textarea className="min-h-[180px] rounded-xl border border-gray-200 px-4 py-3 outline-none transition focus:border-[#D41D33]" value={form.content ?? ""} onChange={(event) => setForm((current) => ({ ...current, content: event.target.value }))} />
-                </label>
-                <ImageUploadField collection="news" value={form.image_url} onChange={(image_url) => setForm((current) => ({ ...current, image_url }))} required />
               </>
             )}
 

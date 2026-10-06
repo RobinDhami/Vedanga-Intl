@@ -1,7 +1,6 @@
 export const adminCollectionConfig = {
   "hero-slides": { label: "Hero Slides", phaseLabel: "Phase 1" },
-  notices: { label: "Notices", phaseLabel: "Phase 1" },
-  news: { label: "News", phaseLabel: "Phase 1" },
+  notices: { label: "Updates", phaseLabel: "Phase 1" },
   events: { label: "Events", phaseLabel: "Phase 1" },
   "gallery-images": { label: "Gallery Images", phaseLabel: "Phase 2" },
   "contact-submissions": { label: "Contact Submissions", phaseLabel: "Phase 2" },

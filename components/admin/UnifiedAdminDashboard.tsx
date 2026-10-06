@@ -6,7 +6,6 @@ import {
   Briefcase,
   CalendarDays,
   Clapperboard,
-  FileText,
   GalleryVertical,
   LayoutTemplate,
   Lock,
@@ -49,14 +48,12 @@ import type {
   CmsSessionUser,
 } from "@/types/cms";
 
-const NEWS_CATEGORY_OPTIONS = ["Academic", "Events", "Facilities", "International", "Sports"] as const;
 const EVENT_CATEGORY_OPTIONS = ["Academic", "Sports", "Cultural", "Community"] as const;
 
 const createCollections = [
   { key: "hero-slides", title: "Hero Slides", description: "Homepage carousel content and call-to-action buttons.", countKey: "heroSlides", href: "/admin/hero-slides", icon: LayoutTemplate, buttonLabel: "Add slide" },
-  { key: "news", title: "News", description: "Articles, categories, author info, and publication status.", countKey: "news", href: "/admin/news", icon: FileText, buttonLabel: "Add news" },
   { key: "events", title: "Events", description: "Upcoming school events, venue details, and schedules.", countKey: "events", href: "/admin/events", icon: CalendarDays, buttonLabel: "Add event" },
-  { key: "notices", title: "Notices", description: "Short urgent announcements and homepage pop-up notices.", countKey: "notices", href: "/admin/notices", icon: Megaphone, buttonLabel: "Add notice" },
+  { key: "notices", title: "Updates", description: "School updates with an optional homepage pop-up.", countKey: "notices", href: "/admin/updates", icon: Megaphone, buttonLabel: "Add update" },
   { key: "gallery-images", title: "Gallery Images", description: "Curate the website gallery with categories and publish state.", countKey: "galleryImages", href: "/admin/gallery-images", icon: GalleryVertical, buttonLabel: "Add image" },
   { key: "videos", title: "Videos", description: "Embeds and supporting copy for the School Life video experience.", countKey: "videos", href: "/admin/videos", icon: Clapperboard, buttonLabel: "Add video" },
   { key: "team-members", title: "Team Members", description: "Homepage team cards plus the About team page roster.", countKey: "teamMembers", href: "/admin/team-members", icon: Users, buttonLabel: "Add member" },
@@ -72,7 +69,6 @@ type CreateCollectionKey = (typeof createCollections)[number]["key"];
 
 type UnifiedCounts = {
   heroSlides: number;
-  news: number;
   events: number;
   notices: number;
   galleryImages: number;
@@ -87,8 +83,6 @@ function emptyFormFor(collection: CreateCollectionKey): AdminSavePayload {
   switch (collection) {
     case "hero-slides":
       return { title: "", subtitle: "", cta_text: "", cta_link: "", image_url: "", is_published: true };
-    case "news":
-      return { title: "", category: "", excerpt: "", author: "", content: "", image_url: "", is_published: true };
     case "events":
       return { title: "", category: "", description: "", venue: "", date: "", image_url: "", is_published: true };
     case "notices":
@@ -107,7 +101,7 @@ function emptyFormFor(collection: CreateCollectionKey): AdminSavePayload {
 }
 
 function initialCounts(): UnifiedCounts {
-  return { heroSlides: 0, news: 0, events: 0, notices: 0, galleryImages: 0, contactSubmissions: 0, videos: 0, teamMembers: 0, clubs: 0, jobOpenings: 0 };
+  return { heroSlides: 0, events: 0, notices: 0, galleryImages: 0, contactSubmissions: 0, videos: 0, teamMembers: 0, clubs: 0, jobOpenings: 0 };
 }
 
 export function UnifiedAdminDashboard() {
@@ -137,7 +131,6 @@ export function UnifiedAdminDashboard() {
 
       setCounts({
         heroSlides: phaseOne.heroSlides.length,
-        news: phaseOne.news.length,
         events: phaseOne.events.length,
         notices: phaseOne.notices.length,
         galleryImages: phaseTwo.galleryImages.length,
@@ -219,7 +212,7 @@ export function UnifiedAdminDashboard() {
       return { valid: false, message: "No collection selected." };
     }
 
-    if (activeCollection === "hero-slides" || activeCollection === "news" || activeCollection === "events" || activeCollection === "notices") {
+    if (activeCollection === "hero-slides" || activeCollection === "events" || activeCollection === "notices") {
       return validatePhaseOnePayload(activeCollection, form);
     }
 
@@ -260,8 +253,6 @@ export function UnifiedAdminDashboard() {
     switch (activeCollection) {
       case "hero-slides":
         return { title: form.title, subtitle: form.subtitle, cta_text: form.cta_text, cta_link: form.cta_link, image_url: form.image_url, is_published: form.is_published };
-      case "news":
-        return { title: form.title, category: form.category, excerpt: form.excerpt, author: form.author, content: form.content, image_url: form.image_url, is_published: form.is_published };
       case "events":
         return { title: form.title, category: form.category, description: form.description, venue: form.venue, date: form.date, image_url: form.image_url, is_published: form.is_published };
       case "notices":
@@ -492,47 +483,14 @@ export function UnifiedAdminDashboard() {
                     <textarea className="min-h-[120px] rounded-xl border border-gray-200 px-4 py-3 outline-none transition focus:border-[#D41D33]" value={form.excerpt ?? ""} onChange={(event) => setForm((current) => ({ ...current, excerpt: event.target.value }))} />
                   </label>
                   <label className="grid gap-2 text-sm font-medium text-gray-700">
-                    Notice link
+                    Optional link
                     <input className="rounded-xl border border-gray-200 px-4 py-3 outline-none transition focus:border-[#D41D33]" value={form.link ?? ""} onChange={(event) => setForm((current) => ({ ...current, link: event.target.value }))} />
                   </label>
                   <ImageUploadField collection="notices" value={form.image_url} onChange={(image_url) => setForm((current) => ({ ...current, image_url }))} />
                   <label className="flex items-center gap-3 rounded-xl border border-gray-200 px-4 py-3 text-sm font-medium text-gray-700">
                     <input type="checkbox" checked={Boolean(form.show_in_overlay)} onChange={(event) => setForm((current) => ({ ...current, show_in_overlay: event.target.checked }))} />
-                    Show this notice in homepage overlay
+                    Show this update as the homepage popup
                   </label>
-                </>
-              )}
-
-              {activeCollection === "news" && (
-                <>
-                  <label className="grid gap-2 text-sm font-medium text-gray-700">
-                    Title
-                    <input className="rounded-xl border border-gray-200 px-4 py-3 outline-none transition focus:border-[#D41D33]" value={form.title ?? ""} onChange={(event) => setForm((current) => ({ ...current, title: event.target.value }))} />
-                  </label>
-                  <label className="grid gap-2 text-sm font-medium text-gray-700">
-                    Category
-                    <select className="rounded-xl border border-gray-200 bg-white px-4 py-3 outline-none transition focus:border-[#D41D33]" value={form.category ?? ""} onChange={(event) => setForm((current) => ({ ...current, category: event.target.value }))}>
-                      <option value="">Select a category</option>
-                      {NEWS_CATEGORY_OPTIONS.map((option) => (
-                        <option key={option} value={option}>
-                          {option}
-                        </option>
-                      ))}
-                    </select>
-                  </label>
-                  <label className="grid gap-2 text-sm font-medium text-gray-700">
-                    Summary
-                    <textarea className="min-h-[120px] rounded-xl border border-gray-200 px-4 py-3 outline-none transition focus:border-[#D41D33]" value={form.excerpt ?? ""} onChange={(event) => setForm((current) => ({ ...current, excerpt: event.target.value }))} />
-                  </label>
-                  <label className="grid gap-2 text-sm font-medium text-gray-700">
-                    Author
-                    <input className="rounded-xl border border-gray-200 px-4 py-3 outline-none transition focus:border-[#D41D33]" value={form.author ?? ""} onChange={(event) => setForm((current) => ({ ...current, author: event.target.value }))} />
-                  </label>
-                  <label className="grid gap-2 text-sm font-medium text-gray-700">
-                    Content
-                    <textarea className="min-h-[180px] rounded-xl border border-gray-200 px-4 py-3 outline-none transition focus:border-[#D41D33]" value={form.content ?? ""} onChange={(event) => setForm((current) => ({ ...current, content: event.target.value }))} />
-                  </label>
-                  <ImageUploadField collection="news" value={form.image_url} onChange={(image_url) => setForm((current) => ({ ...current, image_url }))} required />
                 </>
               )}
 

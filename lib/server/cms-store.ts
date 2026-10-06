@@ -13,7 +13,6 @@ import type {
   GalleryImageItem,
   HeroSlide,
   JobOpeningItem,
-  NewsArticle,
   Notice,
   TeamMemberItem,
   VideoItem,
@@ -22,7 +21,6 @@ import type {
 export type CmsCollectionKey =
   | "hero-slides"
   | "notices"
-  | "news"
   | "events"
   | "gallery-images"
   | "contact-submissions"
@@ -81,7 +79,7 @@ function withPublishedDate<T extends { is_published?: boolean; published_at?: st
   return item;
 }
 
-async function buildUniqueSlugFor(model: "news" | "events" | "clubs", source: string, excludeId?: number) {
+async function buildUniqueSlugFor(model: "events" | "clubs", source: string, excludeId?: number) {
   const baseSlug = slugify(source);
   let candidate = baseSlug;
   let index = 2;
@@ -92,9 +90,6 @@ async function buildUniqueSlugFor(model: "news" | "events" | "clubs", source: st
       | null = null;
 
     switch (model) {
-      case "news":
-        existing = await prisma.newsArticle.findUnique({ where: { slug: candidate }, select: { id: true, slug: true } });
-        break;
       case "events":
         existing = await prisma.event.findUnique({ where: { slug: candidate }, select: { id: true, slug: true } });
         break;
@@ -135,22 +130,6 @@ function mapNotice(item: Awaited<ReturnType<typeof prisma.notice.findFirstOrThro
     is_published: item.isPublished,
     image_url: item.imageUrl,
     show_in_overlay: item.showInOverlay,
-  };
-}
-
-function mapNews(item: Awaited<ReturnType<typeof prisma.newsArticle.findFirstOrThrow>>): NewsArticle {
-  return {
-    id: item.id,
-    title: item.title,
-    slug: item.slug,
-    excerpt: item.excerpt,
-    content: item.content,
-    category: item.category,
-    author: item.author,
-    tags: coerceStringArray(item.tags),
-    published_at: item.publishedAt ?? undefined,
-    is_published: item.isPublished,
-    image_url: item.imageUrl,
   };
 }
 
@@ -311,7 +290,7 @@ export async function getPublicNotices() {
   await ensureSeeded();
   return (await prisma.notice.findMany({
     where: { isPublished: true },
-    orderBy: [{ sortOrder: "asc" }, { updatedAt: "desc" }],
+    orderBy: { updatedAt: "desc" },
   })).map(mapNotice);
 }
 
@@ -319,27 +298,10 @@ export async function getLatestNotice() {
   await ensureSeeded();
   const overlayNotice = await prisma.notice.findFirst({
     where: { isPublished: true, showInOverlay: true },
-    orderBy: [{ sortOrder: "asc" }, { updatedAt: "desc" }],
+    orderBy: { updatedAt: "desc" },
   });
 
-  if (overlayNotice) {
-    return mapNotice(overlayNotice);
-  }
-
-  const firstNotice = await prisma.notice.findFirst({
-    where: { isPublished: true },
-    orderBy: [{ sortOrder: "asc" }, { updatedAt: "desc" }],
-  });
-
-  return firstNotice ? mapNotice(firstNotice) : null;
-}
-
-export async function getPublicNews() {
-  await ensureSeeded();
-  return (await prisma.newsArticle.findMany({
-    where: { isPublished: true },
-    orderBy: [{ sortOrder: "asc" }, { updatedAt: "desc" }],
-  })).map(mapNews);
+  return overlayNotice ? mapNotice(overlayNotice) : null;
 }
 
 export async function getPublicEvents() {
@@ -402,8 +364,6 @@ export async function getAdminCollection(key: CmsCollectionKey) {
       return (await prisma.heroSlide.findMany({ orderBy: [{ sortOrder: "asc" }, { updatedAt: "desc" }] })).map(mapHeroSlide);
     case "notices":
       return (await prisma.notice.findMany({ orderBy: [{ sortOrder: "asc" }, { updatedAt: "desc" }] })).map(mapNotice);
-    case "news":
-      return (await prisma.newsArticle.findMany({ orderBy: [{ sortOrder: "asc" }, { updatedAt: "desc" }] })).map(mapNews);
     case "events":
       return (await prisma.event.findMany({ orderBy: [{ sortOrder: "asc" }, { updatedAt: "desc" }] })).map(mapEvent);
     case "gallery-images":
@@ -474,26 +434,6 @@ export async function createAdminItem(key: CmsCollectionKey, payload: AdminSaveP
         },
       });
       return mapNotice(item);
-    }
-    case "news": {
-      const sortOrder = await prisma.newsArticle.count();
-      const slug = await buildUniqueSlugFor("news", payload.title?.trim() || "item");
-      const item = await prisma.newsArticle.create({
-        data: {
-          title: payload.title?.trim() || "",
-          slug,
-          excerpt: payload.excerpt?.trim() || "",
-          content: payload.content?.trim() || "",
-          category: payload.category?.trim() || "",
-          author: payload.author?.trim() || "",
-          imageUrl: payload.image_url?.trim() || "",
-          tags: [],
-          sortOrder,
-          isPublished: Boolean(payload.is_published),
-          publishedAt: Boolean(payload.is_published) ? new Date().toISOString() : null,
-        },
-      });
-      return mapNews(item);
     }
     case "events": {
       const sortOrder = await prisma.event.count();
@@ -659,37 +599,6 @@ export async function updateAdminItem(key: CmsCollectionKey, identifier: string,
       await cleanupReplacedImage(current.imageUrl, item.imageUrl);
       return mapNotice(item);
     }
-    case "news": {
-      const current = await prisma.newsArticle.findUnique({ where: { slug: identifier } });
-      if (!current) return null;
-      const slug = await buildUniqueSlugFor("news", payload.title?.trim() || "item", current.id);
-      const nextItem = withPublishedDate({
-        title: payload.title?.trim() || "",
-        excerpt: payload.excerpt?.trim() || "",
-        content: payload.content?.trim() || "",
-        category: payload.category?.trim() || "",
-        author: payload.author?.trim() || "",
-        image_url: payload.image_url?.trim() || "",
-        is_published: Boolean(payload.is_published),
-        published_at: current.publishedAt ?? undefined,
-      });
-      const item = await prisma.newsArticle.update({
-        where: { id: current.id },
-        data: {
-          title: nextItem.title,
-          slug,
-          excerpt: nextItem.excerpt,
-          content: nextItem.content,
-          category: nextItem.category,
-          author: nextItem.author,
-          imageUrl: nextItem.image_url || "",
-          isPublished: Boolean(nextItem.is_published),
-          publishedAt: nextItem.published_at || null,
-        },
-      });
-      await cleanupReplacedImage(current.imageUrl, item.imageUrl);
-      return mapNews(item);
-    }
     case "events": {
       const current = await prisma.event.findUnique({ where: { slug: identifier } });
       if (!current) return null;
@@ -827,9 +736,6 @@ export async function deleteAdminItem(key: CmsCollectionKey, identifier: string)
         return true;
       case "notices":
         await deleteManagedImage((await prisma.notice.delete({ where: { id: Number(identifier) } })).imageUrl);
-        return true;
-      case "news":
-        await deleteManagedImage((await prisma.newsArticle.delete({ where: { slug: identifier } })).imageUrl);
         return true;
       case "events":
         await deleteManagedImage((await prisma.event.delete({ where: { slug: identifier } })).imageUrl);

@@ -12,7 +12,6 @@ const MANAGED_IMAGE_PATH = "/uploads/";
 const uploadCollections = [
   "hero-slides",
   "notices",
-  "news",
   "events",
   "gallery-images",
   "team-members",

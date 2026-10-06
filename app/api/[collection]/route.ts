@@ -10,7 +10,6 @@ import {
   getPublicGalleryImages,
   getPublicHeroSlides,
   getPublicJobOpenings,
-  getPublicNews,
   getPublicNotices,
   getPublicTeamMembers,
   getPublicVideos,
@@ -34,8 +33,6 @@ export async function GET(request: NextRequest, { params }: { params: { collecti
       return withCors(request, json(await getPublicHeroSlides()));
     case "notices":
       return withCors(request, json(await getPublicNotices()));
-    case "news":
-      return withCors(request, json(await getPublicNews()));
     case "events":
       return withCors(request, json(await getPublicEvents()));
     case "gallery-images":

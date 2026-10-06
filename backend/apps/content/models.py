@@ -67,6 +67,8 @@ class Notice(PublishableModel):
 
     class Meta(PublishableModel.Meta):
         ordering = ("-published_at", "-updated_at")
+        verbose_name = "Update"
+        verbose_name_plural = "Updates"
 
     def __str__(self) -> str:
         return self.title

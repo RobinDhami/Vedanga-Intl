@@ -8,7 +8,6 @@ import type {
   GalleryImageItem,
   HeroSlide,
   JobOpeningItem,
-  NewsArticle,
   Notice,
   PhaseOneCollections,
   PhaseThreeCollections,
@@ -93,20 +92,19 @@ async function fetchAdminJson<T>(path: string): Promise<T> {
 
 export async function getPhaseOneCollections(): Promise<PhaseOneCollections> {
   try {
-    const [heroSlides, notices, news, events] = await Promise.all([
+    const [heroSlides, notices, events] = await Promise.all([
       fetchJson<HeroSlide[]>("/hero-slides/"),
       fetchJson<Notice[]>("/notices/"),
-      fetchJson<NewsArticle[]>("/news/"),
       fetchJson<EventItem[]>("/events/"),
     ]);
 
-    return { heroSlides, notices, news, events };
+    return { heroSlides, notices, events };
   } catch {
-    return { heroSlides: heroSlidesSeed, notices: [], news: [], events: [] };
+    return { heroSlides: heroSlidesSeed, notices: [], events: [] };
   }
 }
 
-export async function getLatestNoticeOverlay(): Promise<Notice | null> {
+export async function getLatestPopupUpdate(): Promise<Notice | null> {
   try {
     const notice = await fetchJson<Notice | null>("/notices/latest/");
     if (notice) {
@@ -120,14 +118,13 @@ export async function getLatestNoticeOverlay(): Promise<Notice | null> {
 }
 
 export async function getAdminPhaseOneCollections(): Promise<PhaseOneCollections> {
-  const [heroSlides, notices, news, events] = await Promise.all([
+  const [heroSlides, notices, events] = await Promise.all([
     fetchAdminJson<HeroSlide[]>("/admin/hero-slides/"),
     fetchAdminJson<Notice[]>("/admin/notices/"),
-    fetchAdminJson<NewsArticle[]>("/admin/news/"),
     fetchAdminJson<EventItem[]>("/admin/events/"),
   ]);
 
-  return { heroSlides, notices, news, events };
+  return { heroSlides, notices, events };
 }
 
 export async function getPhaseThreeCollections(): Promise<PhaseThreeCollections> {
@@ -287,7 +284,7 @@ export async function logoutFromCms() {
 }
 
 export async function savePhaseOneItem(
-  collection: "hero-slides" | "notices" | "news" | "events",
+  collection: "hero-slides" | "notices" | "events",
   payload: AdminSavePayload
 ) {
   return saveAdminItem(collection, payload);
@@ -296,7 +293,6 @@ export async function savePhaseOneItem(
 export type AdminCollection =
   | "hero-slides"
   | "notices"
-  | "news"
   | "events"
   | "gallery-images"
   | "contact-submissions"
@@ -355,19 +351,6 @@ export async function getNotices(): Promise<Notice[]> {
   } catch {
     return [];
   }
-}
-
-export async function getNewsArticles(): Promise<NewsArticle[]> {
-  try {
-    return await fetchJson<NewsArticle[]>("/news/");
-  } catch {
-    return [];
-  }
-}
-
-export async function getNewsArticle(slug: string): Promise<NewsArticle | null> {
-  const articles = await getNewsArticles();
-  return articles.find((article) => article.slug === slug) ?? null;
 }
 
 export async function getEvents(): Promise<EventItem[]> {
@@ -447,7 +430,7 @@ export async function deleteAdminItem(collection: AdminCollection, identifier: s
 }
 
 export function validatePhaseOnePayload(
-  collection: "hero-slides" | "notices" | "news" | "events",
+  collection: "hero-slides" | "notices" | "events",
   payload: AdminSavePayload
 ): AdminValidationResult {
   if (!payload.title?.trim()) {
@@ -459,25 +442,7 @@ export function validatePhaseOnePayload(
   }
 
   if (collection === "notices" && !payload.excerpt?.trim()) {
-    return { valid: false, message: "Notice summary is required." };
-  }
-
-  if (collection === "news") {
-    if (!payload.category?.trim()) {
-      return { valid: false, message: "News category is required." };
-    }
-    if (!payload.excerpt?.trim()) {
-      return { valid: false, message: "News summary is required." };
-    }
-    if (!payload.author?.trim()) {
-      return { valid: false, message: "Author is required." };
-    }
-    if (!payload.content?.trim()) {
-      return { valid: false, message: "Content is required." };
-    }
-    if (!payload.image_url?.trim()) {
-      return { valid: false, message: "News image is required." };
-    }
+    return { valid: false, message: "Update summary is required." };
   }
 
   if (collection === "events") {
