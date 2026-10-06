@@ -1,9 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ChevronRight } from "lucide-react";
 import Image from "next/image";
-import Link from "next/link";
 import { PROGRAM_LIST } from "./programData";
 
 export default function Programs() {
@@ -81,13 +79,6 @@ export default function Programs() {
                   </ul>
                 </div>
 
-                <Link
-                  href={`/academics/programs/${program.slug}`}
-                  className="inline-flex items-center text-[#D41D33] font-medium group-hover:text-[#A3162A] transition-colors"
-                >
-                  Explore Program Details
-                  <ChevronRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-                </Link>
               </div>
             </motion.div>
           ))}
