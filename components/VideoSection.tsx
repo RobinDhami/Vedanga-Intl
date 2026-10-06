@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { getPhaseThreeCollections } from '@/lib/cms-api';
 import type { VideoItem } from '@/types/cms';
+import { getVideoEmbedUrl } from '@/lib/video';
 import { useEffect, useState } from 'react';
 const VideoSection = () => {
     const [videoItems, setVideoItems] = useState<VideoItem[]>([]);
@@ -54,7 +55,7 @@ const VideoSection = () => {
                             <div className="relative w-full h-0 pb-[56.25%]">
                                 <iframe
                                     className="absolute top-0 left-0 w-full h-full"
-                                    src={video.url}
+                                    src={getVideoEmbedUrl(video.url)}
                                     title={video.title}
                                     frameBorder="0"
                                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
