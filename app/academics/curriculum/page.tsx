@@ -56,7 +56,7 @@ const subjects: Subjects = {
   ],
   "Languages": [
     {
-      name: "Nepali and Sero Fero",
+      name: "Nepali",
       icon: <IndianRupee />,
       description: "Nepali language, local context, and cultural learning through communication and exploration."
     },
