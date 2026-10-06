@@ -51,7 +51,6 @@ import type {
 
 const NEWS_CATEGORY_OPTIONS = ["Academic", "Events", "Facilities", "International", "Sports"] as const;
 const EVENT_CATEGORY_OPTIONS = ["Academic", "Sports", "Cultural", "Community"] as const;
-const GALLERY_CATEGORY_OPTIONS = ["School Life", "Academics", "Sports", "Events", "Activities"] as const;
 
 const createCollections = [
   { key: "hero-slides", title: "Hero Slides", description: "Homepage carousel content and call-to-action buttons.", countKey: "heroSlides", href: "/admin/hero-slides", icon: LayoutTemplate, buttonLabel: "Add slide" },
@@ -95,7 +94,7 @@ function emptyFormFor(collection: CreateCollectionKey): AdminSavePayload {
     case "notices":
       return { title: "", excerpt: "", link: "", image_url: "", show_in_overlay: false, is_published: true };
     case "gallery-images":
-      return { title: "", category: "", description: "", image_url: "", is_published: true };
+      return { title: "", image_url: "", is_published: true };
     case "videos":
       return { title: "", subtitle: "", url: "", is_published: true };
     case "team-members":
@@ -268,7 +267,7 @@ export function UnifiedAdminDashboard() {
       case "notices":
         return { title: form.title, excerpt: form.excerpt, link: form.link, image_url: form.image_url, show_in_overlay: form.show_in_overlay, is_published: form.is_published };
       case "gallery-images":
-        return { title: form.title, category: form.category, description: form.description, image_url: form.image_url, is_published: form.is_published };
+        return { title: form.title, image_url: form.image_url, is_published: form.is_published };
       case "videos":
         return { title: form.title, subtitle: form.subtitle, url: form.url, is_published: form.is_published };
       case "team-members":
@@ -589,21 +588,6 @@ export function UnifiedAdminDashboard() {
                   <label className="grid gap-2 text-sm font-medium text-gray-700">
                     Title
                     <input className="rounded-xl border border-gray-200 px-4 py-3 outline-none transition focus:border-[#D41D33]" value={form.title ?? ""} onChange={(event) => setForm((current) => ({ ...current, title: event.target.value }))} />
-                  </label>
-                  <label className="grid gap-2 text-sm font-medium text-gray-700">
-                    Category
-                    <select className="rounded-xl border border-gray-200 bg-white px-4 py-3 outline-none transition focus:border-[#D41D33]" value={form.category ?? ""} onChange={(event) => setForm((current) => ({ ...current, category: event.target.value }))}>
-                      <option value="">Select a category</option>
-                      {GALLERY_CATEGORY_OPTIONS.map((option) => (
-                        <option key={option} value={option}>
-                          {option}
-                        </option>
-                      ))}
-                    </select>
-                  </label>
-                  <label className="grid gap-2 text-sm font-medium text-gray-700">
-                    Description
-                    <textarea className="min-h-[120px] rounded-xl border border-gray-200 px-4 py-3 outline-none transition focus:border-[#D41D33]" value={form.description ?? ""} onChange={(event) => setForm((current) => ({ ...current, description: event.target.value }))} />
                   </label>
                   <ImageUploadField collection="gallery-images" value={form.image_url} onChange={(image_url) => setForm((current) => ({ ...current, image_url }))} required />
                 </>

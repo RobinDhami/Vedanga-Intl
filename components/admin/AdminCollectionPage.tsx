@@ -104,8 +104,7 @@ function renderSummary(route: AdminCollectionRoute, item: CollectionItem) {
       return [event.category, event.venue, bsDate ? `${bsDate} BS` : event.date];
     }
     case "gallery-images": {
-      const gallery = item as GalleryImageItem;
-      return [gallery.category || "Uncategorized", gallery.description || "No description"];
+      return [];
     }
     case "contact-submissions": {
       const contact = item as ContactSubmissionItem;
@@ -186,8 +185,6 @@ function getEditForm(route: AdminCollectionRoute, item: CollectionItem): AdminSa
       const gallery = item as GalleryImageItem;
       return {
         title: gallery.title,
-        category: gallery.category,
-        description: gallery.description,
         image_url: gallery.image_url,
         is_published: gallery.is_published ?? false,
       };
@@ -255,6 +252,7 @@ function validatePayload(route: AdminCollectionRoute, payload: AdminSavePayload)
   }
 
   if (route === "gallery-images") {
+    if (!payload.title?.trim()) return { valid: false, message: "Title is required." };
     if (!payload.image_url?.trim()) return { valid: false, message: "Gallery image is required." };
     return { valid: true };
   }
@@ -631,6 +629,10 @@ export function AdminCollectionPage({ route }: { route: AdminCollectionRoute }) 
 
             {route === "gallery-images" && (
               <>
+                <label className="grid gap-2 text-sm font-medium text-gray-700">
+                  Title
+                  <input className="rounded-xl border border-gray-200 px-4 py-3 outline-none transition focus:border-[#D41D33]" value={form.title ?? ""} onChange={(event) => setForm((current) => ({ ...current, title: event.target.value }))} />
+                </label>
                 <ImageUploadField collection="gallery-images" value={form.image_url} onChange={(image_url) => setForm((current) => ({ ...current, image_url }))} required />
               </>
             )}

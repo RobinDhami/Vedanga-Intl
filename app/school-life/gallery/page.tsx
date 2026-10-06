@@ -49,7 +49,7 @@ export default function Gallery() {
     try {
       await navigator.share({
         title: selectedImageData.title,
-        text: selectedImageData.description,
+        text: selectedImageData.title,
         url: window.location.href,
       });
     } catch {
@@ -130,11 +130,9 @@ export default function Gallery() {
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                {image.taken_on && (
-                  <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm rounded-full px-3 py-1 text-sm text-gray-700">
-                    {image.taken_on}
-                  </div>
-                )}
+                <div className="absolute top-4 right-4 max-w-[calc(100%-2rem)] truncate bg-white/90 backdrop-blur-sm rounded-full px-3 py-1 text-sm font-medium text-gray-700">
+                  {image.title}
+                </div>
               </div>
             </motion.div>
           ))}
@@ -232,8 +230,7 @@ export default function Gallery() {
 
                 <div className="mt-4 text-white text-center">
                   <p className="text-sm text-gray-400 mt-2">
-                    {currentIndex + 1} of {galleryImages.length}
-                    {selectedImageData.taken_on ? ` • ${selectedImageData.taken_on}` : ""}
+                    {selectedImageData.title} • {currentIndex + 1} of {galleryImages.length}
                   </p>
                 </div>
               </motion.div>
