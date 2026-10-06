@@ -458,9 +458,6 @@ export function validatePhaseOnePayload(
     if (!payload.date?.trim()) {
       return { valid: false, message: "Event date is required." };
     }
-    if (!payload.image_url?.trim()) {
-      return { valid: false, message: "Event image is required." };
-    }
   }
 
   return { valid: true };
