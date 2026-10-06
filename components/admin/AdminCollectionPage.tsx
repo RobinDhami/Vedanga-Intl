@@ -20,10 +20,7 @@ import { subscribeToCmsAuthChanged } from "@/lib/cms-auth-events";
 import { convertBsDateToAd, formatAdDateAsBs } from "@/lib/nepali-date";
 import {
   deleteAdminItem,
-  getAdminPhaseFourCollections,
-  getAdminPhaseOneCollections,
-  getAdminPhaseThreeCollections,
-  getAdminPhaseTwoCollections,
+  getAdminCollectionItems,
   getSessionUser,
   updateAdminItem,
   validatePhaseOnePayload,
@@ -330,38 +327,11 @@ export function AdminCollectionPage({ route }: { route: AdminCollectionRoute }) 
     }
 
     try {
-      switch (route) {
-        case "hero-slides":
-          setItems((await getAdminPhaseOneCollections()).heroSlides);
-          break;
-        case "notices":
-          setItems((await getAdminPhaseOneCollections()).notices);
-          break;
-        case "news":
-          setItems((await getAdminPhaseOneCollections()).news);
-          break;
-        case "events":
-          setItems((await getAdminPhaseOneCollections()).events);
-          break;
-        case "gallery-images":
-          setItems((await getAdminPhaseTwoCollections()).galleryImages);
-          break;
-        case "contact-submissions":
-          setItems((await getAdminPhaseTwoCollections()).contactSubmissions);
-          break;
-        case "videos":
-          setItems((await getAdminPhaseThreeCollections()).videos);
-          break;
-        case "team-members":
-          setItems((await getAdminPhaseThreeCollections()).teamMembers);
-          break;
-        case "job-openings":
-          setItems((await getAdminPhaseFourCollections()).jobOpenings);
-          break;
-        case "clubs":
-          setItems((await getAdminPhaseFourCollections()).clubs);
-          break;
-      }
+      setItems(await getAdminCollectionItems<CollectionItem>(route));
+      setMessage("");
+    } catch (error) {
+      setItems([]);
+      setMessage(error instanceof Error ? error.message : `Unable to load ${config.label.toLowerCase()}.`);
     } finally {
       setLoading(false);
     }

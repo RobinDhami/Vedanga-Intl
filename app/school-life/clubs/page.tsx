@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Image from "next/image";
 import Link from "next/link";
 import { Camera, ChevronRight, Code, Mic, Music, Palette, Users } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -49,12 +50,21 @@ export default function Clubs() {
             return (
               <motion.div
                 key={club.slug}
-                className="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition-all duration-300 border border-gray-100"
+                className="group bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition-all duration-300 border border-gray-100"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.1, delay: index * 0.05 }}
                 whileHover={{ y: -5 }}
               >
+                <div className="relative h-52 w-full overflow-hidden bg-gray-100">
+                  <Image
+                    src={club.image_url}
+                    alt={`${club.name} club`}
+                    fill
+                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                  />
+                </div>
                 <div className="p-6 h-full flex flex-col">
                   <div className="flex items-start space-x-4 mb-4">
                     <div className="p-3 bg-[#D41D33]/10 text-[#D41D33] rounded-lg">

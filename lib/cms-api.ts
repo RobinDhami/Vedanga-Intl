@@ -160,11 +160,15 @@ export async function getPhaseFourCollections(): Promise<PhaseFourCollections> {
 }
 
 export async function getAdminPhaseFourCollections(): Promise<PhaseFourCollections> {
-  const [jobOpenings, clubs] = await Promise.all([
+  const [jobOpeningsResult, clubsResult] = await Promise.allSettled([
     fetchAdminJson<JobOpeningItem[]>("/admin/job-openings/"),
     fetchAdminJson<ClubItem[]>("/admin/clubs/"),
   ]);
-  return { jobOpenings, clubs };
+
+  return {
+    jobOpenings: jobOpeningsResult.status === "fulfilled" ? jobOpeningsResult.value : [],
+    clubs: clubsResult.status === "fulfilled" ? clubsResult.value : [],
+  };
 }
 
 export async function getClubs() {
@@ -300,6 +304,10 @@ export type AdminCollection =
   | "team-members"
   | "clubs"
   | "job-openings";
+
+export async function getAdminCollectionItems<T>(collection: AdminCollection) {
+  return fetchAdminJson<T[]>(`/admin/${collection}/`);
+}
 
 export type ImageUploadCollection = Exclude<
   AdminCollection,
