@@ -1,0 +1,30 @@
+{
+  "name": "Vedanga International School",
+  "image": "mcr.microsoft.com/devcontainers/javascript-node:1-22-bookworm",
+  "remoteUser": "vscode",
+  "forwardPorts": [3000],
+  "portsAttributes": {
+    "3000": {
+      "label": "Next.js development server",
+      "onAutoForward": "openBrowser"
+    }
+  },
+  "containerEnv": {
+    "NODE_ENV": "development",
+    "HOST": "0.0.0.0",
+    "PORT": "3000",
+    "CMS_UPLOAD_DIR": "${containerWorkspaceFolder}/.local/uploads",
+    "CMS_UPLOAD_PUBLIC_URL": "http://localhost:3000/uploads"
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "Prisma.prisma",
+        "dbaeumer.vscode-eslint"
+      ]
+    }
+  },
+  "postCreateCommand": "npm ci --include=optional && npm run prisma:generate",
+  "postStartCommand": "bash .devcontainer/start-dev.sh",
+  "waitFor": "postCreateCommand"
+}
